@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/guidelines.md\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'flatpaper: simple, concise, straight to the point. Non-trivial task without a done check, proof, or constraints? Propose them in one line each.'"
+          }
+        ]
+      }
+    ]
+  }
+}
