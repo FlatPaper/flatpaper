@@ -6,6 +6,10 @@
           {
             "type": "command",
             "command": "cat \"${CLAUDE_PLUGIN_ROOT}/guidelines.md\""
+          },
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/scripts/arch-drift.sh\""
           }
         ]
       }

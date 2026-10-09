@@ -24,6 +24,9 @@ The always-on rules in the flatpaper guidelines still apply. This mode adds play
 - **Refactoring.** A behavior-preserving change to structure. `playbooks/refactoring.md`.
 - **Prototype.** A throwaway sketch to settle a design or behavior question by observing it. `playbooks/prototype.md`.
 - **Autonomous run.** A long task driven to a predicate without stopping ("run until done", "going to bed", "/loop until X"). `playbooks/autonomous-run.md`.
+- **Architecture page.** Create or update the repo's architecture page ("map this repo", "update the diagrams"), or a step in another playbook calls for it. `playbooks/architecture-page.md`.
+
+If `docs/architecture/` exists, read `index.html` there before tracing code in any playbook. It is the repo's map. Treat it as a starting point, and trust the code where they disagree.
 
 No playbook fits? Write a short bespoke one in the same shape (owner line, numbered steps each ending in a check, reply line), show it in the todo list, and follow it.
 
