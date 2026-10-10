@@ -2,6 +2,8 @@
 
 A Claude Code plugin for agent work you can trust and review later. Adapted from poteto's [pstack](https://github.com/cursor/plugins/tree/main/pstack).
 
+It is built for Claude Code. The hooks, the `/flatpaper:` skill names, the task tools, and the plugin layout are Claude Code's. pstack is the Cursor version of the same ideas.
+
 Three ideas carry it:
 
 1. Every task has a done check that can fail.
@@ -33,6 +35,26 @@ To use it in the IDE extension or desktop app too, install it from the local clo
 claude plugin marketplace add ~/Documents/GitHub/flatpaper
 claude plugin install flatpaper@flatpaper --scope user
 ```
+
+## Settings
+
+Add these to `~/.claude/settings.json`, then restart Claude Code. A session that is already open keeps its old tool list.
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_ENABLE_TODO_TOOLS": "1"
+  },
+  "attribution": { "commit": "", "pr": "", "sessionUrl": false }
+}
+```
+
+| Setting | Required | Why |
+|---|---|---|
+| `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` | Yes | Claude Code hides `TaskCreate` and `TaskUpdate` by default on newer models. flatpaper-mode puts each playbook step in the task list with them. Without it, the mode falls back to a checklist in its replies. |
+| `attribution` | No | Removes the Claude co-author line from commits and PRs, enforced by Claude Code instead of a rule. |
+
+Optional tools: `jq` and `gh` (logged in). The architecture drift line uses them to check the latest release of the repo a page describes. Without them, it still checks this repo's commits.
 
 ## Use
 
