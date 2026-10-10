@@ -15,7 +15,7 @@ Three ideas carry it:
 | `guidelines.md` | Always-on rules, loaded at session start by a hook |
 | `UserPromptSubmit` hook | One-line reminder on every prompt: concise replies, and a done check, proof, and constraints |
 | `/flatpaper:flatpaper-mode` | Rigorous mode. Matches the task to a playbook (investigation, bug fix, feature, refactoring, prototype, autonomous run, architecture page) |
-| Architecture drift line | At session start, says when `docs/architecture/` is behind the code. Silent otherwise. |
+| Architecture drift line | At session start, says when `docs/architecture/` is behind this repo's commits, or behind the latest release of the repo it describes. Silent otherwise. |
 | `/flatpaper:show-me-your-work` | Decision log (TSV), audited against the transcript, with an Attention section from a fresh reviewer |
 | `/flatpaper:create-verification-skill` | Generates a project-local `verify-<app>` skill (launch, doctor, drive, evidence, cleanup, feature map) and proves it once, including that Doctor can fail |
 
