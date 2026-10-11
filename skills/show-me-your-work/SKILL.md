@@ -14,7 +14,7 @@ A TSV file, one row per decision. Cells stay on one line. Evidence is a pointer,
 - **ts.** ISO 8601 timestamp.
 - **phase.** The phase or workstream.
 - **decision.** What was chosen or done, in one line.
-- **why.** The reason in plain words, as you would tell a teammate.
+- **why.** The reason in plain words, as you would tell a teammate. If a principle drove it, say it plainly, not as a jargon tag.
 - **evidence.** A pointer that proves it: commit SHA, PR number, `file:line`, a log path, a screenshot path. Never a paragraph.
 - **result.** The outcome: `tests green`, `reverted`, `INCONCLUSIVE`, `open`.
 
@@ -36,7 +36,17 @@ Use the helper. It stamps the time, writes the header on first use, strips tabs 
 
 Log decision points, not every action: a fork chosen, a unit finished with its check result, a pivot or revert and what triggered it, a blocker. In a loop, one row per iteration.
 
-When you return to a log another run wrote, read its last rows first. Your first row uses phase `start` and names your run.
+## Runs
+
+A run is one Claude Code session, including its later turns and any compacted summary of it. A resumed session with the same session id is the same run. A new session, a replacement agent, or a pickup by someone else starts a new run.
+
+When a run adds to a log that already has rows, its first row has phase `start`. So does its first row after another run's `start` row. A run that comes back to a log in a later turn therefore reads the log's last rows first, to see whether another run wrote since.
+
+A `start` row names the `ts` range of the earlier rows this run did not write, in its decision cell. Its evidence names this run by its Claude Code session id, which is the name of its transcript file without `.jsonl`. Use phase `start` for nothing else.
+
+```
+2026-10-03T21:05:10Z	start	picked up the log, rows 2026-10-02T07:14:22Z to 2026-10-02T09:40:01Z are from another run	new session on the same task	session 6f1c2e9a-...	open
+```
 
 ## Where it lives
 
@@ -49,10 +59,13 @@ When you return to a log another run wrote, read its last rows first. Your first
 
 ## Audit before handing back
 
-1. Read this session's transcript at `~/.claude/projects/<project-dir>/<session-id>.jsonl`. Read only this session's file.
-2. Check each row. It maps to a real decision or action, and its evidence resolves and shows what the row claims.
+At the end of the run, check that the log told the truth. Audit only this run's rows. They come in stretches. A stretch begins at one of this run's `start` rows, or at the first row if this run created the log. It ends at the next `start` row of another run, or at the end of the log.
+
+1. Read this session's transcript at `~/.claude/projects/<project-dir>/<session-id>.jsonl`. `<project-dir>` is the working directory path with each `/` and other non-alphanumeric character turned into `-`, such as `-Users-me-src-app`. Read only this file. Never glob across other project directories. They hold unrelated private chats.
+2. Walk this run's stretches against the transcript. Each row maps to a real decision or action, and its evidence resolves and shows what the row claims.
 3. A fork, pivot, or abandoned approach that shaped the work but has no row is a gap. Add a row.
-4. Correct the log by appending rows, never by editing.
+4. Correct the log, not the story. Never edit or remove a row, even an invented one. When a row records no real decision or action, or its claim or evidence is wrong, add a row that supersedes it. The new row says what actually happened and carries a pointer that resolves.
+5. Rows outside this run's stretches are not audited. If this run's own work shows one of them is wrong, supersede it like any wrong call.
 
 ## Fresh review
 

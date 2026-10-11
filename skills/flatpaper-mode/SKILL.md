@@ -19,7 +19,7 @@ Re-match on every prompt. When the kind of work changes (review, then fix, then 
 
 ## Finish every task
 
-Run these once, after the playbook's last step and before the reply. When one playbook runs inside another, they run after the outer playbook's last step.
+Run these once, after the playbook's last step and before the reply. Pause safely is the exception: it skips the Finish steps with the reason `pause`, and its open steps stay open for the resume. When one playbook runs inside another, they run after the outer playbook's last step.
 
 1. Run the repo's tests in the checkout you changed, with the command its rules name, or the one its CI or manifest runs. Paste the result. Skip when this task changed no files, or when the repo has no test command, and say which. A prototype skips this step because its scratch code does not ship.
 2. If the task commits or opens or updates a PR, follow the repo's rules: commit message format, branch name, PR title format, template, draft or ready, and required labels. Without a PR in scope, skip with that reason.
@@ -34,6 +34,11 @@ Run these once, after the playbook's last step and before the reply. When one pl
 - **Prototype.** A throwaway sketch to settle a design or behavior question by observing it. `playbooks/prototype.md`.
 - **Autonomous run.** A long task driven to a predicate without stopping ("run until done", "going to bed", "/loop until X"). `playbooks/autonomous-run.md`.
 - **Architecture page.** Create or update the repo's architecture page ("map this repo", "update the diagrams"), or a step in another playbook calls for it. `playbooks/architecture-page.md`.
+- **Perf.** Make something faster or cheaper against a measured number ("speed up", "make it faster", "cut the cost"). `playbooks/perf.md`.
+- **Babysit.** Drive an open PR to merge-ready: conflicts, review comments, CI ("babysit", "get it green", "address the review comments", "check on the PR"). `playbooks/babysit.md`.
+- **Session pickup.** Continue work another session started ("pick up", "take over this branch", "continue from the log"). `playbooks/session-pickup.md`.
+- **Pause safely.** Stop mid-task so the work can resume later ("pause", "stop for now", "pick this up tomorrow"). `playbooks/pause-safely.md`.
+- **Worktree cleanup.** Find and remove stale git worktrees ("clean up worktrees"). `playbooks/worktree-cleanup.md`.
 
 If `docs/architecture/` exists, read `meta.json`, `diagrams/*.archify.json`, and `diagrams/*.reference.html` there before tracing code in any playbook. They are the repo's map; the built `.html` is the same content wrapped in a viewer. An older page with only `index.html` is read from there. Treat the map as a starting point, and trust the code where they disagree.
 
@@ -42,13 +47,14 @@ No playbook fits? Write a short bespoke one in the same shape (owner line, numbe
 ## Autonomy
 
 - Reversible work proceeds without asking.
-- Always pause for irreversible actions: force-push to shared branches, deploys, data deletion, messages to other people.
+- Always pause for irreversible actions: force-push to shared branches, deploys, data deletion, messages to other people. Replies on a PR the user asked you to babysit are the one exception.
 - Session overrides ("don't stop", "going to bed", "run until done") mean keep going and log decisions with the show-me-your-work skill.
 
 ## Subagents
 
 - You own every subagent's work. Read its diff or output and write your own summary. Don't pass its claims through.
 - Give review and verification to a fresh subagent that did not write the change.
+- Write every brief with the fields in `references/subagent-brief.md`, sized to the unit. A brief that can't fill its fields is not ready to send.
 - Route bulk reading to subagents and keep summaries in the main thread.
 
 ## Writing the reply

@@ -16,10 +16,12 @@ Three ideas carry it:
 |---|---|
 | `guidelines.md` | Always-on rules, loaded at session start by a hook |
 | `UserPromptSubmit` hook | One-line reminder on every prompt: concise replies, and a done check, proof, and constraints |
-| `/flatpaper:flatpaper-mode` | Rigorous mode. Matches the task to a playbook (investigation, bug fix, feature, refactoring, prototype, autonomous run, architecture page) |
+| `/flatpaper:flatpaper-mode` | Rigorous mode. Matches the task to a playbook (investigation, bug fix, feature, refactoring, prototype, autonomous run, architecture page, perf, babysit, session pickup, pause safely, worktree cleanup) |
 | Architecture drift line | At session start, says when `docs/architecture/` is behind this repo's commits, or behind the latest release of the repo it describes. Silent otherwise. |
 | `/flatpaper:show-me-your-work` | Decision log (TSV), audited against the transcript, with an Attention section from a fresh reviewer |
 | `/flatpaper:create-verification-skill` | Generates a project-local `verify-<app>` skill (launch, doctor, drive, evidence, cleanup, feature map) and proves it once, including that Doctor can fail |
+| `/flatpaper:maintain-verification-skill` | Rechecks the `verify-<app>` feature map against the code and the live app, and opens at most one PR of proven corrections |
+| `/flatpaper:blast-radius` | Finds what a change breaks outside its diff, and proves the facts it is safe because of with a rerunnable script |
 
 ## Install
 
@@ -89,6 +91,11 @@ Only the goal is required. A missing check, proof or constraints gets proposed b
 | try, sketch, which works better | Prototype |
 | im stepping away, run until, /loop until | Autonomous run |
 | map this repo, update the architecture page | Architecture page |
+| speed up, make it faster, cut the cost | Perf |
+| babysit, get it green, address the review comments | Babysit |
+| pick up, take over this branch, continue from the log | Session pickup |
+| pause, stop for now, pick this up tomorrow | Pause safely |
+| clean up worktrees | Worktree cleanup |
 
 ### Several tasks in one session
 
@@ -101,6 +108,29 @@ raise a draft PR.
 ```
 
 Every playbook ends with the same finish steps: run the repo's tests, follow its PR rules, and read the PR back with `gh pr view`. The repo's rules files (`AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `docs/README.md`, the PR template) are read at the start of every task.
+
+### Steering a run
+
+Steering prompts are one line. Name the principle or the rule that was broken.
+
+```
+i said the goal is to repro. i did not ask for a fix yet. stay on the bug fix playbook.
+apply prove it works. show me the real output, not the build log.
+apply attack the premise. both fixes assumed the cache is stale.
+```
+
+### Pitfalls
+
+- **Naming skills in the prompt.** "investigate, then prototype, then build" reorders steps the playbook already sequences. State the goal and the constraints.
+- **Leading with your theory of the cause.** The agent searches where you pointed. Give facts, let it restate the problem, then share your hunch.
+- **Taking the first design.** Ask for two prototypes and pick from what runs.
+- **Reviewing a plan with no code behind it.** Review of an abstract plan invents risks. Settle open questions with a prototype, then review what got built.
+- **Parallel agents in one worktree.** They overwrite each other. Say "own worktree per attempt".
+- **Looping before you trust the loop.** A loop that can't verify its own work only makes unchecked work faster. Get `/flatpaper:create-verification-skill` working first.
+- **Trusting an unvetted number.** A warm cache or a skipped code path can fake a speedup. Use the Perf playbook.
+- **Accepting every review comment.** Reviews mix real catches and noise. Babysit triages each one against the code.
+- **Correcting the same mistake by hand.** A correction in chat helps one run. Turn it into a check, a lint, or a hook.
+- **Editing a skill mid-task.** Note the problem and fix the skill in its own change.
 
 ### Examples
 
