@@ -16,7 +16,6 @@ docs/architecture/
     └── <name>.html             build output, the published page
 ```
 
-0. Read the repo's own rules for documentation (`AGENTS.md`, `CLAUDE.md`, `docs/README.md`). If one conflicts with this playbook, such as "diagrams are ASCII only", say so and ask before building.
 1. Read `docs/architecture/meta.json`. If it exists, this is an update. A page in the older layout (`index.html` plus diagram files) moves to this layout on its first update. Run `git diff --stat <built_from_sha>..HEAD -- . ':!docs/architecture'`, and if `evidence` names another repo, compare `evidence.release` with that repo's latest release. Limit the work to what changed. If nothing relevant changed, say so and stop.
 2. Pin the subject. If the facts live in another repo, check out the exact release tag and record repo, tag, and SHA. Then read each environment's deployment pins and record which release each one runs. The page says which environments run what it shows.
 3. Trace the code for what the page shows, with read-only Explore subagents for large areas. Every node, edge, card, and table row must trace to a file, config, or manifest. Mark anything inferred, or owned by a repo you cannot read, as such.

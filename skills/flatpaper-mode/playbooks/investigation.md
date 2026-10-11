@@ -7,6 +7,6 @@
 3. Separate evidence from inference. Cite `file:line`, commits, and command output for each claim.
 4. For a choice between options, answer with a recommendation and a tradeoffs table. If running something would settle the choice, say so and route to Prototype.
 
-No code changes. If the findings point at a fix, say so and stop. The fix starts as a new task.
+No code changes. If the findings point at a fix, say so and stop. The fix is matched to its own playbook on the next prompt.
 
 **Reply:** the answer first, then the evidence used, then open questions. For "are we sure?", give your real judgment and push back if the premise is wrong.

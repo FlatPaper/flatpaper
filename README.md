@@ -54,7 +54,7 @@ Add these to `~/.claude/settings.json`, then restart Claude Code. A session that
 | `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` | Yes | Claude Code hides `TaskCreate` and `TaskUpdate` by default on newer models. flatpaper-mode puts each playbook step in the task list with them. Without it, the mode falls back to a checklist in its replies. |
 | `attribution` | No | Removes the Claude co-author line from commits and PRs, enforced by Claude Code instead of a rule. |
 
-Optional tools: `jq` and `gh` (logged in). The architecture drift line uses them to check the latest release of the repo a page describes. Without them, it still checks this repo's commits.
+Optional tools: `jq` and `gh` (logged in). The finish steps read a PR back with `gh`. Without it, that check is reported inconclusive. The architecture drift line uses both to check the latest release of the repo a page describes. Without them, it still checks this repo's commits.
 
 ## Use
 
@@ -90,15 +90,17 @@ Only the goal is required. A missing check, proof or constraints gets proposed b
 | im stepping away, run until, /loop until | Autonomous run |
 | map this repo, update the architecture page | Architecture page |
 
-### One task per run
+### Several tasks in one session
 
-When the kind of work changes (review, then fix, then PR), start the next prompt with the mode again or with `new task:`. Follow-ups that start with neither stay on the first playbook. Don't `/clear` in between: the next step usually needs what the last one found.
+Each prompt is matched to a playbook again. When the kind of work changes (review, then fix, then PR), the mode switches playbooks and marks the old one's open steps as superseded. Starting with `new task:` makes the switch explicit. Don't `/clear` in between. The next step usually needs what the last one found.
 
 ```
 /flatpaper:flatpaper-mode is anything on the architecture page wrong or hard to follow? done means each finding cites the line and the code that contradicts it. read-only.
-/flatpaper:flatpaper-mode new task: fix the wrong items. show me a before/after table with evidence. no PR yet.
-/flatpaper:flatpaper-mode new task: raise a draft PR. run the repo's tests first.
+fix the wrong items. show me a before/after table with evidence. no PR yet.
+raise a draft PR.
 ```
+
+Every playbook ends with the same finish steps: run the repo's tests, follow its PR rules, and read the PR back with `gh pr view`. The repo's rules files (`AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `docs/README.md`, the PR template) are read at the start of every task.
 
 ### Examples
 
