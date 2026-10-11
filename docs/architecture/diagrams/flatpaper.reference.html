@@ -44,20 +44,25 @@
 </style>
     <!-- Reference sections, appended below the cards by docs/architecture/build.sh. -->
     <div class="ref-sections">
-      <p class="ref-intro">Verified 2026-10-11 against flatpaper 3e6b14d (v0.5.0). flatpaper is a local Claude Code plugin with no deployed environments. Each row cites the file it comes from.</p>
+      <p class="ref-intro">Verified 2026-10-11 against flatpaper 1190a5c (v0.6.0). flatpaper is a local Claude Code plugin with no deployed environments. Each row cites the file it comes from.</p>
 
       <section class="ref-section">
         <div class="ref-head"><span class="ref-num">01</span><h2>Playbooks</h2></div>
         <p>Start step 3 matches each prompt to one playbook. It re-matches when the kind of work changes. Wording comes from the README's steering table.</p>
         <div class="ref-table-wrap"><table>
           <tr><th>Playbook</th><th>Prompt wording</th><th>Hands off to</th><th>File</th></tr>
-          <tr><td class="dir">Investigation</td><td>how does, why is, is anything wrong, are we sure</td><td>Prototype when running something would settle a choice (step 4). A fix is matched on the next prompt.</td><td><code>playbooks/investigation.md:8,10</code></td></tr>
+          <tr><td class="dir">Investigation</td><td>how does, why is, is anything wrong, are we sure</td><td>Prototype when running something would settle a choice (step 4). Claims carry a confidence tier, Direct to Unknown. A fix is matched on the next prompt.</td><td><code>playbooks/investigation.md:7,8,10</code></td></tr>
           <tr><td class="dir">Prototype</td><td>try, sketch, which works better</td><td>Feature for the real build</td><td><code>playbooks/prototype.md:3,7</code></td></tr>
           <tr><td class="dir">Feature</td><td>add, build, support</td><td>Prototype when running something would settle the design (step 4). Architecture page in update mode, same PR (step 7). Fresh review subagent (step 8)</td><td><code>playbooks/feature.md:8,11,12</code></td></tr>
           <tr><td class="dir">Refactoring</td><td>clean up, restructure, without changing behavior</td><td>Architecture page in update mode (step 7)</td><td><code>playbooks/refactoring.md:13</code></td></tr>
           <tr><td class="dir">Architecture page</td><td>map this repo, update the architecture page</td><td>archify skill (step 5, stops if missing), fact-check subagents (step 7), Artifact publish (step 8), show-me-your-work row if a log is active (step 9)</td><td><code>playbooks/architecture-page.md:23-27</code></td></tr>
-          <tr><td class="dir">Bug fix</td><td>fix, broken, repro</td><td>the project's <code>verify-&lt;app&gt;</code> skill, if one exists (step 1)</td><td><code>playbooks/bug-fix.md:7</code></td></tr>
+          <tr><td class="dir">Bug fix</td><td>fix, broken, repro</td><td>Verifies an existing fix instead of writing one (step 2). Reproduces twice with the project's <code>verify-&lt;app&gt;</code> skill, if one exists (step 3). Commits the failing test first (step 5)</td><td><code>playbooks/bug-fix.md</code></td></tr>
           <tr><td class="dir">Autonomous run</td><td>im stepping away, run until, /loop until</td><td>git worktree (step 2), <code>/loop</code> (step 3), show-me-your-work, one row per iteration (step 5)</td><td><code>playbooks/autonomous-run.md:6-9</code></td></tr>
+          <tr><td class="dir">Perf</td><td>speed up, make it faster, cut the cost</td><td>Frozen harness, median of 5 or more runs, one change per measurement. Logs attempts with show-me-your-work (step 6)</td><td><code>playbooks/perf.md</code></td></tr>
+          <tr><td class="dir">Babysit</td><td>babysit, get it green, address the review comments</td><td>GitHub through <code>gh</code>. Comments triaged per <code>references/review-triage.md</code>. Never merges</td><td><code>playbooks/babysit.md</code></td></tr>
+          <tr><td class="dir">Session pickup</td><td>pick up, take over this branch, continue from the log</td><td>Reads the decision log, <code>RESUME.md</code>, and the last <code>wip:</code> commit, rechecks inherited claims, then routes to the matching playbook</td><td><code>playbooks/session-pickup.md</code></td></tr>
+          <tr><td class="dir">Pause safely</td><td>pause, stop for now, pick this up tomorrow</td><td>One <code>wip:</code> commit and a resume note. Skips the Finish steps</td><td><code>playbooks/pause-safely.md</code></td></tr>
+          <tr><td class="dir">Worktree cleanup</td><td>clean up worktrees</td><td><code>scripts/worktree-audit.sh</code> buckets each worktree. Nothing is removed without the user's yes</td><td><code>playbooks/worktree-cleanup.md</code></td></tr>
         </table></div>
       </section>
 
@@ -70,10 +75,10 @@
           <tr><td class="dir">Start 2</td><td>Read the repo's rules files, note test command and PR rules</td><td><code>skills/flatpaper-mode/SKILL.md:14</code></td></tr>
           <tr><td class="dir">Start 3</td><td>Match a playbook, create its steps and the Finish steps as tasks</td><td><code>skills/flatpaper-mode/SKILL.md:15</code></td></tr>
           <tr><td class="dir">Start 4</td><td>Read <code>references/principles.md</code></td><td><code>skills/flatpaper-mode/SKILL.md:16</code></td></tr>
-          <tr><td class="dir">Map first</td><td>If <code>docs/architecture/</code> exists, read it before tracing code</td><td><code>skills/flatpaper-mode/SKILL.md:38</code></td></tr>
-          <tr><td class="dir">No fit</td><td>Write a bespoke playbook in the same shape</td><td><code>skills/flatpaper-mode/SKILL.md:40</code></td></tr>
+          <tr><td class="dir">Map first</td><td>If <code>docs/architecture/</code> exists, read it before tracing code</td><td><code>skills/flatpaper-mode/SKILL.md:43</code></td></tr>
+          <tr><td class="dir">No fit</td><td>Write a bespoke playbook in the same shape</td><td><code>skills/flatpaper-mode/SKILL.md:45</code></td></tr>
           <tr><td class="dir">Re-match</td><td>New playbook when the kind of work changes. Old open steps become <code>skip: superseded</code>. A follow-up that only asks to test, commit, or open a PR reopens the current Finish steps</td><td><code>skills/flatpaper-mode/SKILL.md:18</code></td></tr>
-          <tr><td class="dir">Finish timing</td><td>Once, after the playbook's last step. A nested playbook (Architecture page inside Feature) finishes with the outer one</td><td><code>skills/flatpaper-mode/SKILL.md:22</code></td></tr>
+          <tr><td class="dir">Finish timing</td><td>Once, after the playbook's last step. A nested playbook (Architecture page inside Feature) finishes with the outer one. Pause safely skips them</td><td><code>skills/flatpaper-mode/SKILL.md:22</code></td></tr>
           <tr><td class="dir">Finish 1</td><td>Run the repo's tests</td><td><code>skills/flatpaper-mode/SKILL.md:24</code></td></tr>
           <tr><td class="dir">Finish 2</td><td>Follow the repo's commit and PR rules</td><td><code>skills/flatpaper-mode/SKILL.md:25</code></td></tr>
           <tr><td class="dir">Finish 3</td><td>Read the PR back with <code>gh pr view</code> and <code>gh pr checks</code></td><td><code>skills/flatpaper-mode/SKILL.md:26</code></td></tr>
@@ -88,15 +93,18 @@
           <tr><td class="dir">UserPromptSubmit</td><td>Every prompt</td><td>One-line reminder: concise, done check, proof, constraints</td><td><code>hooks/hooks.json:17-25</code></td></tr>
           <tr><td class="dir">arch-drift.sh</td><td>From SessionStart</td><td>Flags commits outside <code>docs/architecture/</code> since <code>meta.json</code> <code>built_from_sha</code>, and a latest release that differs from <code>evidence.release</code> (needs jq and gh). Both messages say to run the Architecture page playbook.</td><td><code>scripts/arch-drift.sh:16-21,25-43</code></td></tr>
           <tr><td class="dir">flatpaper-mode</td><td><code>/flatpaper:flatpaper-mode</code> only</td><td>Start steps, playbooks, Finish steps</td><td><code>skills/flatpaper-mode/SKILL.md:4</code></td></tr>
-          <tr><td class="dir">show-me-your-work</td><td><code>/flatpaper:show-me-your-work</code>, its own description, Autonomous run, Architecture page step 9, session overrides, and the guidelines</td><td>TSV decision log, audited before hand-back</td><td><code>skills/show-me-your-work/SKILL.md</code></td></tr>
+          <tr><td class="dir">show-me-your-work</td><td><code>/flatpaper:show-me-your-work</code>, its own description, Autonomous run, Perf step 6, Session pickup step 1, Pause safely step 4, Architecture page step 9, session overrides, and the guidelines</td><td>TSV decision log, audited before hand-back</td><td><code>skills/show-me-your-work/SKILL.md</code></td></tr>
           <tr><td class="dir">create-verification-skill</td><td><code>/flatpaper:create-verification-skill</code>, once per repo</td><td>Writes <code>.claude/skills/verify-&lt;app&gt;/</code>, which Bug fix uses to reproduce</td><td><code>skills/create-verification-skill/SKILL.md:25</code></td></tr>
+          <tr><td class="dir">maintain-verification-skill</td><td><code>/flatpaper:maintain-verification-skill</code>, by hand or on a schedule</td><td>Rechecks each feature file from source and live. At most one PR of proven corrections</td><td><code>skills/maintain-verification-skill/SKILL.md</code></td></tr>
+          <tr><td class="dir">blast-radius</td><td><code>/flatpaper:blast-radius</code> on a diff, branch, or PR</td><td>Finds breakage outside the diff and proves the safety facts with a rerunnable script</td><td><code>skills/blast-radius/SKILL.md</code></td></tr>
+          <tr><td class="dir">references/</td><td>Read by playbooks</td><td><code>principles.md</code> (with confidence tiers), <code>subagent-brief.md</code>, <code>design-red-flags.md</code>, <code>review-triage.md</code></td><td><code>skills/flatpaper-mode/references/</code></td></tr>
         </table></div>
       </section>
 
       <section class="ref-section">
         <div class="ref-head"><span class="ref-num">04</span><h2>Sources</h2></div>
         <ul>
-          <li>Repository <code>FlatPaper/flatpaper</code> at <code>3e6b14d5d279dae6b127b29e53b2204f5418c92d</code></li>
+          <li>Repository <code>FlatPaper/flatpaper</code> at <code>1190a5c86a2c16cc97f17292cd8ee95ec72d4422</code></li>
           <li>Diagram spec <code>docs/architecture/diagrams/flatpaper.archify.json</code>, rebuilt with <code>docs/architecture/build.sh</code></li>
         </ul>
       </section>

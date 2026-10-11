@@ -6,7 +6,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://github.com/FlatPaper/flatpaper",
-      "revision": "3e6b14d5d279dae6b127b29e53b2204f5418c92d"
+      "revision": "1190a5c86a2c16cc97f17292cd8ee95ec72d4422"
     }
   },
   "components": [
@@ -17,7 +17,7 @@
       "sublabel": "/flatpaper:flatpaper-mode",
       "pos": [
         40,
-        278
+        240
       ],
       "size": [
         180,
@@ -31,13 +31,12 @@
       "sublabel": "SessionStart + UserPromptSubmit",
       "pos": [
         300,
-        110
+        60
       ],
       "size": [
         180,
         58
       ],
-      "tag": "always on",
       "sources": [
         {
           "path": "hooks/hooks.json",
@@ -53,7 +52,7 @@
       "sublabel": "restate, rules, match, principles",
       "pos": [
         300,
-        278
+        240
       ],
       "size": [
         180,
@@ -74,7 +73,7 @@
       "sublabel": "tests, PR rules, read back",
       "pos": [
         300,
-        460
+        420
       ],
       "size": [
         180,
@@ -92,14 +91,14 @@
       "id": "investigation",
       "type": "frontend",
       "label": "Investigation",
-      "sublabel": "read-only",
+      "sublabel": "read-only, confidence tiers",
       "pos": [
-        600,
+        590,
         30
       ],
       "size": [
-        170,
-        50
+        250,
+        58
       ],
       "sources": [
         {
@@ -108,59 +107,27 @@
       ]
     },
     {
-      "id": "prototype",
+      "id": "change",
       "type": "frontend",
-      "label": "Prototype",
-      "sublabel": "throwaway",
+      "label": "Change playbooks",
+      "sublabel": "prototype, feature, refactor, bug, perf",
       "pos": [
-        600,
-        114
+        590,
+        140
       ],
       "size": [
-        170,
-        50
-      ],
-      "sources": [
-        {
-          "path": "skills/flatpaper-mode/playbooks/prototype.md"
-        }
-      ]
-    },
-    {
-      "id": "feature",
-      "type": "frontend",
-      "label": "Feature",
-      "sublabel": "new behavior",
-      "pos": [
-        600,
-        198
-      ],
-      "size": [
-        170,
-        50
+        250,
+        70
       ],
       "sources": [
         {
           "path": "skills/flatpaper-mode/playbooks/feature.md"
-        }
-      ]
-    },
-    {
-      "id": "refactoring",
-      "type": "frontend",
-      "label": "Refactoring",
-      "sublabel": "same behavior",
-      "pos": [
-        600,
-        282
-      ],
-      "size": [
-        170,
-        50
-      ],
-      "sources": [
+        },
         {
-          "path": "skills/flatpaper-mode/playbooks/refactoring.md"
+          "path": "skills/flatpaper-mode/playbooks/bug-fix.md"
+        },
+        {
+          "path": "skills/flatpaper-mode/playbooks/perf.md"
         }
       ]
     },
@@ -170,12 +137,12 @@
       "label": "Architecture page",
       "sublabel": "docs/architecture/",
       "pos": [
-        600,
-        366
+        590,
+        262
       ],
       "size": [
-        170,
-        50
+        250,
+        58
       ],
       "sources": [
         {
@@ -184,40 +151,46 @@
       ]
     },
     {
-      "id": "bugfix",
+      "id": "run",
       "type": "frontend",
-      "label": "Bug fix",
-      "sublabel": "repro first",
+      "label": "Run playbooks",
+      "sublabel": "autonomous, pickup, pause, worktrees",
       "pos": [
-        600,
-        450
+        590,
+        364
       ],
       "size": [
-        170,
-        50
-      ],
-      "sources": [
-        {
-          "path": "skills/flatpaper-mode/playbooks/bug-fix.md"
-        }
-      ]
-    },
-    {
-      "id": "autonomous",
-      "type": "frontend",
-      "label": "Autonomous run",
-      "sublabel": "to a predicate",
-      "pos": [
-        600,
-        534
-      ],
-      "size": [
-        170,
-        50
+        250,
+        70
       ],
       "sources": [
         {
           "path": "skills/flatpaper-mode/playbooks/autonomous-run.md"
+        },
+        {
+          "path": "skills/flatpaper-mode/playbooks/session-pickup.md"
+        },
+        {
+          "path": "skills/flatpaper-mode/playbooks/pause-safely.md"
+        }
+      ]
+    },
+    {
+      "id": "babysit",
+      "type": "frontend",
+      "label": "Babysit",
+      "sublabel": "open PR to merge-ready",
+      "pos": [
+        590,
+        486
+      ],
+      "size": [
+        250,
+        58
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/playbooks/babysit.md"
         }
       ]
     },
@@ -225,19 +198,22 @@
       "id": "verify",
       "type": "database",
       "label": "verify-<app> skill",
-      "sublabel": "from create-verification-skill",
+      "sublabel": "create- and maintain- skills",
       "pos": [
-        900,
-        450
+        930,
+        146
       ],
       "size": [
-        200,
-        50
+        210,
+        58
       ],
       "sources": [
         {
           "path": "skills/create-verification-skill/SKILL.md",
           "line": 25
+        },
+        {
+          "path": "skills/maintain-verification-skill/SKILL.md"
         }
       ]
     },
@@ -247,16 +223,49 @@
       "label": "show-me-your-work",
       "sublabel": "TSV decision log",
       "pos": [
-        900,
-        534
+        930,
+        370
       ],
       "size": [
-        200,
-        50
+        210,
+        58
       ],
       "sources": [
         {
           "path": "skills/show-me-your-work/SKILL.md"
+        }
+      ]
+    },
+    {
+      "id": "github",
+      "type": "external",
+      "label": "GitHub PR",
+      "sublabel": "gh pr view, gh pr checks",
+      "pos": [
+        930,
+        486
+      ],
+      "size": [
+        210,
+        58
+      ]
+    },
+    {
+      "id": "blast",
+      "type": "database",
+      "label": "blast-radius",
+      "sublabel": "what breaks outside the diff",
+      "pos": [
+        930,
+        30
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "sources": [
+        {
+          "path": "skills/blast-radius/SKILL.md"
         }
       ]
     }
@@ -267,12 +276,10 @@
       "label": "playbooks/",
       "wraps": [
         "investigation",
-        "prototype",
-        "feature",
-        "refactoring",
+        "change",
         "archpage",
-        "bugfix",
-        "autonomous"
+        "run",
+        "babysit"
       ]
     }
   ],
@@ -290,11 +297,9 @@
       "to": "start",
       "label": "guidelines + reminder",
       "variant": "security",
-      "fromSide": "bottom",
-      "toSide": "top",
       "labelAt": [
         390,
-        222
+        179
       ]
     },
     {
@@ -303,19 +308,9 @@
       "to": "investigation"
     },
     {
-      "id": "m-proto",
+      "id": "m-change",
       "from": "start",
-      "to": "prototype"
-    },
-    {
-      "id": "m-feat",
-      "from": "start",
-      "to": "feature"
-    },
-    {
-      "id": "m-ref",
-      "from": "start",
-      "to": "refactoring"
+      "to": "change"
     },
     {
       "id": "m-arch",
@@ -323,14 +318,14 @@
       "to": "archpage"
     },
     {
-      "id": "m-bug",
+      "id": "m-run",
       "from": "start",
-      "to": "bugfix"
+      "to": "run"
     },
     {
-      "id": "m-auto",
+      "id": "m-baby",
       "from": "start",
-      "to": "autonomous"
+      "to": "babysit"
     },
     {
       "id": "queue-finish",
@@ -340,59 +335,47 @@
       "variant": "dashed",
       "labelAt": [
         390,
-        400
+        359
       ]
     },
     {
-      "id": "inv-proto",
+      "id": "inv-change",
       "from": "investigation",
-      "to": "prototype",
+      "to": "change",
       "label": "route",
       "variant": "dashed",
       "labelAt": [
-        685,
-        97
+        715,
+        114
       ]
     },
     {
-      "id": "proto-feat",
-      "from": "prototype",
-      "to": "feature",
-      "label": "real build",
-      "variant": "dashed",
-      "labelAt": [
-        685,
-        181
-      ]
-    },
-    {
-      "id": "feat-arch",
-      "from": "feature",
+      "id": "change-arch",
+      "from": "change",
       "to": "archpage",
       "label": "update map",
-      "fromSide": "right",
-      "toSide": "right",
       "labelAt": [
-        794,
-        349
+        715,
+        236
       ]
     },
     {
-      "id": "ref-arch",
-      "from": "refactoring",
-      "to": "archpage"
-    },
-    {
-      "id": "bug-verify",
-      "from": "bugfix",
+      "id": "change-verify",
+      "from": "change",
       "to": "verify",
       "label": "reproduce"
     },
     {
-      "id": "auto-log",
-      "from": "autonomous",
+      "id": "run-log",
+      "from": "run",
       "to": "smyw",
       "label": "log rows"
+    },
+    {
+      "id": "baby-gh",
+      "from": "babysit",
+      "to": "github",
+      "label": "triage, fix, wait"
     }
   ],
   "cards": [
@@ -409,17 +392,18 @@
       "dot": "emerald",
       "title": "flatpaper-mode",
       "items": [
-        "Start: restate, read repo rules, match a playbook, read principles.md",
+        "Start: restate, read repo rules, match one of 12 playbooks, read principles.md",
         "Each playbook step and Finish step becomes a task",
         "Re-match on every prompt when the kind of work changes"
       ]
     },
     {
       "dot": "violet",
-      "title": "Helper skills",
+      "title": "Standalone skills",
       "items": [
-        "create-verification-skill writes .claude/skills/verify-<app>/",
-        "show-me-your-work keeps the decision log for long or unattended runs"
+        "create- and maintain-verification-skill own .claude/skills/verify-<app>/",
+        "show-me-your-work keeps the decision log",
+        "blast-radius checks a diff, branch, or PR on request"
       ]
     }
   ]
