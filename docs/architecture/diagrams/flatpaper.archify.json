@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "flatpaper skill map",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/FlatPaper/flatpaper",
+      "revision": "3e6b14d5d279dae6b127b29e53b2204f5418c92d"
+    }
+  },
+  "components": [
+    {
+      "id": "user",
+      "type": "external",
+      "label": "User prompt",
+      "sublabel": "/flatpaper:flatpaper-mode",
+      "pos": [
+        40,
+        278
+      ],
+      "size": [
+        180,
+        58
+      ]
+    },
+    {
+      "id": "hooks",
+      "type": "security",
+      "label": "Hooks",
+      "sublabel": "SessionStart + UserPromptSubmit",
+      "pos": [
+        300,
+        110
+      ],
+      "size": [
+        180,
+        58
+      ],
+      "tag": "always on",
+      "sources": [
+        {
+          "path": "hooks/hooks.json",
+          "line": 3,
+          "end_line": 25
+        }
+      ]
+    },
+    {
+      "id": "start",
+      "type": "backend",
+      "label": "Start steps",
+      "sublabel": "restate, rules, match, principles",
+      "pos": [
+        300,
+        278
+      ],
+      "size": [
+        180,
+        58
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/SKILL.md",
+          "line": 11,
+          "end_line": 18
+        }
+      ]
+    },
+    {
+      "id": "finish",
+      "type": "backend",
+      "label": "Finish steps",
+      "sublabel": "tests, PR rules, read back",
+      "pos": [
+        300,
+        460
+      ],
+      "size": [
+        180,
+        58
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/SKILL.md",
+          "line": 20,
+          "end_line": 26
+        }
+      ]
+    },
+    {
+      "id": "investigation",
+      "type": "frontend",
+      "label": "Investigation",
+      "sublabel": "read-only",
+      "pos": [
+        600,
+        30
+      ],
+      "size": [
+        170,
+        50
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/playbooks/investigation.md"
+        }
+      ]
+    },
+    {
+      "id": "prototype",
+      "type": "frontend",
+      "label": "Prototype",
+      "sublabel": "throwaway",
+      "pos": [
+        600,
+        114
+      ],
+      "size": [
+        170,
+        50
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/playbooks/prototype.md"
+        }
+      ]
+    },
+    {
+      "id": "feature",
+      "type": "frontend",
+      "label": "Feature",
+      "sublabel": "new behavior",
+      "pos": [
+        600,
+        198
+      ],
+      "size": [
+        170,
+        50
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/playbooks/feature.md"
+        }
+      ]
+    },
+    {
+      "id": "refactoring",
+      "type": "frontend",
+      "label": "Refactoring",
+      "sublabel": "same behavior",
+      "pos": [
+        600,
+        282
+      ],
+      "size": [
+        170,
+        50
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/playbooks/refactoring.md"
+        }
+      ]
+    },
+    {
+      "id": "archpage",
+      "type": "frontend",
+      "label": "Architecture page",
+      "sublabel": "docs/architecture/",
+      "pos": [
+        600,
+        366
+      ],
+      "size": [
+        170,
+        50
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/playbooks/architecture-page.md"
+        }
+      ]
+    },
+    {
+      "id": "bugfix",
+      "type": "frontend",
+      "label": "Bug fix",
+      "sublabel": "repro first",
+      "pos": [
+        600,
+        450
+      ],
+      "size": [
+        170,
+        50
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/playbooks/bug-fix.md"
+        }
+      ]
+    },
+    {
+      "id": "autonomous",
+      "type": "frontend",
+      "label": "Autonomous run",
+      "sublabel": "to a predicate",
+      "pos": [
+        600,
+        534
+      ],
+      "size": [
+        170,
+        50
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/playbooks/autonomous-run.md"
+        }
+      ]
+    },
+    {
+      "id": "verify",
+      "type": "database",
+      "label": "verify-<app> skill",
+      "sublabel": "from create-verification-skill",
+      "pos": [
+        900,
+        450
+      ],
+      "size": [
+        200,
+        50
+      ],
+      "sources": [
+        {
+          "path": "skills/create-verification-skill/SKILL.md",
+          "line": 25
+        }
+      ]
+    },
+    {
+      "id": "smyw",
+      "type": "database",
+      "label": "show-me-your-work",
+      "sublabel": "TSV decision log",
+      "pos": [
+        900,
+        534
+      ],
+      "size": [
+        200,
+        50
+      ],
+      "sources": [
+        {
+          "path": "skills/show-me-your-work/SKILL.md"
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "playbooks/",
+      "wraps": [
+        "investigation",
+        "prototype",
+        "feature",
+        "refactoring",
+        "archpage",
+        "bugfix",
+        "autonomous"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "prompt",
+      "from": "user",
+      "to": "start",
+      "label": "prompt",
+      "variant": "emphasis"
+    },
+    {
+      "id": "inject",
+      "from": "hooks",
+      "to": "start",
+      "label": "guidelines + reminder",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [
+        390,
+        222
+      ]
+    },
+    {
+      "id": "m-inv",
+      "from": "start",
+      "to": "investigation"
+    },
+    {
+      "id": "m-proto",
+      "from": "start",
+      "to": "prototype"
+    },
+    {
+      "id": "m-feat",
+      "from": "start",
+      "to": "feature"
+    },
+    {
+      "id": "m-ref",
+      "from": "start",
+      "to": "refactoring"
+    },
+    {
+      "id": "m-arch",
+      "from": "start",
+      "to": "archpage"
+    },
+    {
+      "id": "m-bug",
+      "from": "start",
+      "to": "bugfix"
+    },
+    {
+      "id": "m-auto",
+      "from": "start",
+      "to": "autonomous"
+    },
+    {
+      "id": "queue-finish",
+      "from": "start",
+      "to": "finish",
+      "label": "after the playbook",
+      "variant": "dashed",
+      "labelAt": [
+        390,
+        400
+      ]
+    },
+    {
+      "id": "inv-proto",
+      "from": "investigation",
+      "to": "prototype",
+      "label": "route",
+      "variant": "dashed",
+      "labelAt": [
+        685,
+        97
+      ]
+    },
+    {
+      "id": "proto-feat",
+      "from": "prototype",
+      "to": "feature",
+      "label": "real build",
+      "variant": "dashed",
+      "labelAt": [
+        685,
+        181
+      ]
+    },
+    {
+      "id": "feat-arch",
+      "from": "feature",
+      "to": "archpage",
+      "label": "update map",
+      "fromSide": "right",
+      "toSide": "right",
+      "labelAt": [
+        794,
+        349
+      ]
+    },
+    {
+      "id": "ref-arch",
+      "from": "refactoring",
+      "to": "archpage"
+    },
+    {
+      "id": "bug-verify",
+      "from": "bugfix",
+      "to": "verify",
+      "label": "reproduce"
+    },
+    {
+      "id": "auto-log",
+      "from": "autonomous",
+      "to": "smyw",
+      "label": "log rows"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Always on",
+      "items": [
+        "SessionStart prints guidelines.md and runs arch-drift.sh",
+        "UserPromptSubmit adds a one-line reminder",
+        "arch-drift.sh flags commits since built_from_sha, or a changed evidence.release"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "flatpaper-mode",
+      "items": [
+        "Start: restate, read repo rules, match a playbook, read principles.md",
+        "Each playbook step and Finish step becomes a task",
+        "Re-match on every prompt when the kind of work changes"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Helper skills",
+      "items": [
+        "create-verification-skill writes .claude/skills/verify-<app>/",
+        "show-me-your-work keeps the decision log for long or unattended runs"
+      ]
+    }
+  ]
+}

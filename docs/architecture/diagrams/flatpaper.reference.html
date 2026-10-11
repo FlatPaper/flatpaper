@@ -1,0 +1,103 @@
+  <style>
+    /* Reference sections appended under the diagram; they reuse the viewer's theme variables. */
+    .ref-sections { display: grid; gap: 1.5rem; margin-top: 2rem; }
+    .ref-intro { color: var(--text-muted); font-size: 0.75rem; line-height: 1.6; max-width: 80ch; }
+    .ref-section {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+    }
+    .ref-head { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .ref-head .ref-num {
+      color: var(--frontend-stroke);
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .ref-head h2 { color: var(--text); font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+    .ref-section p { color: var(--text-muted); font-size: 0.75rem; line-height: 1.6; margin-bottom: 0.75rem; max-width: 72ch; }
+    .ref-section code { color: var(--text); font-family: inherit; font-size: 0.72rem; }
+    .ref-table-wrap { overflow-x: auto; }
+    .ref-section table { border-collapse: collapse; width: 100%; font-size: 0.75rem; line-height: 1.5; }
+    .ref-section th, .ref-section td {
+      text-align: left;
+      vertical-align: top;
+      padding: 0.5rem 0.75rem 0.5rem 0;
+      border-bottom: 1px solid var(--panel-border);
+      color: var(--text-muted);
+    }
+    .ref-section th {
+      color: var(--text-dim);
+      font-size: 0.5625rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .ref-section td.dir { color: var(--text); white-space: nowrap; }
+    .ref-section ul { list-style: none; color: var(--text-muted); font-size: 0.75rem; line-height: 1.6; }
+    .ref-section li { margin-bottom: 0.375rem; }
+    .ref-section li::before { content: "\2022  "; color: var(--text-dim); }
+    @media print { .ref-section { break-inside: avoid; border-color: #e2e8f0; } }
+</style>
+    <!-- Reference sections, appended below the cards by docs/architecture/build.sh. -->
+    <div class="ref-sections">
+      <p class="ref-intro">Verified 2026-10-11 against flatpaper 3e6b14d (v0.5.0). flatpaper is a local Claude Code plugin with no deployed environments. Each row cites the file it comes from.</p>
+
+      <section class="ref-section">
+        <div class="ref-head"><span class="ref-num">01</span><h2>Playbooks</h2></div>
+        <p>Start step 3 matches each prompt to one playbook. It re-matches when the kind of work changes. Wording comes from the README's steering table.</p>
+        <div class="ref-table-wrap"><table>
+          <tr><th>Playbook</th><th>Prompt wording</th><th>Hands off to</th><th>File</th></tr>
+          <tr><td class="dir">Investigation</td><td>how does, why is, is anything wrong, are we sure</td><td>Prototype when running something would settle a choice (step 4). A fix is matched on the next prompt.</td><td><code>playbooks/investigation.md:8,10</code></td></tr>
+          <tr><td class="dir">Prototype</td><td>try, sketch, which works better</td><td>Feature for the real build</td><td><code>playbooks/prototype.md:3,7</code></td></tr>
+          <tr><td class="dir">Feature</td><td>add, build, support</td><td>Prototype when running something would settle the design (step 4). Architecture page in update mode, same PR (step 7). Fresh review subagent (step 8)</td><td><code>playbooks/feature.md:8,11,12</code></td></tr>
+          <tr><td class="dir">Refactoring</td><td>clean up, restructure, without changing behavior</td><td>Architecture page in update mode (step 7)</td><td><code>playbooks/refactoring.md:13</code></td></tr>
+          <tr><td class="dir">Architecture page</td><td>map this repo, update the architecture page</td><td>archify skill (step 5, stops if missing), fact-check subagents (step 7), Artifact publish (step 8), show-me-your-work row if a log is active (step 9)</td><td><code>playbooks/architecture-page.md:23-27</code></td></tr>
+          <tr><td class="dir">Bug fix</td><td>fix, broken, repro</td><td>the project's <code>verify-&lt;app&gt;</code> skill, if one exists (step 1)</td><td><code>playbooks/bug-fix.md:7</code></td></tr>
+          <tr><td class="dir">Autonomous run</td><td>im stepping away, run until, /loop until</td><td>git worktree (step 2), <code>/loop</code> (step 3), show-me-your-work, one row per iteration (step 5)</td><td><code>playbooks/autonomous-run.md:6-9</code></td></tr>
+        </table></div>
+      </section>
+
+      <section class="ref-section">
+        <div class="ref-head"><span class="ref-num">02</span><h2>Start and Finish steps</h2></div>
+        <p>Every playbook runs between these. Each playbook step and each Finish step becomes a <code>TaskCreate</code> task.</p>
+        <div class="ref-table-wrap"><table>
+          <tr><th>Step</th><th>What it does</th><th>File</th></tr>
+          <tr><td class="dir">Start 1</td><td>Restate goal, done check, proof, constraints</td><td><code>skills/flatpaper-mode/SKILL.md:13</code></td></tr>
+          <tr><td class="dir">Start 2</td><td>Read the repo's rules files, note test command and PR rules</td><td><code>skills/flatpaper-mode/SKILL.md:14</code></td></tr>
+          <tr><td class="dir">Start 3</td><td>Match a playbook, create its steps and the Finish steps as tasks</td><td><code>skills/flatpaper-mode/SKILL.md:15</code></td></tr>
+          <tr><td class="dir">Start 4</td><td>Read <code>references/principles.md</code></td><td><code>skills/flatpaper-mode/SKILL.md:16</code></td></tr>
+          <tr><td class="dir">Map first</td><td>If <code>docs/architecture/</code> exists, read it before tracing code</td><td><code>skills/flatpaper-mode/SKILL.md:38</code></td></tr>
+          <tr><td class="dir">No fit</td><td>Write a bespoke playbook in the same shape</td><td><code>skills/flatpaper-mode/SKILL.md:40</code></td></tr>
+          <tr><td class="dir">Re-match</td><td>New playbook when the kind of work changes. Old open steps become <code>skip: superseded</code>. A follow-up that only asks to test, commit, or open a PR reopens the current Finish steps</td><td><code>skills/flatpaper-mode/SKILL.md:18</code></td></tr>
+          <tr><td class="dir">Finish timing</td><td>Once, after the playbook's last step. A nested playbook (Architecture page inside Feature) finishes with the outer one</td><td><code>skills/flatpaper-mode/SKILL.md:22</code></td></tr>
+          <tr><td class="dir">Finish 1</td><td>Run the repo's tests</td><td><code>skills/flatpaper-mode/SKILL.md:24</code></td></tr>
+          <tr><td class="dir">Finish 2</td><td>Follow the repo's commit and PR rules</td><td><code>skills/flatpaper-mode/SKILL.md:25</code></td></tr>
+          <tr><td class="dir">Finish 3</td><td>Read the PR back with <code>gh pr view</code> and <code>gh pr checks</code></td><td><code>skills/flatpaper-mode/SKILL.md:26</code></td></tr>
+        </table></div>
+      </section>
+
+      <section class="ref-section">
+        <div class="ref-head"><span class="ref-num">03</span><h2>Hooks and skills</h2></div>
+        <div class="ref-table-wrap"><table>
+          <tr><th>Piece</th><th>How it runs</th><th>Effect</th><th>File</th></tr>
+          <tr><td class="dir">SessionStart</td><td>Every session</td><td>Prints <code>guidelines.md</code>, then runs <code>scripts/arch-drift.sh</code></td><td><code>hooks/hooks.json:3-15</code></td></tr>
+          <tr><td class="dir">UserPromptSubmit</td><td>Every prompt</td><td>One-line reminder: concise, done check, proof, constraints</td><td><code>hooks/hooks.json:17-25</code></td></tr>
+          <tr><td class="dir">arch-drift.sh</td><td>From SessionStart</td><td>Flags commits outside <code>docs/architecture/</code> since <code>meta.json</code> <code>built_from_sha</code>, and a latest release that differs from <code>evidence.release</code> (needs jq and gh). Both messages say to run the Architecture page playbook.</td><td><code>scripts/arch-drift.sh:16-21,25-43</code></td></tr>
+          <tr><td class="dir">flatpaper-mode</td><td><code>/flatpaper:flatpaper-mode</code> only</td><td>Start steps, playbooks, Finish steps</td><td><code>skills/flatpaper-mode/SKILL.md:4</code></td></tr>
+          <tr><td class="dir">show-me-your-work</td><td><code>/flatpaper:show-me-your-work</code>, its own description, Autonomous run, Architecture page step 9, session overrides, and the guidelines</td><td>TSV decision log, audited before hand-back</td><td><code>skills/show-me-your-work/SKILL.md</code></td></tr>
+          <tr><td class="dir">create-verification-skill</td><td><code>/flatpaper:create-verification-skill</code>, once per repo</td><td>Writes <code>.claude/skills/verify-&lt;app&gt;/</code>, which Bug fix uses to reproduce</td><td><code>skills/create-verification-skill/SKILL.md:25</code></td></tr>
+        </table></div>
+      </section>
+
+      <section class="ref-section">
+        <div class="ref-head"><span class="ref-num">04</span><h2>Sources</h2></div>
+        <ul>
+          <li>Repository <code>FlatPaper/flatpaper</code> at <code>3e6b14d5d279dae6b127b29e53b2204f5418c92d</code></li>
+          <li>Diagram spec <code>docs/architecture/diagrams/flatpaper.archify.json</code>, rebuilt with <code>docs/architecture/build.sh</code></li>
+        </ul>
+      </section>
+    </div>
