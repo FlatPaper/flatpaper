@@ -60,16 +60,58 @@ Optional tools: `jq` and `gh` (logged in). The architecture drift line uses them
 
 Quick questions need nothing. The guidelines are always on.
 
-For real work, say the goal and how you'll know it's done:
+### The prompt format
+
+For real work, start with the mode and give up to five parts, one sentence each:
 
 ```
-/flatpaper:flatpaper-mode the dashboard shows no runs through the Coder URL. repro first, then fix. done means a smoke run appears through the Coder URL. show me the /api/runs response.
+/flatpaper:flatpaper-mode <goal>. done means <check>. show me <proof>. <what you know>. <constraints>.
+```
+
+| Part | What it is | Example |
+|---|---|---|
+| `<goal>` | The outcome, not the steps. Its wording steers the playbook (see below). | fix the csv export dropping its last row |
+| `<check>` | Something that can pass or fail. Not "see if", not a duration. | done means the 60k-row fixture exports every row |
+| `<proof>` | The real output you want to see. | show me row counts before and after |
+| `<what you know>` | Facts only, not your theory of the cause. | started after yesterday's deploy. failing job is 4812 |
+| `<constraints>` | What it must not do, or must do first. | repro first. no PR. don't touch the schema |
+
+Only the goal is required. A missing check, proof or constraints gets proposed back to you in one line, but yours is the one the agent can't quietly weaken.
+
+### Words that steer the playbook
+
+| Say | Playbook |
+|---|---|
+| how does, why is, is anything wrong, are we sure | Investigation (read-only) |
+| fix, broken, repro | Bug fix |
+| add, build, support | Feature |
+| clean up, restructure, without changing behavior | Refactoring |
+| try, sketch, which works better | Prototype |
+| im stepping away, run until, /loop until | Autonomous run |
+| map this repo, update the architecture page | Architecture page |
+
+### One task per run
+
+When the kind of work changes (review, then fix, then PR), start the next prompt with the mode again or with `new task:`. Follow-ups that start with neither stay on the first playbook. Don't `/clear` in between: the next step usually needs what the last one found.
+
+```
+/flatpaper:flatpaper-mode is anything on the architecture page wrong or hard to follow? done means each finding cites the line and the code that contradicts it. read-only.
+/flatpaper:flatpaper-mode new task: fix the wrong items. show me a before/after table with evidence. no PR yet.
+/flatpaper:flatpaper-mode new task: raise a draft PR. run the repo's tests first.
+```
+
+### Examples
+
+```
+/flatpaper:flatpaper-mode the dashboard shows no runs through the Coder URL. done means a smoke run appears through the Coder URL. show me the /api/runs response. /ws returns 403 through the proxy; a local tunnel works. repro first.
+
+/flatpaper:flatpaper-mode scan every test in this repo for tests that would pass if the code did nothing, and for behavior with no test. done means every test file is judged. show me the results as an artifact. no PR.
 ```
 
 When you step away:
 
 ```
-/flatpaper:flatpaper-mode im stepping away. <goal>. done means <predicate>. keep a decision log. if stuck, stop and write up why.
+/flatpaper:flatpaper-mode im stepping away. <goal>. done means <check>. keep a decision log. if stuck, stop and write up why.
 ```
 
 When you're back:
@@ -79,3 +121,9 @@ When you're back:
 ```
 
 Read the Attention section first.
+
+Once per repo, give the agent a scripted way to prove the app works:
+
+```
+/flatpaper:create-verification-skill
+```
