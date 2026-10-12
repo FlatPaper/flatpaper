@@ -83,6 +83,8 @@ Add these to `~/.claude/settings.json`, then restart Claude Code. A session that
 | `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` | Yes | Claude Code hides `TaskCreate` and `TaskUpdate` by default on newer models. flatpaper-mode puts each playbook step in the task list with them. Without it, the mode falls back to a checklist in its replies. |
 | `attribution` | No | Removes the Claude co-author line from commits and PRs, enforced by Claude Code instead of a rule. |
 
+Check the plugin after editing a skill or playbook with `scripts/check-skills.sh`. It lints frontmatter, README listings, playbook wiring, relative paths, and non-Anthropic model names.
+
 Optional tools: `jq` and `gh` (logged in). The finish steps read a PR back with `gh`. Without it, that check is reported inconclusive. The architecture drift line uses both to check the latest release of the repo a page describes. Without them, it still checks this repo's commits.
 
 ## Use
