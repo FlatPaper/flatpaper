@@ -6,7 +6,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://github.com/FlatPaper/flatpaper",
-      "revision": "1190a5c86a2c16cc97f17292cd8ee95ec72d4422"
+      "revision": "ba86348c44ef9abcbbeac4f26f87c9bb89cbdb68"
     }
   },
   "components": [
@@ -102,7 +102,8 @@
       ],
       "sources": [
         {
-          "path": "skills/flatpaper-mode/playbooks/investigation.md"
+          "path": "skills/flatpaper-mode/playbooks/investigation.md",
+          "line": 6
         }
       ]
     },
@@ -154,7 +155,7 @@
       "id": "run",
       "type": "frontend",
       "label": "Run playbooks",
-      "sublabel": "autonomous, pickup, pause, worktrees",
+      "sublabel": "plan, autonomous, pickup, pause, worktrees",
       "pos": [
         590,
         364
@@ -171,7 +172,7 @@
           "path": "skills/flatpaper-mode/playbooks/session-pickup.md"
         },
         {
-          "path": "skills/flatpaper-mode/playbooks/pause-safely.md"
+          "path": "skills/flatpaper-mode/playbooks/multi-phase-plan.md"
         }
       ]
     },
@@ -200,8 +201,8 @@
       "label": "verify-<app> skill",
       "sublabel": "create- and maintain- skills",
       "pos": [
-        930,
-        146
+        990,
+        210
       ],
       "size": [
         210,
@@ -223,7 +224,7 @@
       "label": "show-me-your-work",
       "sublabel": "TSV decision log",
       "pos": [
-        930,
+        990,
         370
       ],
       "size": [
@@ -242,7 +243,7 @@
       "label": "GitHub PR",
       "sublabel": "gh pr view, gh pr checks",
       "pos": [
-        930,
+        990,
         486
       ],
       "size": [
@@ -256,8 +257,8 @@
       "label": "blast-radius",
       "sublabel": "what breaks outside the diff",
       "pos": [
-        930,
-        30
+        990,
+        290
       ],
       "size": [
         210,
@@ -266,6 +267,108 @@
       "sources": [
         {
           "path": "skills/blast-radius/SKILL.md"
+        }
+      ]
+    },
+    {
+      "id": "forensics",
+      "type": "frontend",
+      "label": "Forensics playbooks",
+      "sublabel": "runtime (live), trace (captured)",
+      "pos": [
+        590,
+        588
+      ],
+      "size": [
+        250,
+        58
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/playbooks/runtime-forensics.md"
+        },
+        {
+          "path": "skills/flatpaper-mode/playbooks/trace-forensics.md"
+        }
+      ]
+    },
+    {
+      "id": "openpr",
+      "type": "frontend",
+      "label": "Opening a PR",
+      "sublabel": "default commit and PR rules",
+      "pos": [
+        590,
+        690
+      ],
+      "size": [
+        250,
+        58
+      ],
+      "sources": [
+        {
+          "path": "skills/flatpaper-mode/playbooks/opening-a-pr.md"
+        },
+        {
+          "path": "skills/flatpaper-mode/SKILL.md",
+          "line": 25
+        }
+      ]
+    },
+    {
+      "id": "called",
+      "type": "database",
+      "label": "Playbook-called skills",
+      "sublabel": "why, architect, interrogate, +4",
+      "pos": [
+        990,
+        30
+      ],
+      "size": [
+        210,
+        150
+      ],
+      "sources": [
+        {
+          "path": "README.md",
+          "line": 26,
+          "end_line": 40
+        },
+        {
+          "path": "skills/flatpaper-mode/SKILL.md",
+          "line": 66
+        },
+        {
+          "path": "skills/swarm/SKILL.md"
+        }
+      ]
+    },
+    {
+      "id": "byhand",
+      "type": "database",
+      "label": "By-hand skills",
+      "sublabel": "correct, reflect, recall, ketchup",
+      "pos": [
+        40,
+        420
+      ],
+      "size": [
+        180,
+        70
+      ],
+      "sources": [
+        {
+          "path": "README.md",
+          "line": 42,
+          "end_line": 51
+        },
+        {
+          "path": "skills/correct/SKILL.md",
+          "line": 4
+        },
+        {
+          "path": "skills/reflect/SKILL.md",
+          "line": 4
         }
       ]
     }
@@ -279,7 +382,9 @@
         "change",
         "archpage",
         "run",
-        "babysit"
+        "babysit",
+        "forensics",
+        "openpr"
       ]
     }
   ],
@@ -376,6 +481,55 @@
       "from": "babysit",
       "to": "github",
       "label": "triage, fix, wait"
+    },
+    {
+      "id": "m-for",
+      "from": "start",
+      "to": "forensics"
+    },
+    {
+      "id": "finish-pr",
+      "from": "finish",
+      "to": "openpr",
+      "label": "no repo PR rules",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "via": [
+        [
+          390,
+          719
+        ]
+      ]
+    },
+    {
+      "id": "pr-gh",
+      "from": "openpr",
+      "to": "github",
+      "label": "gh pr create",
+      "toSide": "bottom"
+    },
+    {
+      "id": "inv-why",
+      "from": "investigation",
+      "to": "called",
+      "label": "why"
+    },
+    {
+      "id": "change-called",
+      "from": "change",
+      "to": "called",
+      "label": "design, review, fan out"
+    },
+    {
+      "id": "user-hand",
+      "from": "user",
+      "to": "byhand",
+      "label": "/flatpaper:<skill>",
+      "labelAt": [
+        130,
+        359
+      ]
     }
   ],
   "cards": [
@@ -392,8 +546,9 @@
       "dot": "emerald",
       "title": "flatpaper-mode",
       "items": [
-        "Start: restate, read repo rules, match one of 12 playbooks, read principles.md",
+        "Start: restate, read repo rules, match one of 15 playbooks, read principles.md",
         "Each playbook step and Finish step becomes a task",
+        "Finish step 2 falls back to Opening a PR when the repo sets no PR rules",
         "Re-match on every prompt when the kind of work changes"
       ]
     },
@@ -401,9 +556,10 @@
       "dot": "violet",
       "title": "Standalone skills",
       "items": [
-        "create- and maintain-verification-skill own .claude/skills/verify-<app>/",
+        "Playbook steps call why, architect, interrogate, swarm, arena, unslop, technical-writing",
+        "By hand only: correct, reflect, recall, ketchup, blast-radius, the verification skills",
         "show-me-your-work keeps the decision log",
-        "blast-radius checks a diff, branch, or PR on request"
+        "Subagents run on opus, sonnet, haiku, or fable only"
       ]
     }
   ]
