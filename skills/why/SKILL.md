@@ -79,7 +79,7 @@ Check: every category is either spawned or has a written skip reason.
 
 ## Step 5. Synthesize
 
-When all investigators return, spawn one synthesizer: `subagent_type: "general-purpose"`, `model: "opus"`. General-purpose keeps MCP access so it can spot-check citations. Give it all findings including nulls, the skip reasons, the anchor, the question, and `references/synthesizer-prompt.md` filled in. It reads `references/epistemics.md` and the confidence tiers before writing.
+When all investigators return, spawn one synthesizer: `subagent_type: "general-purpose"`, `model: "opus"`. General-purpose keeps MCP access so it can spot-check citations. Give it all findings including nulls, the skip reasons, the anchor, the question, and `references/synthesizer-prompt.md` filled in. It reads `references/epistemics.md` and the confidence tiers before writing. When you paste a template into a brief, replace `${CLAUDE_PLUGIN_ROOT}` with the plugin's real path (two directories above this skill's base directory), since a subagent cannot expand it.
 
 Check: the output has every section of the synthesizer template, and Sources Consulted has one line per category.
 

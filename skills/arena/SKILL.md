@@ -26,7 +26,7 @@ If a candidate produces no output, go on with N-1 and note the dropout.
 
 ## Phase C: Cross-judge
 
-After every candidate finishes, spawn one judge with the Agent tool: `subagent_type: "general-purpose"`, read-only (its brief forbids edits), with `model` set to one of `opus`, `sonnet`, or `fable` that differs from the session model. It sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs while you read in Phase D. Don't spawn it while candidates are still writing.
+After every candidate finishes, spawn one judge with the Agent tool: `subagent_type: "general-purpose"`, read-only (its brief says "Do not modify files, run state-changing commands, or commit. Report only."), with `model` set to one of `opus`, `sonnet`, or `fable` that differs from the session model. It sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs while you read in Phase D. Don't spawn it while candidates are still writing.
 
 ## Phase D: Pick a base
 

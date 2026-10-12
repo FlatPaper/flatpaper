@@ -39,6 +39,7 @@ Run these once, after the playbook's last step and before the reply. Pause safel
 - **Session pickup.** Continue work another session started ("pick up", "take over this branch", "continue from the log"). `playbooks/session-pickup.md`.
 - **Pause safely.** Stop mid-task so the work can resume later ("pause", "stop for now", "pick this up tomorrow"). `playbooks/pause-safely.md`.
 - **Worktree cleanup.** Find and remove stale git worktrees ("clean up worktrees"). `playbooks/worktree-cleanup.md`.
+- **Opening a PR.** Not matched by prompt. Finish step 2 uses its defaults for commits, title, body, and draft state when the repo sets no rule. `playbooks/opening-a-pr.md`.
 - **Multi-phase plan.** Write a plan for a migration or multi-PR change without building it ("plan this migration", "break this into PRs"). `playbooks/multi-phase-plan.md`.
 - **Runtime forensics.** Diagnose a live process by instrumenting it ("why is this process hung", "what is it doing right now"). `playbooks/runtime-forensics.md`.
 - **Trace forensics.** Diagnose from a captured artifact: a trace, profile, core dump, HAR, or log bundle ("read this trace", "what does this profile show"). `playbooks/trace-forensics.md`.

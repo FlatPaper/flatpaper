@@ -1,6 +1,6 @@
 # Reviewer Prompt Template
 
-Build each reviewer subagent's prompt from this template, filling in the placeholders.
+Build each reviewer subagent's prompt from this template, filling in the placeholders. Every prompt includes the line: "Do not modify files, run state-changing commands, or commit. Report only."
 
 ---
 

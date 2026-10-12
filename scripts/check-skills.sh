@@ -54,8 +54,8 @@ while IFS=: read -r file ref; do
 done < <(grep -roE '`[^` ]*/[^` ]*\.(md|sh|tsv|json|mjs)`' skills guidelines.md)
 
 # Only Anthropic models, and no Cursor-only tools or plugins.
-banned='grok|gpt-[0-9]|gemini|composer-[0-9]|codex|AskQuestion|poteto-agent|cursor-team-kit|/deslop|generalPurpose|\.cursor/|is_background'
-if hits=$(grep -rniE "$banned" skills guidelines.md hooks); then
+banned='grok|\bgpt\b|gpt-[0-9]|gemini|llama|mistral|deepseek|composer-[0-9]|codex|AskQuestion|poteto-agent|cursor-team-kit|/deslop|generalPurpose|\.cursor/|is_background'
+if hits=$(grep -rniE "$banned" skills guidelines.md hooks README.md); then
 	while IFS= read -r h; do problem "banned term: ${h:0:160}"; done <<<"$hits"
 fi
 
