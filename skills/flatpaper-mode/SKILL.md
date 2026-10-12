@@ -22,7 +22,7 @@ Re-match on every prompt. When the kind of work changes (review, then fix, then 
 Run these once, after the playbook's last step and before the reply. Pause safely is the exception: it skips the Finish steps with the reason `pause`, and its open steps stay open for the resume. When one playbook runs inside another, they run after the outer playbook's last step.
 
 1. Run the repo's tests in the checkout you changed, with the command its rules name, or the one its CI or manifest runs. Paste the result. Skip when this task changed no files, or when the repo has no test command, and say which. A prototype skips this step because its scratch code does not ship.
-2. If the task commits or opens or updates a PR, follow the repo's rules: commit message format, branch name, PR title format, template, draft or ready, and required labels. Without a PR in scope, skip with that reason.
+2. If the task commits or opens or updates a PR, follow the repo's rules: commit message format, branch name, PR title format, template, draft or ready, and required labels. Where the repo sets no rule, use the defaults in `playbooks/opening-a-pr.md`. Without a PR in scope, skip with that reason.
 3. Read the PR back after creating or editing it: `gh pr view --json title,body,baseRefName,isDraft,labels` and `gh pr checks`. Check each against the rules and fix what is off. Pending checks are pending, not passed. Without `gh`, mark the read-back inconclusive and say why. Skip when step 2 was skipped. A PR you did not read back is not done.
 
 ## Playbooks
@@ -39,6 +39,9 @@ Run these once, after the playbook's last step and before the reply. Pause safel
 - **Session pickup.** Continue work another session started ("pick up", "take over this branch", "continue from the log"). `playbooks/session-pickup.md`.
 - **Pause safely.** Stop mid-task so the work can resume later ("pause", "stop for now", "pick this up tomorrow"). `playbooks/pause-safely.md`.
 - **Worktree cleanup.** Find and remove stale git worktrees ("clean up worktrees"). `playbooks/worktree-cleanup.md`.
+- **Multi-phase plan.** Write a plan for a migration or multi-PR change without building it ("plan this migration", "break this into PRs"). `playbooks/multi-phase-plan.md`.
+- **Runtime forensics.** Diagnose a live process by instrumenting it ("why is this process hung", "what is it doing right now"). `playbooks/runtime-forensics.md`.
+- **Trace forensics.** Diagnose from a captured artifact: a trace, profile, core dump, HAR, or log bundle ("read this trace", "what does this profile show"). `playbooks/trace-forensics.md`.
 
 If `docs/architecture/` exists, read `meta.json`, `diagrams/*.archify.json`, and `diagrams/*.reference.html` there before tracing code in any playbook. They are the repo's map; the built `.html` is the same content wrapped in a viewer. An older page with only `index.html` is read from there. Treat the map as a starting point, and trust the code where they disagree.
 
@@ -58,6 +61,8 @@ No playbook fits? Write a short bespoke one in the same shape (owner line, numbe
 - Route bulk reading to subagents and keep summaries in the main thread.
 
 ## Writing the reply
+
+Apply the `unslop` skill to every reply, and the `technical-writing` skill to docs, READMEs, and PR text.
 
 - Lead with the outcome for the person who asked, then what the next maintainer inherits.
 - Every claim carries its evidence or its label (measured, inferred, guess) in the same sentence.

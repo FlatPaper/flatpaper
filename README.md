@@ -16,12 +16,39 @@ Three ideas carry it:
 |---|---|
 | `guidelines.md` | Always-on rules, loaded at session start by a hook |
 | `UserPromptSubmit` hook | One-line reminder on every prompt: concise replies, and a done check, proof, and constraints |
-| `/flatpaper:flatpaper-mode` | Rigorous mode. Matches the task to a playbook (investigation, bug fix, feature, refactoring, prototype, autonomous run, architecture page, perf, babysit, session pickup, pause safely, worktree cleanup) |
+| `/flatpaper:flatpaper-mode` | Rigorous mode. Matches the task to a playbook (investigation, bug fix, feature, refactoring, prototype, autonomous run, architecture page, perf, babysit, session pickup, pause safely, worktree cleanup, multi-phase plan, runtime forensics, trace forensics, opening a PR) |
 | Architecture drift line | At session start, says when `docs/architecture/` is behind this repo's commits, or behind the latest release of the repo it describes. Silent otherwise. |
 | `/flatpaper:show-me-your-work` | Decision log (TSV), audited against the transcript, with an Attention section from a fresh reviewer |
 | `/flatpaper:create-verification-skill` | Generates a project-local `verify-<app>` skill (launch, doctor, drive, evidence, cleanup, feature map) and proves it once, including that Doctor can fail |
 | `/flatpaper:maintain-verification-skill` | Rechecks the `verify-<app>` feature map against the code and the live app, and opens at most one PR of proven corrections |
 | `/flatpaper:blast-radius` | Finds what a change breaks outside its diff, and proves the facts it is safe because of with a rerunnable script |
+
+### Skills flatpaper-mode calls for you
+
+You don't type these. A playbook step runs them. You can still call one directly.
+
+| Skill | Called from | What it does |
+|---|---|---|
+| `/flatpaper:why` | Investigation | Finds why code is the way it is, from git, PRs, and whichever trackers, docs, chat, and observability connectors the session can reach. Every claim gets a confidence tier |
+| `/flatpaper:architect` | Feature | Sketches types, signatures, and module structure in competing designs before code |
+| `/flatpaper:interrogate` | Feature, Refactoring | Adversarial review by three fresh reviewers on `opus`, `sonnet`, and `fable`, then one verdict |
+| `/flatpaper:swarm` | Feature, Perf, Multi-phase plan | Fans out parallel workers and returns one table |
+| `/flatpaper:arena` | Prototype | Runs candidates on `opus`, `sonnet`, and `fable`, picks a base, and grafts the best parts of the others |
+| `/flatpaper:unslop` | Every reply | Cuts AI tells from prose |
+| `/flatpaper:technical-writing` | Docs and PR text | Layered writing standard for docs, READMEs, PR descriptions, and commit messages |
+
+Subagents use only Anthropic models: `opus`, `sonnet`, `fable`, and `haiku`. Same-family review catches less than a cross-vendor mix, so the skills treat agreement between reviewers as a weaker signal than pstack does.
+
+### Skills you call by hand
+
+These act on your session or your repo at a time you choose.
+
+| Skill | What it does |
+|---|---|
+| `/flatpaper:correct` | Makes a repeated agent mistake impossible: architecture, types, a lint, a hook, a test, docs last. Each check is shown failing on the mistake and passing on the fix |
+| `/flatpaper:reflect` | Three reviewers mine this session's transcript. Each learning becomes a proposed edit to a skill, `CLAUDE.md`, or memory, shown for your approval |
+| `/flatpaper:recall` | Rebuilds recent context from this project's sessions, decision logs, git, and open PRs into a short current-state brief |
+| `/flatpaper:ketchup` | Catches you up on everything since your last message, with each action item laid out so you can decide |
 
 ## Install
 
@@ -96,6 +123,9 @@ Only the goal is required. A missing check, proof or constraints gets proposed b
 | pick up, take over this branch, continue from the log | Session pickup |
 | pause, stop for now, pick this up tomorrow | Pause safely |
 | clean up worktrees | Worktree cleanup |
+| plan this migration, break this into PRs | Multi-phase plan |
+| why is this process hung, what is it doing right now | Runtime forensics |
+| read this trace, what does this profile show | Trace forensics |
 
 ### Several tasks in one session
 
@@ -107,7 +137,7 @@ fix the wrong items. show me a before/after table with evidence. no PR yet.
 raise a draft PR.
 ```
 
-Every playbook ends with the same finish steps: run the repo's tests, follow its PR rules, and read the PR back with `gh pr view`. The repo's rules files (`AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `docs/README.md`, the PR template) are read at the start of every task.
+Every playbook ends with the same finish steps: run the repo's tests, follow its PR rules, and read the PR back with `gh pr view`. Where a repo sets no PR rules, the Opening a PR playbook supplies defaults: Conventional Commits titles, a short PR body with fixed headings, and draft unless you say ready. The repo's rules files (`AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `docs/README.md`, the PR template) are read at the start of every task.
 
 ### Steering a run
 

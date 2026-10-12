@@ -9,7 +9,7 @@ If the cleanup reveals a bug or a missing feature, split it out. Ship the struct
 3. Subtract before you add. Delete dead code and one-caller wrappers before introducing the new shape.
 4. Move in small steps, each keeping the pin green. When replacing an API, migrate every caller and delete the old one in the same change. Check renames against the actual files, including strings and docs.
 5. Prove behavior is unchanged on the real artifact. For larger moves, diff old against new outputs with a script.
-6. Keep the change only if it lowers reader load somewhere. Otherwise revert it.
+6. Keep the change only if it lowers reader load somewhere. Otherwise revert it. For a large move whose target shape is contested, run the `interrogate` skill on it first.
 7. If the new structure moved a boundary the architecture page shows, run the Architecture page playbook in update mode and include it in the same PR.
 
 **Reply:** the structure that changed, the pin, the equivalence proof, and what was reverted. No new behavior.

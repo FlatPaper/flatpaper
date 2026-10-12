@@ -3,7 +3,7 @@
 **You own the answer.** Read-only. The output is a cited explanation or a recommendation, not a code change.
 
 1. Trace the code with read-only Explore subagents when the area is large. Read directly when it is narrow.
-2. For "why was it built this way" questions, anchor in git history first. Run `git blame -L <start>,<end> <file>` for last-touch commits and `git log --follow -p -- <file>` for history through renames. Take PR numbers from commit subjects (`(#1234)`) and read each substantive one with `gh pr view <n> --json title,body,comments,reviews`. Then check linked issues. "Nobody wrote down why" is a valid finding.
+2. For "why was it built this way" questions, run the `why` skill. It anchors in git history first and then checks the other sources this session can reach. "Nobody wrote down why" is a valid finding.
 3. Put each claim in a confidence tier from `../references/principles.md`. Cite `file:line`, commits, PRs, and command output for each claim. A hypothesis the user embeds in the question ("I assume it's for performance?") is a claim to test.
 4. For a choice between options, answer with a recommendation and a tradeoffs table. If running something would settle the choice, say so and route to Prototype.
 
