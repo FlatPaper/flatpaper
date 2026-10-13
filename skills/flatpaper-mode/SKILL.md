@@ -48,6 +48,12 @@ If `docs/architecture/` exists, read `meta.json`, `diagrams/*.archify.json`, and
 
 No playbook fits? Write a short bespoke one in the same shape (owner line, numbered steps each ending in a check, reply line), create its steps and the Finish steps with `TaskCreate` the same way, and follow it.
 
+## Driving the app
+
+Some playbook steps verify on the real surface or reproduce a symptom. Those steps drive the app through the project's `verify-<app>` skill, usually `.claude/skills/verify-<app>/`. A perf harness on a user path is built from that skill's Launch and Drive recipe. Read the skill at the start of any playbook that has such a step. Follow its Launch, Doctor, Drive, Evidence, and Cleanup sections, and use its feature map for the entry points to cover.
+
+If such a step touches a UI, CLI, or service and no `verify-<app>` skill exists, offer once per session to create one. After a no, don't offer again. On yes, read `${CLAUDE_PLUGIN_ROOT}/skills/create-verification-skill/SKILL.md` and follow it. That skill is by hand only, so reading it here needs the user's yes. Ship the new skill in its own commit or PR. On no, or in an autonomous run, drive the surface by hand, log that choice with the show-me-your-work skill, and say in the reply that no verification skill exists.
+
 ## Autonomy
 
 - Reversible work proceeds without asking.

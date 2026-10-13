@@ -215,6 +215,10 @@
         },
         {
           "path": "skills/maintain-verification-skill/SKILL.md"
+        },
+        {
+          "path": "skills/flatpaper-mode/SKILL.md",
+          "line": 51
         }
       ]
     },
@@ -468,7 +472,7 @@
       "id": "change-verify",
       "from": "change",
       "to": "verify",
-      "label": "reproduce"
+      "label": "drive / verify"
     },
     {
       "id": "run-log",

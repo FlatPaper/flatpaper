@@ -13,7 +13,7 @@
    - **Smallest safe decomposition.** If one worker is best, say why.
    Code-coupled work goes to one owner, who fans out after the blocking steps. Fan out across subagents only for slices that produce independent artifacts. Run that fan-out with the `swarm` skill. Rewrite the checkpoint at each phase boundary, and give a new phase to a fresh subagent instead of redirecting a running one.
 6. Implement in small units, each ending in a check (sequence verifiable units).
-7. Verify on the real surface: the new behavior works, and the pinned behavior is unchanged.
+7. Verify on the real surface through the project's `verify-<app>` skill: the new behavior works, and the pinned behavior is unchanged.
 8. If the change added, removed, or rewired something the architecture page shows, run the Architecture page playbook in update mode and include it in the same PR.
 9. Hand the diff to a fresh subagent for review. It did not write the change. If the design is contested, run the `interrogate` skill before the PR.
 
