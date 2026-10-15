@@ -17,7 +17,7 @@ sha=$(field .built_from_sha built_from_sha)
 if [[ $sha =~ ^[0-9a-f]{7,40}$ ]]; then
   behind=$(git -C "$dir" rev-list --count "$sha..HEAD" -- . ':!docs/architecture' 2>/dev/null)
   [ "${behind:-0}" -gt 0 ] 2>/dev/null &&
-    echo "flatpaper: the architecture page was built from ${sha:0:7} and is $behind commit(s) behind. Run the Architecture page playbook if those commits moved a boundary it shows."
+    echo "flatpaper-stack: the architecture page was built from ${sha:0:7} and is $behind commit(s) behind. Run the Architecture page playbook if those commits moved a boundary it shows."
 fi
 
 # Release drift needs jq and gh. Only evidence.release is compared; promotions between
@@ -40,5 +40,5 @@ if [ -z "$(find "$cache" -mtime -1 2>/dev/null)" ]; then
 fi
 latest=$(head -1 "$cache" 2>/dev/null)
 [[ $latest =~ ^[A-Za-z0-9._+-]+$ ]] && [ "$latest" != "$release" ] &&
-  echo "flatpaper: the architecture page describes $repo $release; the latest release is $latest. Run the Architecture page playbook in update mode."
+  echo "flatpaper-stack: the architecture page describes $repo $release; the latest release is $latest. Run the Architecture page playbook in update mode."
 exit 0

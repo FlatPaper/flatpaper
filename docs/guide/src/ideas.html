@@ -36,8 +36,8 @@
     <div><span class="mark pass">AFTER</span><p>"done means you show a run appearing through the Coder URL, or name every blocker. show me /ws status and the /api/runs body. read-only for now."</p></div>
   </div>
   <p>Try it:</p>
-<pre>/flatpaper:flatpaper-mode read this thread. restate the underlying issue in plain words. don't change any code yet.</pre>
-  <p><b>In flatpaper:</b> the five-part prompt, the per-prompt reminder, flatpaper-mode's first start step, and <code>sharpen</code> for tasks you can't state crisply.</p>
+<pre>/flatpaper-stack:flatpaper-mode read this thread. restate the underlying issue in plain words. don't change any code yet.</pre>
+  <p><b>In flatpaper-stack:</b> the five-part prompt, the per-prompt reminder, flatpaper-mode's first start step, and <code>sharpen</code> for tasks you can't state crisply.</p>
 </section>
 
 <section class="ch" id="i-router">
@@ -50,7 +50,7 @@
     <li>When the subject changes, the work should re-match. A mode mid-feature otherwise treats your new question as the next feature step.</li>
     <li>Give parallel work its own worktree. Agents sharing one working tree fight over files, ports, and build output.</li>
   </ul>
-  <p><b>In flatpaper:</b> <code>flatpaper-mode</code>, its 16 playbooks, the shared Start and Finish steps, re-matching on every prompt, and a worktree for every writing subagent.</p>
+  <p><b>In flatpaper-stack:</b> <code>flatpaper-mode</code>, its 16 playbooks, the shared Start and Finish steps, re-matching on every prompt, and a worktree for every writing subagent.</p>
 </section>
 
 <section class="ch" id="i-understand">
@@ -65,9 +65,9 @@
     <li>"Nobody wrote down why" is itself an answer. Code is not evidence of its own intent.</li>
   </ul>
   <p>Try it:</p>
-<pre>/flatpaper:flatpaper-mode investigate why background jobs time out every few hours. give me what we know, what data you used, and your best hypotheses. don't change any code yet.
-/flatpaper:why was the retry limit set to five? does the reason still hold?</pre>
-  <p><b>In flatpaper:</b> the Investigation, Runtime forensics, and Trace forensics playbooks, <code>why</code>, <code>recall</code>, Session pickup, and the confidence tiers in <code>principles.md</code>.</p>
+<pre>/flatpaper-stack:flatpaper-mode investigate why background jobs time out every few hours. give me what we know, what data you used, and your best hypotheses. don't change any code yet.
+/flatpaper-stack:why was the retry limit set to five? does the reason still hold?</pre>
+  <p><b>In flatpaper-stack:</b> the Investigation, Runtime forensics, and Trace forensics playbooks, <code>why</code>, <code>recall</code>, Session pickup, and the confidence tiers in <code>principles.md</code>.</p>
 </section>
 
 <section class="ch" id="i-design">
@@ -118,7 +118,7 @@
   <p>Write the failing test first when there's a cheap test path. Don't force one through brittle mocks when running the real command is stronger evidence.</p>
   <h3>Clean before review</h3>
   <p>Cleanup is not optional polish. Narrating comments and defensive dead weight read as unfinished, and the extra code is where the next bug hides. Clean code and prose separately, and have comments reviewed by an agent that didn't write them, because authors defend their own.</p>
-  <p><b>In flatpaper:</b> the Bug fix, Feature, Refactoring, and Perf playbooks, the Opening a PR defaults, <code>unslop</code>, and <code>technical-writing</code>.</p>
+  <p><b>In flatpaper-stack:</b> the Bug fix, Feature, Refactoring, and Perf playbooks, the Opening a PR defaults, <code>unslop</code>, and <code>technical-writing</code>.</p>
 </section>
 
 <section class="ch" id="i-verify">
@@ -136,7 +136,7 @@
     <div><span class="mark fail">ALL GREEN, NOTHING THERE</span><p>Dashboard loaded. Daemon restarted. WebSocket <code>101</code>. <code>/api/runs</code> returned <code>200</code>, with body <code>[]</code>.</p></div>
     <div><span class="mark pass">THE REAL CHECK</span><p>A smoke run actually appears in the dashboard through the Coder URL.</p></div>
   </div>
-  <p><b>In flatpaper:</b> <code>create-verification-skill</code>, <code>maintain-verification-skill</code>, "Driving the app" in flatpaper-mode, <code>blast-radius</code>, the Perf playbook's number vetting, Babysit, and a fresh reviewer in every playbook.</p>
+  <p><b>In flatpaper-stack:</b> <code>create-verification-skill</code>, <code>maintain-verification-skill</code>, "Driving the app" in flatpaper-mode, <code>blast-radius</code>, the Perf playbook's number vetting, Babysit, and a fresh reviewer in every playbook.</p>
 </section>
 
 <section class="ch" id="i-away">
@@ -151,7 +151,7 @@
     <li>You've read transcripts and turned repeat failures into checks.</li>
   </ul>
   <h3>The handoff</h3>
-<pre>/flatpaper:flatpaper-mode im going to bed. migrate every caller to the new parser in a fresh worktree off main.
+<pre>/flatpaper-stack:flatpaper-mode im going to bed. migrate every caller to the new parser in a fresh worktree off main.
 done means zero old callers, all parser fixtures pass, old api deleted.
 keep a decision log. don't ask me before committing.
 /loop until done. if you're truly stuck after a few hours, stop and write up why.</pre>
@@ -162,7 +162,7 @@ keep a decision log. don't ask me before committing.
     <li>Ask when watched, decide and log when away. The log is what makes deciding safe.</li>
     <li>In the morning, audit decisions, not the whole night. Read the Attention section first.</li>
   </ul>
-  <p><b>In flatpaper:</b> the Autonomous run, Pause safely, and Session pickup playbooks, <code>show-me-your-work</code>, and <code>ketchup</code>.</p>
+  <p><b>In flatpaper-stack:</b> the Autonomous run, Pause safely, and Session pickup playbooks, <code>show-me-your-work</code>, and <code>ketchup</code>.</p>
 </section>
 
 <section class="ch" id="i-principles">
@@ -201,7 +201,7 @@ keep a decision log. don't ask me before committing.
     <li>Don't edit a skill mid-task. Fix it in its own change.</li>
   </ul>
   <p>"straight to the point" appeared in 54 of 1,951 prompts despite a written rule saying "concise". A rule nothing enforces shows up as a repeat. In flatpaper it became a per-prompt hook.</p>
-  <p><b>In flatpaper:</b> <code>correct</code>, <code>reflect</code>, the hooks, and <code>check-skills.sh</code>.</p>
+  <p><b>In flatpaper-stack:</b> <code>correct</code>, <code>reflect</code>, the hooks, and <code>check-skills.sh</code>.</p>
 </section>
 
 <section class="ch last" id="i-map">
@@ -214,5 +214,5 @@ keep a decision log. don't ask me before committing.
     <li><b>Verify.</b> Pin it to a SHA and release, and fact-check it row by row like code.</li>
     <li><b>Drift.</b> A script says at session start when the map is behind.</li>
   </ul>
-  <p><b>In flatpaper:</b> the Architecture page playbook and <code>arch-drift.sh</code>.</p>
+  <p><b>In flatpaper-stack:</b> the Architecture page playbook and <code>arch-drift.sh</code>.</p>
 </section>

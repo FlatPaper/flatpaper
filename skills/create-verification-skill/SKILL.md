@@ -43,4 +43,4 @@ Then prove Doctor can fail. Break one precondition it guards, in a way that is e
 
 ## 5. Keep it current
 
-The feature map rots as the app changes. Tell the user to run `/flatpaper:maintain-verification-skill` after notable app changes, or on a schedule. It checks every feature in the map from source and live, and ships map fixes in their own PR. Never edit product code to make the map pass. A live run that fails on the app is a regression to report.
+The feature map rots as the app changes. Tell the user to run `/flatpaper-stack:maintain-verification-skill` after notable app changes, or on a schedule. It checks every feature in the map from source and live, and ships map fixes in their own PR. Never edit product code to make the map pass. A live run that fails on the app is a regression to report.

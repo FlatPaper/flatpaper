@@ -1,12 +1,12 @@
 {
-  "name": "flatpaper",
+  "name": "flatpaper-stack",
   "owner": {
     "name": "FlatPaper"
   },
   "description": "FlatPaper's Claude Code workflow plugins.",
   "plugins": [
     {
-      "name": "flatpaper",
+      "name": "flatpaper-stack",
       "source": "./",
       "description": "Agent workflow: checkable goals, proof over claims, and a decision trail."
     }

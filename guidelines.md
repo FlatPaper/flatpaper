@@ -1,6 +1,6 @@
 # flatpaper guidelines
 
-These rules apply to every task. For rigorous work, the user runs `/flatpaper:flatpaper-mode`, which adds playbooks.
+These rules apply to every task. For rigorous work, the user runs `/flatpaper-stack:flatpaper-mode`, which adds playbooks.
 
 ## Before starting
 

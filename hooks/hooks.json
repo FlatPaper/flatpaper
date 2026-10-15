@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'flatpaper: simple, concise, straight to the point. Non-trivial task without a done check, proof, or constraints? Propose them in one line each.'"
+            "command": "echo 'flatpaper-stack: simple, concise, straight to the point. Non-trivial task without a done check, proof, or constraints? Propose them in one line each.'"
           }
         ]
       }

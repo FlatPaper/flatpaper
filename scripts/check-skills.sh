@@ -25,9 +25,9 @@ done
 for f in skills/*/SKILL.md; do
 	dir=$(basename "$(dirname "$f")")
 	[ "$dir" = flatpaper-mode ] && continue
-	grep -q "/flatpaper:$dir\`" README.md || problem "README.md: skill $dir not listed as /flatpaper:$dir"
+	grep -q "/flatpaper-stack:$dir\`" README.md || problem "README.md: skill $dir not listed as /flatpaper-stack:$dir"
 	if ! grep -q '^disable-model-invocation: true' "$f"; then
-		grep -rqE -- "\`$dir\`|/flatpaper:$dir|the $dir skill" "$mode" guidelines.md || problem "$dir: model-invoked but no flatpaper-mode file or guideline calls it"
+		grep -rqE -- "\`$dir\`|/flatpaper-stack:$dir|the $dir skill" "$mode" guidelines.md || problem "$dir: model-invoked but no flatpaper-mode file or guideline calls it"
 	fi
 done
 
@@ -40,7 +40,7 @@ for f in agents/*.md; do
 	name=$(sed -n '2,10{s/^name: *//p;}' "$f" | head -1)
 	[ "$name" = "$base" ] || problem "$f: name '$name' does not match file '$base'"
 	grep -q '^description: ' "$f" || problem "$f: no description"
-	grep -q "flatpaper:$base\`" README.md || problem "README.md: agent $base not listed as flatpaper:$base"
+	grep -q "flatpaper-stack:$base\`" README.md || problem "README.md: agent $base not listed as flatpaper-stack:$base"
 done
 
 # Every playbook file is listed in the mode's SKILL.md, and the reverse.

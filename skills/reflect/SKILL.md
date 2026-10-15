@@ -50,7 +50,7 @@ Follow each approved row's routing:
 - **`memory`.** A preference about how this user works. Write it to Claude Code's memory directory, `~/.claude/projects/<project-dir>/memory/`, as one short file per fact, and add a one-line entry to that directory's `MEMORY.md` index. Update an existing entry instead of adding a duplicate.
 - **`new skill: <kebab-name>`.** Rare. Propose the shape and wait. Do not invent it ad hoc.
 
-List each Backlog item for the user with its suggested mechanism. Offer to run `/flatpaper:correct` on it. Do not file it anywhere without asking.
+List each Backlog item for the user with its suggested mechanism. Offer to run `/flatpaper-stack:correct` on it. Do not file it anywhere without asking.
 
 Run the repo's skill linter, if one exists, on every touched skill before declaring done.
 

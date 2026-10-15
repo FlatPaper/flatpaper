@@ -14,7 +14,7 @@
       "id": "user",
       "type": "external",
       "label": "User prompt",
-      "sublabel": "/flatpaper:flatpaper-mode",
+      "sublabel": "/flatpaper-stack:flatpaper-mode",
       "pos": [
         40,
         240
@@ -559,7 +559,7 @@
       "id": "user-hand",
       "from": "user",
       "to": "byhand",
-      "label": "/flatpaper:<skill>",
+      "label": "/flatpaper-stack:<skill>",
       "labelAt": [
         130,
         359

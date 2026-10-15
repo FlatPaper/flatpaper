@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Maintain a verification skill
 
-A feature map rots as soon as the app changes. This skill is the upkeep loop for a skill made by `/flatpaper:create-verification-skill`, or any project-local verification skill with a feature map. Adapted from poteto's pstack.
+A feature map rots as soon as the app changes. This skill is the upkeep loop for a skill made by `/flatpaper-stack:create-verification-skill`, or any project-local verification skill with a feature map. Adapted from poteto's pstack.
 
 The unit of rigor is the feature, not every sentence. Cover every feature file from source and drive every feature live. You don't have to run every bullet.
 
@@ -24,7 +24,7 @@ Edit only the verification skill's own directory: its `SKILL.md`, `features/`, a
 
 ## Pass
 
-1. Locate the target. Find the project-local skill with Launch and Drive sections and a feature map, usually `.claude/skills/verify-<app>/`. With several candidates, ask which one. With none, stop and point at `/flatpaper:create-verification-skill`. Don't invent a target.
+1. Locate the target. Find the project-local skill with Launch and Drive sections and a feature map, usually `.claude/skills/verify-<app>/`. With several candidates, ask which one. With none, stop and point at `/flatpaper-stack:create-verification-skill`. Don't invent a target.
 2. Index hygiene. Read `features/README.md` and list its sibling files. Fix missing, extra, duplicate, or dead entries. Keep this light.
 3. Source wave. Launch one read-only Explore subagent per feature file, all at once. Each one reads the source and explains how this user-facing feature works, flags likely doc drift with `file:line` citations, and returns one short recipe for checking it live. Readers never drive the app and never edit files. Return shape: feature summary, source entry points, likely drift or none, one recipe.
 4. Reconcile. Every feature file has a returned summary. Merge overlapping recipes into as few app states as practical. Spot-check the drift readers cited. Don't re-prove clean claims. Sweep recent commits for user-facing surfaces the map is missing. Call one missing only with a concrete source path.

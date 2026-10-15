@@ -8,8 +8,8 @@
 <pre>alias claude='claude --plugin-dir ~/Documents/GitHub/flatpaper'</pre>
   <p>For the CLI, the IDE extension, and the desktop app, install it:</p>
 <pre>claude plugin marketplace add ~/Documents/GitHub/flatpaper
-claude plugin install flatpaper@flatpaper --scope user
-claude plugin update flatpaper@flatpaper   # after edits; bump the version first
+claude plugin install flatpaper-stack@flatpaper-stack --scope user
+claude plugin update flatpaper-stack@flatpaper-stack   # after edits; bump the version first
 /reload-plugins                            # in an open session</pre>
   <p>Then add these to <code>~/.claude/settings.json</code> and restart Claude Code. A session that is already open keeps its old tool list.</p>
 <pre>{
@@ -30,7 +30,7 @@ claude plugin update flatpaper@flatpaper   # after edits; bump the version first
   <div class="chnum">1.2</div>
   <h2>Use it</h2>
   <p class="claim">Quick questions need nothing. For real work, start with the mode and give up to five parts, one sentence each.</p>
-<pre>/flatpaper:flatpaper-mode &lt;goal&gt;. done means &lt;check&gt;. show me &lt;proof&gt;. &lt;what you know&gt;. &lt;constraints&gt;.</pre>
+<pre>/flatpaper-stack:flatpaper-mode &lt;goal&gt;. done means &lt;check&gt;. show me &lt;proof&gt;. &lt;what you know&gt;. &lt;constraints&gt;.</pre>
   <div class="tbl"><table>
     <thead><tr><th>Part</th><th>Example</th></tr></thead>
     <tbody>
@@ -43,6 +43,6 @@ claude plugin update flatpaper@flatpaper   # after edits; bump the version first
   </table></div>
   <p>Only the goal is required. A missing part gets proposed back to you in one line. The words in your goal pick the playbook ("fix" picks Bug fix, "how does" picks Investigation). Stay in the same session for follow-ups: each prompt is matched again, so review, then fix, then PR just works.</p>
   <p>Stepping away? Say so, and the mode decides and logs reversible calls instead of asking:</p>
-<pre>/flatpaper:flatpaper-mode im stepping away. &lt;goal&gt;. done means &lt;check&gt;. keep a decision log.</pre>
-  <p>Coming back? <code>/flatpaper:ketchup</code> for what changed, <code>/flatpaper:show-me-your-work catch me up</code> for the decision log. Every command is in <a href="#commands">Part 3</a>.</p>
+<pre>/flatpaper-stack:flatpaper-mode im stepping away. &lt;goal&gt;. done means &lt;check&gt;. keep a decision log.</pre>
+  <p>Coming back? <code>/flatpaper-stack:ketchup</code> for what changed, <code>/flatpaper-stack:show-me-your-work catch me up</code> for the decision log. Every command is in <a href="#commands">Part 3</a>.</p>
 </section>
