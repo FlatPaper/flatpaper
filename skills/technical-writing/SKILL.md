@@ -5,8 +5,6 @@ description: "Layered technical-writing standard: Diátaxis mode first, Google d
 
 # Technical writing
 
-Adapted from poteto's pstack.
-
 Write so a tired engineer understands on the first read. Apply all four layers.
 
 Three rules sit above the layers:

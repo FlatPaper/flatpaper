@@ -71,5 +71,10 @@ if hits=$(grep -rsniE "$banned" skills agents guidelines.md hooks README.md); th
 	while IFS= read -r h; do problem "banned term: ${h:0:160}"; done <<<"$hits"
 fi
 
+# Skills and agents stand on their own: no credit lines or references to the upstream plugin.
+if hits=$(grep -rsniE 'pstack|poteto' skills agents); then
+	while IFS= read -r h; do problem "upstream reference: ${h:0:160}"; done <<<"$hits"
+fi
+
 [ "$fail" -eq 0 ] && echo "check-skills: ok ($(ls -d skills/*/ | wc -l | tr -d ' ') skills, $(ls agents/*.md 2>/dev/null | wc -l | tr -d ' ') agents, $(ls "$mode"/playbooks/*.md | wc -l | tr -d ' ') playbooks)"
 exit "$fail"

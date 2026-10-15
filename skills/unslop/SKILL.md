@@ -5,8 +5,6 @@ description: Cut AI tells from any prose before it goes out. Scans for numbered 
 
 # Unslop
 
-Adapted from poteto's pstack.
-
 Edit text to remove AI patterns. It applies to any prose: chat replies, docs, PR text, commit messages, review comments. Scan for the patterns below, then rewrite. Keep the meaning and match the intended tone. Leave code, quoted output, and other people's words as they are.
 
 ## Patterns to detect and fix

@@ -59,6 +59,7 @@ These act on your session or your repo at a time you choose.
 | `/flatpaper-stack:reflect` | Three reviewers mine this session's transcript. Each learning becomes a proposed edit to a skill, `CLAUDE.md`, or memory, shown for your approval |
 | `/flatpaper-stack:recall` | Rebuilds recent context from this project's sessions, decision logs, git, and open PRs into a short current-state brief |
 | `/flatpaper-stack:ketchup` | Catches you up on what changed since your last message in under 150 words, with each action item laid out so you can decide |
+| `/flatpaper-stack:flatpaper-help` | Answers how-to questions about flatpaper: setup, wording a flatpaper-mode prompt, which skill or playbook fits, and fixes for a run that went wrong. Hands back a prompt to send instead of starting the work |
 | `/flatpaper-stack:sharpen` | Before starting, asks how a top expert would do the task, what you are really after, and whether the ask is over- or underspecified, then does the work |
 
 ## Install
@@ -66,13 +67,13 @@ These act on your session or your repo at a time you choose.
 Load it from a local clone with a shell alias. Edits take effect on the next session.
 
 ```bash
-alias claude='claude --plugin-dir ~/Documents/GitHub/flatpaper'
+alias claude='claude --plugin-dir ~/Documents/GitHub/flatpaper-stack'
 ```
 
 To use it in the IDE extension or desktop app too, install it from the local clone instead. Nothing is published.
 
 ```bash
-claude plugin marketplace add ~/Documents/GitHub/flatpaper
+claude plugin marketplace add ~/Documents/GitHub/flatpaper-stack
 claude plugin install flatpaper-stack@flatpaper-stack --scope user
 ```
 
@@ -94,7 +95,7 @@ Add these to `~/.claude/settings.json`, then restart Claude Code. A session that
 | `CLAUDE_CODE_ENABLE_TODO_TOOLS=1` | Yes | Claude Code hides `TaskCreate` and `TaskUpdate` by default on newer models. flatpaper-mode puts each playbook step in the task list with them. Without it, the mode falls back to a checklist in its replies. |
 | `attribution` | No | Removes the Claude co-author line from commits and PRs, enforced by Claude Code instead of a rule. |
 
-Check the plugin after editing a skill or playbook with `scripts/check-skills.sh`. It lints frontmatter, README listings, playbook wiring, relative paths, and non-Anthropic model names.
+Check the plugin after editing a skill or playbook with `scripts/check-skills.sh`. It lints frontmatter, README listings, playbook wiring, relative paths, non-Anthropic model names, and references to the upstream plugin in skills and agents.
 
 Optional tools: `jq` and `gh` (logged in). The finish steps read a PR back with `gh`. Without it, that check is reported inconclusive. The architecture drift line uses both to check the latest release of the repo a page describes. Without them, it still checks this repo's commits.
 

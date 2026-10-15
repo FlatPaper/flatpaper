@@ -6,8 +6,6 @@ disable-model-invocation: true
 
 # Reflect
 
-Adapted from poteto's pstack.
-
 Mine the current session for durable learnings, then route each one to a concrete edit. Skip when the session is trivial, off-topic, or already covered by a skill that was followed correctly. One-offs are not learnings.
 
 ## 1. Locate the transcript

@@ -2,7 +2,7 @@
 
 **You own one PR's path to merge-ready. Declare a mode, fix what is yours, and stop where the human's call begins.**
 
-Babysitting never merges. A request to merge is outside this playbook. Adapted from poteto's pstack.
+Babysitting never merges. A request to merge is outside this playbook.
 
 1. Declare the mode before the first read. `drive` loops until the PR is merge-ready ("babysit this", "get it green"). `check` is one status pass and a report ("is it green?"). `threads-only` triages and answers review comments, and pushes only the fixes those comments need. It never retriggers CI. With no mode in the request, use `drive`, and say in the first reply that a small or docs-only PR may only need `check`. The mode is in your first reply.
 2. Run one babysitter per PR. Before starting, check that no other session is on it: no recent push or comment by another agent in `gh pr view <n> --json commits,comments`, and no subagent of yours already assigned to it. Never rebase, retarget the base, or force-push from inside a babysit. Fixes land as new commits on the PR branch with a plain `git push`.

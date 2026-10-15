@@ -5,8 +5,6 @@ description: Spawn Comment Sicko on a diff or files, act on the findings it gets
 
 # No comments
 
-Adapted from poteto's pstack.
-
 Spawn Comment Sicko. Act on accepted findings. Defer to its fresh view.
 
 ## Scope

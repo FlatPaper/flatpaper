@@ -5,7 +5,7 @@ description: Find out why code is the way it is. Anchors in git history, discove
 
 # Why
 
-Find the forces that gave code its shape. Adapted from poteto's pstack.
+Find the forces that gave code its shape.
 
 For what code does and how it works, use the Investigation playbook (`${CLAUDE_PLUGIN_ROOT}/skills/flatpaper-mode/playbooks/investigation.md`). This skill answers why.
 

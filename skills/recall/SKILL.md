@@ -6,8 +6,6 @@ disable-model-invocation: true
 
 # Recall
 
-Adapted from poteto's pstack.
-
 Before you start or resume work, rebuild the user's recent working context and hand back a tight brief of where things stand and what to do next. Read only what the in-scope threads need, then stop.
 
 The context lives in two records. This project's session transcripts hold what you did and decided. The shared record holds everything that happened around the same code under other names: the symptoms users keep reporting, the fixes that shipped and got reverted, the errors still firing in prod. That second record is what the `why` skill searches. A feature with a long bug tail keeps most of its story there, so don't rebuild it from transcripts alone.

@@ -5,8 +5,6 @@ description: Adversarial review of a change by three parallel reviewers on diffe
 
 # Interrogate
 
-Adapted from poteto's pstack.
-
 Spawn one reviewer per model to review a change adversarially. The signal comes from model diversity, not assigned personas. The deliverable is a synthesized verdict. Don't apply changes.
 
 All reviewers are Claude models. Same-family review catches less than cross-vendor review, so agreement across them is a weaker signal than agreement across vendors.

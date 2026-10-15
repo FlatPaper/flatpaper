@@ -5,8 +5,6 @@ description: Sketch types, signatures, and module structure before code, compare
 
 # Architect
 
-Adapted from poteto's pstack.
-
 Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Compare candidates from several runners, then fill in code against the chosen sketch.
 
 ## Start

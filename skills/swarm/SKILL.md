@@ -5,8 +5,6 @@ description: Fan out N parallel background workers over separate slices or a rac
 
 # Swarm
 
-Adapted from poteto's pstack.
-
 Fan out N parallel workers. They cover separate slices, race the same brief, or both. You wait, aggregate, and return one report.
 
 ## Start

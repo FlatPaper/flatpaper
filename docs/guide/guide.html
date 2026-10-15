@@ -95,7 +95,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 </style>
 <header class="top">
-  <div class="eyebrow">A Claude Code plugin · version 0.8.0</div>
+  <div class="eyebrow">A Claude Code plugin · version 0.8.1</div>
   <h1>Using flatpaper</h1>
   <p class="lede">flatpaper makes agent work you can trust and still understand a month later. Part 1 gets you running. Part 2 covers the ideas behind it: how to work with agents so the result holds up. Part 3 shows what to type for the situation you're in.</p>
   <div class="five"><span>goal</span><span>done check</span><span>proof</span><span>what you know</span><span>constraints</span></div>
@@ -140,9 +140,9 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   <h2>Install it</h2>
   <p>flatpaper is a Claude Code plugin loaded from a local clone. Pick one way to load it.</p>
   <p>For the CLI only, alias it. Edits take effect on the next session.</p>
-<pre>alias claude='claude --plugin-dir ~/Documents/GitHub/flatpaper'</pre>
+<pre>alias claude='claude --plugin-dir ~/Documents/GitHub/flatpaper-stack'</pre>
   <p>For the CLI, the IDE extension, and the desktop app, install it:</p>
-<pre>claude plugin marketplace add ~/Documents/GitHub/flatpaper
+<pre>claude plugin marketplace add ~/Documents/GitHub/flatpaper-stack
 claude plugin install flatpaper-stack@flatpaper-stack --scope user
 claude plugin update flatpaper-stack@flatpaper-stack   # after edits; bump the version first
 /reload-plugins                            # in an open session</pre>
@@ -421,7 +421,7 @@ raise a draft PR.</pre>
     <li>A task list with one task per playbook step. A skipped step stays visible as <code>skip: &lt;reason&gt;</code>.</li>
     <li>A short reply that leads with the outcome and pastes real output as proof.</li>
   </ul>
-  <div class="takeaway"><b>Tip</b>Quick questions don't need the mode. The always-on rules apply to every prompt.</div>
+  <div class="takeaway"><b>Tip</b>Quick questions don't need the mode. The always-on rules apply to every prompt. Not sure what to type? Ask <code>/flatpaper-stack:flatpaper-help</code> in plain words.</div>
 </section>
 
 <section class="ch" id="c-mode">
@@ -539,6 +539,12 @@ raise a draft PR.</pre>
 <pre>/flatpaper-stack:flatpaper-mode &lt;goal&gt;. done means &lt;check&gt;. show me &lt;proof&gt;. &lt;what you know&gt;. &lt;constraints&gt;.</pre>
   </div>
 
+  <div class="cmd" id="c-flatpaper-help">
+    <h4>/flatpaper-stack:flatpaper-help <span class="tag">by hand</span></h4>
+    <p><b>Use it when</b> you don't know which command or wording fits. Ask in plain words. It answers, links the file the answer came from, and hands you a prompt to send. It doesn't start the work.</p>
+<pre>/flatpaper-stack:flatpaper-help which command checks a PR before I open it?</pre>
+  </div>
+
   <div class="cmd" id="c-sharpen">
     <h4>/flatpaper-stack:sharpen <span class="tag">by hand</span></h4>
     <p><b>Use it when</b> you can't state the task crisply. It frames the task the way an expert would, then does it.</p>
@@ -577,7 +583,7 @@ raise a draft PR.</pre>
   </div>
 
   <div class="cmd" id="c-blast-radius">
-    <h4>/flatpaper-stack:blast-radius</h4>
+    <h4>/flatpaper-stack:blast-radius <span class="tag">by hand</span></h4>
     <p><b>Use it when</b> a change might break callers outside its diff. It finds them and proves the key safety fact with a script you can rerun. Defaults to the current branch.</p>
 <pre>/flatpaper-stack:blast-radius PR 123</pre>
   </div>
@@ -691,4 +697,4 @@ new task: review the open PR.</pre>
 </section>
 </main>
 </div>
-<footer>Built from the flatpaper repo at version 0.8.0 with <code>docs/guide/build.sh</code>.</footer>
+<footer>Built from the flatpaper repo at version 0.8.1 with <code>docs/guide/build.sh</code>.</footer>

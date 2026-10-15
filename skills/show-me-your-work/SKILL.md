@@ -5,7 +5,7 @@ description: Keep a reviewable decision trail for long-running, unattended, or m
 
 # Show me your work
 
-Keep one decision log per task. Adapted from poteto's pstack.
+Keep one decision log per task.
 
 ## The format
 

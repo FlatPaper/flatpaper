@@ -5,8 +5,6 @@ description: Run several parallel candidates at the same task, pick a base again
 
 # Arena
 
-Adapted from poteto's pstack.
-
 Call `TaskCreate` once per phase (Frame, Fan out, Cross-judge, Pick, Graft, Verify) before launching anything.
 
 ## Phase A: Frame

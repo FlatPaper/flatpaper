@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Maintain a verification skill
 
-A feature map rots as soon as the app changes. This skill is the upkeep loop for a skill made by `/flatpaper-stack:create-verification-skill`, or any project-local verification skill with a feature map. Adapted from poteto's pstack.
+A feature map rots as soon as the app changes. This skill is the upkeep loop for a skill made by `/flatpaper-stack:create-verification-skill`, or any project-local verification skill with a feature map.
 
 The unit of rigor is the feature, not every sentence. Cover every feature file from source and drive every feature live. You don't have to run every bullet.
 

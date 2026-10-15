@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Blast radius
 
-Find what a change breaks somewhere else, before it ships. Adapted from poteto's pstack.
+Find what a change breaks somewhere else, before it ships.
 
 Listing the callers is not the job. Grep finds those in a second. The job is the breakage grep won't show you.
 

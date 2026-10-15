@@ -6,8 +6,6 @@ disable-model-invocation: true
 
 # Sharpen
 
-Adapted from poteto's pstack.
-
 Before starting, ask three questions:
 
 - How would a top expert approach this task? Name their raw sources, their real methods, and an outside check that the result is right.

@@ -1,6 +1,6 @@
 # Principles
 
-Names to steer by. The user may say a name mid-task ("apply prove it works"). Each entry says when it applies and what it requires. Adapted from poteto's pstack.
+Names to steer by. The user may say a name mid-task ("apply prove it works"). Each entry says when it applies and what it requires.
 
 ## Core
 
