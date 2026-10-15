@@ -66,6 +66,7 @@ If such a step touches a UI, CLI, or service and no `verify-<app>` skill exists,
 - Give review and verification to a fresh subagent that did not write the change.
 - Write every brief with the fields in `references/subagent-brief.md`, sized to the unit. A brief that can't fill its fields is not ready to send.
 - Route bulk reading to subagents and keep summaries in the main thread.
+- Match the effort to the job. Before each spawn, set the Agent tool's `effort`. Start at `high`. Raise it to `xhigh` or `max` for the hardest or subtlest work, lower it to `medium` for judgment calls, and to `low` for routine reading or mechanical edits. Keep the model a skill names, so a mixed panel stays mixed. If the tool rejects `effort`, omit it and say so.
 
 ## Writing the reply
 

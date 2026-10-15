@@ -48,7 +48,8 @@ These act on your session or your repo at a time you choose.
 | `/flatpaper:correct` | Makes a repeated agent mistake impossible: architecture, types, a lint, a hook, a test, docs last. Each check is shown failing on the mistake and passing on the fix |
 | `/flatpaper:reflect` | Three reviewers mine this session's transcript. Each learning becomes a proposed edit to a skill, `CLAUDE.md`, or memory, shown for your approval |
 | `/flatpaper:recall` | Rebuilds recent context from this project's sessions, decision logs, git, and open PRs into a short current-state brief |
-| `/flatpaper:ketchup` | Catches you up on everything since your last message, with each action item laid out so you can decide |
+| `/flatpaper:ketchup` | Catches you up on what changed since your last message in under 150 words, with each action item laid out so you can decide |
+| `/flatpaper:sharpen` | Before starting, asks how a top expert would do the task, what you are really after, and whether the ask is over- or underspecified, then does the work |
 
 ## Install
 
