@@ -139,6 +139,13 @@ column -s$'\t' -t decisions.tsv          # read the log in a terminal</pre>
 /flatpaper:interrogate src/sync/ before I open the PR</pre>
   </div>
 
+  <div class="cmd" id="c-no-comments">
+    <h4>/flatpaper:no-comments</h4>
+    <p>Runs on its own before a PR is pushed. A fresh reviewer strips comments that narrate or excuse code, and flags code that only makes sense with a comment. The flags get fixed. A "do not remove" comment becomes a type, test, or lint if you approve.</p>
+<pre>/flatpaper:no-comments
+/flatpaper:no-comments src/billing/</pre>
+  </div>
+
   <div class="cmd" id="c-swarm">
     <h4>/flatpaper:swarm</h4>
     <p>Parallel workers over slices or a race, one table back.</p>

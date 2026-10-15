@@ -34,6 +34,7 @@ You don't type these. A playbook step runs them. You can still call one directly
 | `/flatpaper:interrogate` | Feature, Refactoring | Adversarial review by three fresh reviewers on `opus`, `sonnet`, and `fable`, then one verdict |
 | `/flatpaper:swarm` | Feature, Perf, Multi-phase plan | Fans out parallel workers and returns one table |
 | `/flatpaper:arena` | Prototype | Runs candidates on `opus`, `sonnet`, and `fable`, picks a base, and grafts the best parts of the others |
+| `/flatpaper:no-comments` | Opening a PR | A fresh reviewer deletes comments that don't earn their place and flags code that needs prose to make sense. Fixes the accepted flags and offers to turn claimed constraints into a type, test, or lint |
 | `/flatpaper:unslop` | Every reply | Cuts AI tells from prose |
 | `/flatpaper:technical-writing` | Docs and PR text | Layered writing standard for docs, READMEs, PR descriptions, and commit messages |
 
