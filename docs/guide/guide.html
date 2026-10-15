@@ -1,0 +1,640 @@
+<title>flatpaper Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: lab-notebook guide. Sticky index on wide screens, one reading column, pass/fail marks as the recurring device. */
+:root {
+  --bg: #f5f7f4;
+  --surface: #ffffff;
+  --fg: #18211d;
+  --muted: #59655f;
+  --rule: #d9dfdb;
+  --accent: #0d6b58;
+  --accent-soft: #e2efe9;
+  --pass: #1f7a3d;
+  --fail: #b03a2a;
+  --fail-soft: #f7e6e2;
+  --pass-soft: #e3f1e6;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111613; --surface: #18201c; --fg: #e4ebe7; --muted: #9aa8a1; --rule: #2b3631;
+    --accent: #5cc7a8; --accent-soft: #1c3029; --pass: #6fcf8a; --fail: #f08a78;
+    --fail-soft: #3a211d; --pass-soft: #1b3123; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111613; --surface: #18201c; --fg: #e4ebe7; --muted: #9aa8a1; --rule: #2b3631;
+  --accent: #5cc7a8; --accent-soft: #1c3029; --pass: #6fcf8a; --fail: #f08a78;
+  --fail-soft: #3a211d; --pass-soft: #1b3123; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font-body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 64px; }
+.wrap { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px; }
+.wrap.single { grid-template-columns: minmax(0, 1fr); max-width: 860px; }
+@media (max-width: 860px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 0; } nav.toc { display: none; } }
+header.top { max-width: 1120px; margin: 0 auto; padding-block: 48px 32px; border-bottom: 1px solid var(--rule); margin-bottom: 32px; }
+.eyebrow { font: 600 12px/1.4 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 800 clamp(34px, 6vw, 56px)/1.05 var(--font-display); margin: 8px 0 12px; text-wrap: balance; letter-spacing: -.01em; }
+.lede { max-width: 64ch; color: var(--muted); font-size: 18px; margin: 0; }
+.five { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.five span { font: 600 13px/1 var(--font-mono); padding: 8px 10px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); }
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; font-size: 14px; max-height: calc(100vh - 48px); overflow-y: auto; }
+nav.toc .grp { font: 600 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 14px 8px 6px; }
+nav.toc .grp:first-child { margin-top: 0; }
+nav.toc ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
+nav.toc a { display: grid; grid-template-columns: 36px 1fr; color: var(--muted); text-decoration: none; padding: 4px 8px; border-radius: 4px; }
+nav.toc a:hover, nav.toc a:focus-visible { background: var(--accent-soft); color: var(--fg); outline: none; }
+nav.toc .n { font-family: var(--font-mono); color: var(--accent); }
+main { min-width: 0; }
+.part { font: 600 12px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-top: 2px solid var(--fg); padding-top: 10px; margin: 8px 0 28px; }
+section.ch { padding-block: 8px 40px; border-bottom: 1px solid var(--rule); margin-bottom: 40px; scroll-margin-top: 24px; }
+section.ch.last { border-bottom: 0; }
+.chnum { font: 600 12px/1 var(--font-mono); color: var(--accent); letter-spacing: .08em; text-transform: uppercase; }
+h2 { font: 800 30px/1.15 var(--font-display); margin: 6px 0 10px; text-wrap: balance; }
+h3 { font: 600 18px/1.3 var(--font-body); margin: 32px 0 10px; }
+p { max-width: 68ch; margin: 0 0 12px; }
+.claim { font-size: 19px; max-width: 64ch; border-left: 3px solid var(--accent); padding-left: 16px; margin: 12px 0 20px; }
+code, .mono { font-family: var(--font-mono); font-size: .9em; }
+:not(pre) > code { background: var(--accent-soft); padding: 1px 5px; border-radius: 3px; overflow-wrap: anywhere; }
+pre { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 16px; overflow-x: auto; font: 13.5px/1.55 var(--font-mono); margin: 12px 0 16px; white-space: pre; }
+.tbl { overflow-x: auto; margin: 12px 0 16px; }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 12px/1.3 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+td.nw { white-space: nowrap; }
+ul.tight, ol.tight { padding-left: 20px; margin: 8px 0 14px; max-width: 68ch; }
+ul.tight li, ol.tight li { margin-bottom: 4px; }
+.pf { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 12px 0 16px; }
+.pf > div { border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; background: var(--surface); min-width: 0; }
+.mark { font: 600 11px/1 var(--font-mono); letter-spacing: .08em; padding: 4px 6px; border-radius: 3px; display: inline-block; margin-bottom: 8px; }
+.mark.fail { color: var(--fail); background: var(--fail-soft); }
+.mark.pass { color: var(--pass); background: var(--pass-soft); }
+.pf p { margin: 0; font-size: 15px; }
+.takeaway { background: var(--accent-soft); border-radius: 6px; padding: 12px 16px; margin: 20px 0 0; max-width: 72ch; }
+.takeaway b { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 2px; }
+.entries { display: grid; gap: 12px; margin: 12px 0 8px; }
+.entry { border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); padding: 14px 16px; min-width: 0; scroll-margin-top: 24px; }
+.entry h4 { font: 600 16px/1.3 var(--font-mono); margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.entry dl { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 6px 14px; margin: 0; font-size: 15px; }
+.entry dt { font: 600 11px/1.9 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.entry dd { margin: 0; max-width: 68ch; }
+@media (max-width: 560px) { .entry dl { grid-template-columns: minmax(0, 1fr); gap: 2px; } .entry dd { margin-bottom: 8px; } }
+.cmd { border-top: 1px solid var(--rule); padding-top: 16px; margin-top: 20px; scroll-margin-top: 24px; }
+.cmd h4 { font: 600 17px/1.3 var(--font-mono); margin: 0 0 6px; display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.cmd p { margin-bottom: 8px; }
+footer { max-width: 1120px; margin: 24px auto 0; color: var(--muted); font-size: 14px; border-top: 1px solid var(--rule); padding-top: 16px; }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tag { font: 600 11px/1 var(--font-mono); color: var(--muted); border: 1px solid var(--rule); border-radius: 3px; padding: 3px 5px; white-space: nowrap; letter-spacing: 0; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+<header class="top">
+  <div class="eyebrow">A Claude Code plugin · version 0.7.1</div>
+  <h1>Using flatpaper</h1>
+  <p class="lede">flatpaper makes agent work you can trust and still understand a month later. Part 1 gets you running. Part 2 covers the ideas behind it: how to work with agents so the result holds up. Part 3 lists every command and what sets each part of a playbook off.</p>
+  <div class="five"><span>goal</span><span>done check</span><span>proof</span><span>what you know</span><span>constraints</span></div>
+</header>
+<div class="wrap">
+<nav class="toc" aria-label="Sections">
+  <div class="grp">1 · Install and use</div>
+  <ol>
+    <li><a href="#install"><span class="n">1.1</span>Install it</a></li>
+    <li><a href="#use"><span class="n">1.2</span>Use it</a></li>
+  </ol>
+  <div class="grp">2 · Working with agents</div>
+  <ol>
+    <li><a href="#i-trust"><span class="n">2.1</span>Trust first</a></li>
+    <li><a href="#i-prompt"><span class="n">2.2</span>Say the goal</a></li>
+    <li><a href="#i-router"><span class="n">2.3</span>One front door</a></li>
+    <li><a href="#i-understand"><span class="n">2.4</span>Understand first</a></li>
+    <li><a href="#i-design"><span class="n">2.5</span>Design by running</a></li>
+    <li><a href="#i-build"><span class="n">2.6</span>Pin, build, clean</a></li>
+    <li><a href="#i-verify"><span class="n">2.7</span>Prove it</a></li>
+    <li><a href="#i-away"><span class="n">2.8</span>Earn the loop</a></li>
+    <li><a href="#i-principles"><span class="n">2.9</span>Steer with names</a></li>
+    <li><a href="#i-encode"><span class="n">2.10</span>Fix the repo</a></li>
+    <li><a href="#i-map"><span class="n">2.11</span>Keep a map</a></li>
+  </ol>
+  <div class="grp">3 · Commands</div>
+  <ol>
+    <li><a href="#c-mode"><span class="n">3.1</span>Playbook triggers</a></li>
+    <li><a href="#c-auto"><span class="n">3.2</span>In-run triggers</a></li>
+    <li><a href="#c-skills"><span class="n">3.3</span>Every skill</a></li>
+    <li><a href="#c-steer"><span class="n">3.4</span>Steering</a></li>
+    <li><a href="#c-scripts"><span class="n">3.5</span>Scripts</a></li>
+    <li><a href="#c-pitfalls"><span class="n">3.6</span>Pitfalls</a></li>
+  </ol>
+</nav>
+<main>
+<div class="part" id="start">Part 1 · Install and use</div>
+
+<section class="ch" id="install">
+  <div class="chnum">1.1</div>
+  <h2>Install it</h2>
+  <p>flatpaper is a Claude Code plugin loaded from a local clone. Pick one way to load it.</p>
+  <p>For the CLI only, alias it. Edits take effect on the next session.</p>
+<pre>alias claude='claude --plugin-dir ~/Documents/GitHub/flatpaper'</pre>
+  <p>For the CLI, the IDE extension, and the desktop app, install it:</p>
+<pre>claude plugin marketplace add ~/Documents/GitHub/flatpaper
+claude plugin install flatpaper@flatpaper --scope user
+claude plugin update flatpaper@flatpaper   # after edits; bump the version first
+/reload-plugins                            # in an open session</pre>
+  <p>Then add these to <code>~/.claude/settings.json</code> and restart Claude Code. A session that is already open keeps its old tool list.</p>
+<pre>{
+  "env": { "CLAUDE_CODE_ENABLE_TODO_TOOLS": "1" },
+  "attribution": { "commit": "", "pr": "", "sessionUrl": false }
+}</pre>
+  <div class="tbl"><table>
+    <thead><tr><th>Setting</th><th>Needed</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="nw"><code>CLAUDE_CODE_ENABLE_TODO_TOOLS</code></td><td>Yes</td><td>flatpaper-mode puts each playbook step in the task list. Without it, the mode keeps a checklist in its replies instead.</td></tr>
+      <tr><td class="nw"><code>attribution</code></td><td>No</td><td>Removes the Claude co-author line from commits and PRs. Claude Code enforces it, so the model has nothing to remember.</td></tr>
+      <tr><td class="nw"><code>gh</code>, <code>jq</code></td><td>Optional</td><td><code>gh</code> reads PRs back; without it, the read-back is reported inconclusive. Both check the latest release for the drift line; without them, it still counts commits.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch" id="use">
+  <div class="chnum">1.2</div>
+  <h2>Use it</h2>
+  <p class="claim">Quick questions need nothing. For real work, start with the mode and give up to five parts, one sentence each.</p>
+<pre>/flatpaper:flatpaper-mode &lt;goal&gt;. done means &lt;check&gt;. show me &lt;proof&gt;. &lt;what you know&gt;. &lt;constraints&gt;.</pre>
+  <div class="tbl"><table>
+    <thead><tr><th>Part</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>Goal</td><td>fix the csv export dropping its last row</td></tr>
+      <tr><td>Done check</td><td>done means the 60k-row fixture exports every row</td></tr>
+      <tr><td>Proof</td><td>show me row counts before and after</td></tr>
+      <tr><td>What you know</td><td>started after yesterday's deploy. failing job is 4812</td></tr>
+      <tr><td>Constraints</td><td>repro first. no PR. don't touch the schema</td></tr>
+    </tbody>
+  </table></div>
+  <p>Only the goal is required. A missing part gets proposed back to you in one line. The words in your goal pick the playbook ("fix" picks Bug fix, "how does" picks Investigation). Stay in the same session for follow-ups: each prompt is matched again, so review, then fix, then PR just works.</p>
+  <p>Stepping away? Say so, and the mode decides and logs reversible calls instead of asking:</p>
+<pre>/flatpaper:flatpaper-mode im stepping away. &lt;goal&gt;. done means &lt;check&gt;. keep a decision log.</pre>
+  <p>Coming back? <code>/flatpaper:ketchup</code> for what changed, <code>/flatpaper:show-me-your-work catch me up</code> for the decision log. Every command is in <a href="#commands">Part 3</a>.</p>
+</section>
+<div class="part" id="ideas">Part 2 · Working with agents</div>
+
+<section class="ch" id="i-trust">
+  <div class="chnum">2.1</div>
+  <h2>Trust comes before parallelism</h2>
+  <p class="claim">Ten agents you don't trust give you ten times the unchecked work, and you become the bottleneck. Make one agent trustworthy first. Then running many is easy.</p>
+  <ul class="tight">
+    <li>Unchecked work compounds. Agents copy the patterns they find, so one bad pattern gets copied by the next ten agents. Delete bad patterns before they spread.</li>
+    <li>Trust needs three things: a goal that can be checked, evidence that it was met, and a trail of what was decided and why.</li>
+    <li>Your job shifts from writing code to designing checks and reading evidence.</li>
+  </ul>
+  <div class="tbl"><table>
+    <thead><tr><th>Ingredient</th><th>Question it answers</th><th>In flatpaper</th></tr></thead>
+    <tbody>
+      <tr><td>Checkable goal</td><td>What does done mean?</td><td>The done check in every prompt, asked for by the guidelines and the per-prompt hook</td></tr>
+      <tr><td>Evidence</td><td>How do I know it's done?</td><td>Proof on the real artifact, through the project's <code>verify-&lt;app&gt;</code> skill</td></tr>
+      <tr><td>Trail</td><td>What did it decide, and why?</td><td>The decision log from <code>show-me-your-work</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="takeaway"><b>Remember</b>If you want to go fast, go deep first.</div>
+</section>
+
+<section class="ch" id="i-prompt">
+  <div class="chnum">2.2</div>
+  <h2>Say the goal, not the ceremony</h2>
+  <p class="claim">A prompt needs at most five things, one sentence each: the goal, a done check that can pass or fail, the proof you want to see, what you already know, and the real constraints.</p>
+  <ul class="tight">
+    <li><b>Leave out the how.</b> Say what to achieve and leave room for a better path than the one you'd pick.</li>
+    <li><b>Leave out your theory, at first.</b> A stated guess narrows the search to wherever you pointed. Give the fact ("/ws returns 403"), not the "so..." after it.</li>
+    <li><b>Restate noisy reports first.</b> A misreading caught in the restatement costs one message instead of one wrong fix.</li>
+    <li><b>Don't list skills.</b> The playbook already sequences them, and a hand-written sequence drops steps it would have kept.</li>
+    <li><b>A done check must be able to fail.</b> "Make it better" and "work on it for an hour" aren't checks.</li>
+  </ul>
+  <div class="pf">
+    <div><span class="mark fail">BEFORE</span><p>"see if there's a way to fix this." A proposed fix counted as done. Runs still didn't show up.</p></div>
+    <div><span class="mark pass">AFTER</span><p>"done means you show a run appearing through the Coder URL, or name every blocker. show me /ws status and the /api/runs body. read-only for now."</p></div>
+  </div>
+  <p>Try it:</p>
+<pre>/flatpaper:flatpaper-mode read this thread. restate the underlying issue in plain words. don't change any code yet.</pre>
+  <p><b>In flatpaper:</b> the five-part prompt, the per-prompt reminder, flatpaper-mode's first start step, and <code>sharpen</code> for tasks you can't state crisply.</p>
+</section>
+
+<section class="ch" id="i-router">
+  <div class="chnum">2.3</div>
+  <h2>One front door</h2>
+  <p class="claim">When the model picks skills by matching descriptions, it gets fuzzy as skills overlap. A router is predictable: one entry point matches a playbook, copies its steps into a task list, and calls each skill when a step needs it.</p>
+  <ul class="tight">
+    <li>A skipped step stays visible as <code>skip: &lt;reason&gt;</code>, so you can see what the agent chose not to do.</li>
+    <li>Your words carry the intent and the playbook carries the rigor, so follow-ups can be short: "continue", "do it", "raise a draft PR".</li>
+    <li>When the subject changes, the work should re-match. A mode mid-feature otherwise treats your new question as the next feature step.</li>
+    <li>Give parallel work its own worktree. Agents sharing one working tree fight over files, ports, and build output.</li>
+  </ul>
+  <p><b>In flatpaper:</b> <code>flatpaper-mode</code>, its 16 playbooks, the shared Start and Finish steps, re-matching on every prompt, and a worktree for every writing subagent.</p>
+</section>
+
+<section class="ch" id="i-understand">
+  <div class="chnum">2.4</div>
+  <h2>Understand before you change</h2>
+  <p class="claim">Agents fail in two ways: they misread what you want, or they lack the context to do it right. An agent that edits without a traced model fixes the symptom at the first plausible spot. Tracing first is cheaper than the second bug.</p>
+  <ul class="tight">
+    <li>Investigate read-only first, and ask what data it used, so evidence separates from guesses.</li>
+    <li>Ask it to convince you. An agent that has to explain must back each claim instead of stating it and moving on.</li>
+    <li>Turn explanations into claims, predict, then run: <span class="mono">explanation → claims → predictions → run → compare</span>. A vague prediction can't be wrong, so it teaches nothing.</li>
+    <li>When a result surprises you, suspect the check first.</li>
+    <li>"Nobody wrote down why" is itself an answer. Code is not evidence of its own intent.</li>
+  </ul>
+  <p>Try it:</p>
+<pre>/flatpaper:flatpaper-mode investigate why background jobs time out every few hours. give me what we know, what data you used, and your best hypotheses. don't change any code yet.
+/flatpaper:why was the retry limit set to five? does the reason still hold?</pre>
+  <p><b>In flatpaper:</b> the Investigation, Runtime forensics, and Trace forensics playbooks, <code>why</code>, <code>recall</code>, Session pickup, and the confidence tiers in <code>principles.md</code>.</p>
+</section>
+
+<section class="ch" id="i-design">
+  <div class="chnum">2.5</div>
+  <h2>Settle the design by running something</h2>
+  <p class="claim">One attempt at a hard design locks in the first shape the model thought of. Plan through code: prototypes answer the open questions, a README sets the target for shared code, and the written plan comes last.</p>
+  <ul class="tight">
+    <li>Never take the first design. Ask for a few, and pick from evidence you can see.</li>
+    <li>Don't spend reviewers on an abstract plan. Review of a plan with no code behind it invents risks that never happen.</li>
+    <li>Different models have different blind spots, so a finding two of them raise independently is a strong signal.</li>
+    <li>For a migration, say "the result must match the original exactly, bugs included". Otherwise old and new can't be compared.</li>
+  </ul>
+  <h3>How much design does a task deserve?</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Situation</th><th>Reach for</th></tr></thead>
+    <tbody>
+      <tr><td>A small finished change you're unsure about</td><td><code>interrogate</code></td></tr>
+      <tr><td>Crosses boundaries or moves ownership</td><td><code>architect</code>, which runs <code>arena</code></td></tr>
+      <tr><td>One decision where independent attempts help</td><td><code>arena</code></td></tr>
+      <tr><td>Coverage, parallel checks, or a race</td><td><code>swarm</code></td></tr>
+      <tr><td>A question you could answer by running something</td><td>The Prototype playbook</td></tr>
+      <tr><td>Contested and expensive to reverse</td><td><code>architect</code>, then <code>interrogate</code> before shipping</td></tr>
+      <tr><td>Spans several PRs</td><td>The Multi-phase plan playbook, after the design settles</td></tr>
+    </tbody>
+  </table></div>
+  <p>Most changes need none of this. flatpaper-mode applies the ladder on its own; reach for these directly when you want more or less scrutiny.</p>
+</section>
+
+<section class="ch" id="i-build">
+  <div class="chnum">2.6</div>
+  <h2>Pin it, build it, clean it</h2>
+  <p class="claim">Say what you observed and let the playbook demand the evidence. Every build task pins something before anything changes.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Task</th><th>Pin first</th><th>Prompt shape</th></tr></thead>
+    <tbody>
+      <tr><td>Bug</td><td>A reproduction</td><td>repro first, then fix and verify</td></tr>
+      <tr><td>Feature</td><td>What must not change</td><td>text output stays byte-identical</td></tr>
+      <tr><td>Refactor</td><td>Current output</td><td>record the output first, prove it's unchanged</td></tr>
+      <tr><td>Perf</td><td>A measured baseline</td><td>1.8s on this fixture. before and after</td></tr>
+    </tbody>
+  </table></div>
+  <h3>The sabotage test</h3>
+  <p>If every function returned None, would this test notice? A test that passes when the code does nothing is hollow.</p>
+  <div class="pf">
+    <div><span class="mark fail">PASSES WHEN BROKEN</span><p><code>send.assert_not_called()</code> after <code>notify_user(42)</code>. Code that does nothing never calls send.</p></div>
+    <div><span class="mark pass">FAILS WHEN BROKEN</span><p>Notify an opted-out user and a subscribed one, then <code>send.assert_called_once_with(7, ...)</code>.</p></div>
+  </div>
+  <p>Write the failing test first when there's a cheap test path. Don't force one through brittle mocks when running the real command is stronger evidence.</p>
+  <h3>Clean before review</h3>
+  <p>Cleanup is not optional polish. Narrating comments and defensive dead weight read as unfinished, and the extra code is where the next bug hides. Clean code and prose separately, and have comments reviewed by an agent that didn't write them, because authors defend their own.</p>
+  <p><b>In flatpaper:</b> the Bug fix, Feature, Refactoring, and Perf playbooks, the Opening a PR defaults, <code>unslop</code>, and <code>technical-writing</code>.</p>
+</section>
+
+<section class="ch" id="i-verify">
+  <div class="chnum">2.7</div>
+  <h2>Prove it on the real thing</h2>
+  <p class="claim">"It compiles" is not evidence. Verification is the step that usually waits on a human. Make the agent able to do it, and you stop being the bottleneck.</p>
+  <ul class="tight">
+    <li><b>Match the check to the change.</b> A CLI runs the real command. A UI walks the flow in the running app. A parser replays a saved input. Perf compares profiles. Storage reads the value back.</li>
+    <li><b>Presence is not behavior.</b> "Installed", "running", or "returned 200" can all pass while the user is still blocked.</li>
+    <li><b>Vet every number.</b> A warm cache, an untuned side, or work outside the timed region can fake a speedup. Ask "why not double?" and answer from a run.</li>
+    <li><b>The judge is never the author.</b> Review and verification go to an agent that didn't write the change.</li>
+    <li><b>A verification skill is infrastructure.</b> Commit it so every person and agent drives the app the same way, and keep its feature map honest as the app changes.</li>
+  </ul>
+  <div class="pf">
+    <div><span class="mark fail">ALL GREEN, NOTHING THERE</span><p>Dashboard loaded. Daemon restarted. WebSocket <code>101</code>. <code>/api/runs</code> returned <code>200</code>, with body <code>[]</code>.</p></div>
+    <div><span class="mark pass">THE REAL CHECK</span><p>A smoke run actually appears in the dashboard through the Coder URL.</p></div>
+  </div>
+  <p><b>In flatpaper:</b> <code>create-verification-skill</code>, <code>maintain-verification-skill</code>, "Driving the app" in flatpaper-mode, <code>blast-radius</code>, the Perf playbook's number vetting, Babysit, and a fresh reviewer in every playbook.</p>
+</section>
+
+<section class="ch" id="i-away">
+  <div class="chnum">2.8</div>
+  <h2>Earn the loop before you leave it</h2>
+  <p class="claim">A loop you don't trust produces unchecked work faster. What makes leaving safe is a checkable finish condition, an isolated worktree, and a decision log you audit later.</p>
+  <h3>Four checks before a run goes alone</h3>
+  <ul class="tight">
+    <li>You've done the task once, or watched it done.</li>
+    <li>The agent has your tools: the verify skill, logs, profiler.</li>
+    <li>Every stage proves its work and can stop the line.</li>
+    <li>You've read transcripts and turned repeat failures into checks.</li>
+  </ul>
+  <h3>The handoff</h3>
+<pre>/flatpaper:flatpaper-mode im going to bed. migrate every caller to the new parser in a fresh worktree off main.
+done means zero old callers, all parser fixtures pass, old api deleted.
+keep a decision log. don't ask me before committing.
+/loop until done. if you're truly stuck after a few hours, stop and write up why.</pre>
+  <p>Each line buys something: a switch from asking to deciding, checks every iteration can run, isolation, a pre-answered permission, and an escape hatch that beats hours of creative goal reinterpretation. A duration is not a finish condition.</p>
+  <ul class="tight">
+    <li>Each iteration makes one change, runs one check, writes one log row. Changes that didn't help are discarded.</li>
+    <li>A plateau means pivot, never relaxing the finish condition.</li>
+    <li>Ask when watched, decide and log when away. The log is what makes deciding safe.</li>
+    <li>In the morning, audit decisions, not the whole night. Read the Attention section first.</li>
+  </ul>
+  <p><b>In flatpaper:</b> the Autonomous run, Pause safely, and Session pickup playbooks, <code>show-me-your-work</code>, and <code>ketchup</code>.</p>
+</section>
+
+<section class="ch" id="i-principles">
+  <div class="chnum">2.9</div>
+  <h2>Steer with names</h2>
+  <p class="claim">Say a principle's name and the agent applies the full rule it already read. One phrase redirects the work more precisely than a paragraph.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Say</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td>prove it works</td><td>It claims done because the build passed</td></tr>
+      <tr><td>fix root causes</td><td>It's silencing a symptom</td></tr>
+      <tr><td>attack the premise</td><td>Two fixes sharing one premise have failed</td></tr>
+      <tr><td>build the lever</td><td>It's doing repeated work by hand</td></tr>
+      <tr><td>subtract before you add</td><td>It's bolting a new piece onto old ones</td></tr>
+      <tr><td>separate before serializing shared state</td><td>Two attempts are about to write to one branch</td></tr>
+    </tbody>
+  </table></div>
+  <p>The agent must say which decision the principle changed. A name with no decision behind it was name-dropping. Don't memorize the list; come back when an agent does something a name would have prevented. All 24 are in Part 3.</p>
+</section>
+
+<section class="ch" id="i-encode">
+  <div class="chnum">2.10</div>
+  <h2>Fix the repo, not the prompt</h2>
+  <p class="claim">When you correct agents for the same mistake again and again, the fix belongs in the repo, not in your next prompt.</p>
+  <h3>The fix ladder, strongest first</h3>
+  <ol class="tight">
+    <li>Make the mistake impossible with architecture or a better data structure.</li>
+    <li>Block it with types, or a lint whose error names the fix.</li>
+    <li>Catch it with a test.</li>
+    <li>Write it down as a rule. Nothing fails when a rule is skipped, so this comes last.</li>
+  </ol>
+  <ul class="tight">
+    <li>Human review isn't on the ladder. A reviewer who catches the same mistake on every PR is the problem.</li>
+    <li>Start smaller than you think. Add a skill or a check when the same failure shows up twice.</li>
+    <li>Approve a lesson only if it would change a future decision. One odd session is an anecdote.</li>
+    <li>Don't edit a skill mid-task. Fix it in its own change.</li>
+  </ul>
+  <p>"straight to the point" appeared in 54 of 1,951 prompts despite a written rule saying "concise". A rule nothing enforces shows up as a repeat. In flatpaper it became a per-prompt hook.</p>
+  <p><b>In flatpaper:</b> <code>correct</code>, <code>reflect</code>, the hooks, and <code>check-skills.sh</code>.</p>
+</section>
+
+<section class="ch last" id="i-map">
+  <div class="chnum">2.11</div>
+  <h2>Keep a map the agent reads first</h2>
+  <p class="claim">An agent that starts cold re-traces the system every session, and a diagram nobody updates turns into a confident lie.</p>
+  <ul class="tight">
+    <li><b>Read.</b> Every playbook reads the map before tracing code, and trusts the code where they disagree.</li>
+    <li><b>Update.</b> A change that moves a boundary the map shows updates it in the same PR.</li>
+    <li><b>Verify.</b> Pin it to a SHA and release, and fact-check it row by row like code.</li>
+    <li><b>Drift.</b> A script says at session start when the map is behind.</li>
+  </ul>
+  <p><b>In flatpaper:</b> the Architecture page playbook and <code>arch-drift.sh</code>.</p>
+</section>
+<div class="part" id="commands">Part 3 · Commands and triggers</div>
+
+<section class="ch" id="c-mode">
+  <div class="chnum">3.1</div>
+  <h2>flatpaper-mode and its playbooks</h2>
+  <p>Every command starts with <code>/flatpaper:</code>. The main one is <code>/flatpaper:flatpaper-mode</code>. The words in your goal pick the playbook. You don't name the playbook.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Say</th><th>Playbook</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr id="cp-investigation"><td>how does, why is, is anything wrong, are we sure</td><td class="nw">Investigation</td><td><code>/flatpaper:flatpaper-mode how does the retry queue decide when to give up? read-only.</code></td></tr>
+      <tr id="cp-prototype"><td>try, sketch, which works better</td><td class="nw">Prototype</td><td><code>/flatpaper:flatpaper-mode try sqlite and duckdb for the export cache. show me timings on the 60k fixture.</code></td></tr>
+      <tr id="cp-feature"><td>add, build, support</td><td class="nw">Feature</td><td><code>/flatpaper:flatpaper-mode add a --json flag to the status command. text output stays byte-identical.</code></td></tr>
+      <tr id="cp-refactoring"><td>clean up, restructure, without changing behavior</td><td class="nw">Refactoring</td><td><code>/flatpaper:flatpaper-mode restructure the config loader without changing behavior. record current output first.</code></td></tr>
+      <tr id="cp-bug-fix"><td>fix, broken, repro</td><td class="nw">Bug fix</td><td><code>/flatpaper:flatpaper-mode fix the csv export dropping its last row. repro first. done means the 60k fixture exports every row.</code></td></tr>
+      <tr id="cp-perf"><td>speed up, make it faster, cut the cost</td><td class="nw">Perf</td><td><code>/flatpaper:flatpaper-mode speed up cold start. 1.8s on this machine now. done means under 1s, median of 5.</code></td></tr>
+      <tr id="cp-runtime-forensics"><td>why is this process hung, what is it doing right now</td><td class="nw">Runtime forensics</td><td><code>/flatpaper:flatpaper-mode the worker is at 100% CPU while idle. what is it doing right now? pid 4123. no code changes.</code></td></tr>
+      <tr id="cp-trace-forensics"><td>read this trace, what does this profile show</td><td class="nw">Trace forensics</td><td><code>/flatpaper:flatpaper-mode read this trace: ~/Downloads/boot.json. where does first paint wait?</code></td></tr>
+      <tr id="cp-autonomous-run"><td>im stepping away, run until, /loop until</td><td class="nw">Autonomous run</td><td><code>/flatpaper:flatpaper-mode im going to bed. migrate every caller to the new parser. done means zero old callers and fixtures pass. keep a decision log.</code></td></tr>
+      <tr id="cp-multi-phase-plan"><td>plan this migration, break this into PRs</td><td class="nw">Multi-phase plan</td><td><code>/flatpaper:flatpaper-mode plan this migration from REST to gRPC. break it into PRs. don't build anything.</code></td></tr>
+      <tr id="cp-babysit"><td>babysit, get it green, address the review comments</td><td class="nw">Babysit</td><td><code>/flatpaper:flatpaper-mode babysit PR 123</code></td></tr>
+      <tr id="cp-session-pickup"><td>pick up, take over this branch, continue from the log</td><td class="nw">Session pickup</td><td><code>/flatpaper:flatpaper-mode pick up where the last session left off on this branch</code></td></tr>
+      <tr id="cp-pause-safely"><td>pause, stop for now, pick this up tomorrow</td><td class="nw">Pause safely</td><td><code>pause for now. I'll pick this up tomorrow.</code></td></tr>
+      <tr id="cp-worktree-cleanup"><td>clean up worktrees</td><td class="nw">Worktree cleanup</td><td><code>/flatpaper:flatpaper-mode clean up worktrees</code></td></tr>
+      <tr id="cp-architecture-page"><td>map this repo, update the architecture page</td><td class="nw">Architecture page</td><td><code>/flatpaper:flatpaper-mode map this repo</code></td></tr>
+      <tr id="cp-opening-a-pr"><td>Not typed. Runs when a task commits or opens a PR and the repo sets no PR rules</td><td class="nw">Opening a PR</td><td><code>raise a draft PR.</code> (as a follow-up in the same session)</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Several steps in one session</h3>
+  <p>Each follow-up is matched again. When the kind of work changes, the mode switches playbooks and marks the old one's open steps <code>skip: superseded</code>. Don't <code>/clear</code> in between; the next step needs what the last one found.</p>
+<pre>/flatpaper:flatpaper-mode is anything on the architecture page wrong? done means each finding cites the line and the code. read-only.
+fix the wrong items. show me a before/after table with evidence. no PR yet.
+raise a draft PR.</pre>
+  <h3>Babysit modes</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Say</th><th>Mode</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>babysit this, get it green</td><td class="nw"><code>drive</code></td><td>Loops until merge-ready, a human wait, or a conflict. The default when no mode is named.</td></tr>
+      <tr><td>is it green?</td><td class="nw"><code>check</code></td><td>One status pass and a report.</td></tr>
+      <tr><td>ask for threads only</td><td class="nw"><code>threads-only</code></td><td>Triages and answers review threads, pushes only those fixes, never retriggers CI.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch" id="c-auto">
+  <div class="chnum">3.2</div>
+  <h2>What triggers what inside a run</h2>
+  <p>You don't call these. A condition in the work sets them off.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Condition</th><th>What happens</th><th>Where</th></tr></thead>
+    <tbody>
+      <tr><td>Session starts</td><td><code>guidelines.md</code> loads; the drift line prints if the architecture page is behind</td><td class="nw">SessionStart hook</td></tr>
+      <tr><td>You send any prompt</td><td>One-line reminder: concise, propose a done check, proof, constraints</td><td class="nw">UserPromptSubmit hook</td></tr>
+      <tr><td>Any prompt to the mode</td><td>Restates the goal; reads <code>AGENTS.md</code>, <code>CLAUDE.md</code>, <code>CONTRIBUTING.md</code>, <code>docs/README.md</code>, and the PR template</td><td class="nw">Start steps</td></tr>
+      <tr><td>The repo has <code>docs/architecture/</code></td><td>Reads the map before tracing code in any playbook</td><td class="nw">flatpaper-mode, after the playbook list</td></tr>
+      <tr><td>A "why was it built this way" question</td><td>Runs <code>why</code></td><td class="nw">Investigation 2</td></tr>
+      <tr><td>Running something would settle a choice</td><td>Routes to Prototype</td><td class="nw">Investigation 4, guidelines</td></tr>
+      <tr><td>One attempt would lock in the wrong shape, and the candidates share one task</td><td>Can run <code>arena</code></td><td class="nw">Prototype 3</td></tr>
+      <tr><td>A change crosses module boundaries or has several valid shapes</td><td>Runs <code>architect</code> sketch phases</td><td class="nw">Feature 4</td></tr>
+      <tr><td>Independent slices that produce separate artifacts</td><td>Fans out with <code>swarm</code></td><td class="nw">Feature 5, Perf 6, plan lanes</td></tr>
+      <tr><td>A step must drive the real app</td><td>Uses <code>verify-&lt;app&gt;</code>; offers once to create one if missing</td><td class="nw">Driving the app</td></tr>
+      <tr><td>The change moved a boundary the map shows</td><td>Runs Architecture page in update mode, same PR</td><td class="nw">Feature 8, Refactoring 7</td></tr>
+      <tr><td>The design is contested</td><td>Runs <code>interrogate</code> before the PR</td><td class="nw">Feature 9, Refactoring 6</td></tr>
+      <tr><td>The cause lives in a running process, or only a capture exists</td><td>Instruments per Runtime forensics, or reads per Trace forensics</td><td class="nw">Bug fix 4</td></tr>
+      <tr><td>"going to bed", "run until done", "stepping away"</td><td>Decides reversible calls, logs each with <code>show-me-your-work</code></td><td class="nw">Autonomy, guidelines</td></tr>
+      <tr><td>A force-push to a shared branch, deploy, data deletion, or message to people</td><td>Always pauses for you</td><td class="nw">Autonomy, guidelines</td></tr>
+      <tr><td>A task commits or opens a PR</td><td>Follows repo rules, else Opening a PR defaults; reads the PR back</td><td class="nw">Finish 2 and 3</td></tr>
+      <tr><td>A risky diff in a PR</td><td>Runs <code>blast-radius</code> for the Blast Radius section</td><td class="nw">Opening a PR 4</td></tr>
+      <tr><td>Any reply; any doc or PR text</td><td><code>unslop</code>; plus <code>technical-writing</code> for docs and PR text</td><td class="nw">Writing the reply</td></tr>
+      <tr><td>Review or verification of a change</td><td>A fresh subagent that did not write it</td><td class="nw">Subagents, guidelines</td></tr>
+      <tr><td>A multi-phase plan is written</td><td><code>check-plan.sh</code> must exit 0</td><td class="nw">Multi-phase plan 6</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch" id="c-skills">
+  <div class="chnum">3.3</div>
+  <h2>Every skill</h2>
+  <p>Skills tagged <span class="tag">by hand</span> never start on their own; you type them, or a playbook step asks you first. The rest also run from playbook steps.</p>
+
+  <div class="cmd" id="c-flatpaper-mode">
+    <h4>/flatpaper:flatpaper-mode <span class="tag">by hand</span></h4>
+    <p>Rigorous mode. Matches a playbook (table above) and drives it to verified work.</p>
+<pre>/flatpaper:flatpaper-mode &lt;goal&gt;. done means &lt;check&gt;. show me &lt;proof&gt;. &lt;what you know&gt;. &lt;constraints&gt;.</pre>
+  </div>
+
+  <div class="cmd" id="c-sharpen">
+    <h4>/flatpaper:sharpen <span class="tag">by hand</span></h4>
+    <p>For a task you can't state crisply. It frames the task the way an expert would, then does it.</p>
+<pre>/flatpaper:sharpen write onboarding docs for the billing service
+/flatpaper:sharpen figure out why our nightly job got slower this month</pre>
+  </div>
+
+  <div class="cmd" id="c-ketchup">
+    <h4>/flatpaper:ketchup <span class="tag">by hand</span></h4>
+    <p>What changed since your last message, in under 150 words, and what needs you.</p>
+<pre>/flatpaper:ketchup</pre>
+  </div>
+
+  <div class="cmd" id="c-show-me-your-work">
+    <h4>/flatpaper:show-me-your-work</h4>
+    <p>Starts or reads a decision log. Loads on its own for autonomous and multi-phase runs. Read the Attention section first.</p>
+<pre>/flatpaper:show-me-your-work keep a decision log for this migration
+/flatpaper:show-me-your-work catch me up on what you did
+column -s$'\t' -t decisions.tsv          # read the log in a terminal</pre>
+  </div>
+
+  <div class="cmd" id="c-recall">
+    <h4>/flatpaper:recall <span class="tag">by hand</span></h4>
+    <p>A current-state brief across this project's recent sessions, logs, and PRs. Defaults to the last 7 days.</p>
+<pre>/flatpaper:recall
+/flatpaper:recall my work on the export cache this week</pre>
+  </div>
+
+  <div class="cmd" id="c-why">
+    <h4>/flatpaper:why</h4>
+    <p>Why code is the way it is, from git, PRs, and any trackers, docs, or chat the session can reach. Every claim gets a confidence tier.</p>
+<pre>/flatpaper:why does the uploader retry exactly 3 times?
+/flatpaper:why did we pick postgres advisory locks over redis?</pre>
+  </div>
+
+  <div class="cmd" id="c-architect">
+    <h4>/flatpaper:architect</h4>
+    <p>Competing design sketches before code. Add "with checkpoint" to review the sketch before it implements.</p>
+<pre>/flatpaper:architect a plugin system for export formats
+/flatpaper:architect with checkpoint the new auth session store</pre>
+  </div>
+
+  <div class="cmd" id="c-arena">
+    <h4>/flatpaper:arena</h4>
+    <p>Three candidates on one task, a judge, a base, and grafts.</p>
+<pre>/flatpaper:arena the landing page hero copy
+/flatpaper:arena a parser for the legacy fixed-width format</pre>
+  </div>
+
+  <div class="cmd" id="c-interrogate">
+    <h4>/flatpaper:interrogate</h4>
+    <p>Three fresh reviewers try to break a change, then one verdict. Applies no fixes.</p>
+<pre>/flatpaper:interrogate the diff on this branch
+/flatpaper:interrogate src/sync/ before I open the PR</pre>
+  </div>
+
+  <div class="cmd" id="c-swarm">
+    <h4>/flatpaper:swarm</h4>
+    <p>Parallel workers over slices or a race, one table back.</p>
+<pre>/flatpaper:swarm check every test file for tests that pass when the code does nothing
+/flatpaper:swarm race 3 workers on fixing the flaky upload test, first pass wins</pre>
+  </div>
+
+  <div class="cmd" id="c-unslop">
+    <h4>/flatpaper:unslop</h4>
+    <p>Cuts AI tells from prose. Runs on every flatpaper-mode reply.</p>
+<pre>/flatpaper:unslop the release notes in CHANGELOG.md</pre>
+  </div>
+
+  <div class="cmd" id="c-technical-writing">
+    <h4>/flatpaper:technical-writing</h4>
+    <p>The writing standard for docs, READMEs, PR bodies, and commit messages.</p>
+<pre>/flatpaper:technical-writing rewrite docs/setup.md as a how-to</pre>
+  </div>
+
+  <div class="cmd" id="c-blast-radius">
+    <h4>/flatpaper:blast-radius</h4>
+    <p>What a change breaks outside its diff, with a rerunnable proof of the one safety fact. Takes a PR, a branch, or a diff; defaults to the current branch.</p>
+<pre>/flatpaper:blast-radius PR 123
+/flatpaper:blast-radius</pre>
+  </div>
+
+  <div class="cmd" id="c-create-verification-skill">
+    <h4>/flatpaper:create-verification-skill <span class="tag">by hand</span></h4>
+    <p>Once per repo. Generates and proves <code>.claude/skills/verify-&lt;app&gt;/</code>.</p>
+<pre>/flatpaper:create-verification-skill</pre>
+  </div>
+
+  <div class="cmd" id="c-maintain-verification-skill">
+    <h4>/flatpaper:maintain-verification-skill <span class="tag">by hand</span></h4>
+    <p>Rechecks every feature in the map from source and live. Ends clean, changed (one PR), or blocked.</p>
+<pre>/flatpaper:maintain-verification-skill</pre>
+    <p>To run it on a schedule, ask <code>/schedule</code> for a recurring cloud agent that runs it.</p>
+  </div>
+
+  <div class="cmd" id="c-correct">
+    <h4>/flatpaper:correct <span class="tag">by hand</span></h4>
+    <p>When you've corrected the same mistake twice. Makes it impossible and shows the check failing on it.</p>
+<pre>/flatpaper:correct
+/flatpaper:correct agents keep importing from internal/ directly</pre>
+  </div>
+
+  <div class="cmd" id="c-reflect">
+    <h4>/flatpaper:reflect <span class="tag">by hand</span></h4>
+    <p>At the end of a long session. Proposes skill, <code>CLAUDE.md</code>, and memory edits for your approval.</p>
+<pre>/flatpaper:reflect</pre>
+  </div>
+</section>
+
+<section class="ch" id="c-steer">
+  <div class="chnum">3.4</div>
+  <h2>Steering a run</h2>
+  <p>Steering prompts are one line. Name the principle or the rule that was broken. The agent must say which decision the principle changed.</p>
+<pre>apply prove it works. show me the real output, not the build log.
+apply fix root causes. that guard silences the symptom.
+apply attack the premise. both fixes assumed the cache is stale.
+apply build the lever. write the script instead of editing by hand.
+apply subtract before you add.
+i said repro first. i did not ask for a fix yet. stay on the bug fix playbook.
+new task: review the open PR.</pre>
+  <p>All principle names live in <code>skills/flatpaper-mode/references/principles.md</code>: laziness protocol, foundational thinking, redesign from first principles, attack the premise, subtract before you add, minimize reader load, outcome-oriented execution, experience first, exhaust the design space, build the lever, model the domain, boundary discipline, type system discipline, make operations idempotent, migrate callers then delete legacy APIs, separate before serializing shared state, prove it works, fix root causes, sequence verifiable units, test behavior not implementation, explain the number, guard the context window, never block on the human, encode lessons in structure.</p>
+</section>
+
+<section class="ch" id="c-scripts">
+  <div class="chnum">3.5</div>
+  <h2>Scripts you can run</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Script</th><th>When</th><th>Command</th></tr></thead>
+    <tbody>
+      <tr><td class="nw">check-skills.sh</td><td>After editing any skill or playbook</td><td><code>scripts/check-skills.sh</code></td></tr>
+      <tr><td class="nw">arch-drift.sh</td><td>Runs at session start; run by hand to recheck</td><td><code>scripts/arch-drift.sh</code></td></tr>
+      <tr><td class="nw">check-plan.sh</td><td>After writing a multi-phase plan</td><td><code>skills/flatpaper-mode/scripts/check-plan.sh docs/plans/&lt;slug&gt;.md</code></td></tr>
+      <tr><td class="nw">worktree-audit.sh</td><td>Before removing worktrees</td><td><code>skills/flatpaper-mode/scripts/worktree-audit.sh [--self &lt;session-id&gt;] [repo]</code></td></tr>
+      <tr><td class="nw">log.sh</td><td>Appending a decision row by hand</td><td><code>skills/show-me-your-work/scripts/log.sh &lt;log&gt; &lt;phase&gt; &lt;decision&gt; &lt;why&gt; &lt;evidence&gt; &lt;result&gt;</code></td></tr>
+      <tr><td class="nw">docs/guide/build.sh</td><td>After editing this guide</td><td><code>docs/guide/build.sh</code></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch last" id="c-pitfalls">
+  <div class="chnum">3.6</div>
+  <h2>Pitfalls</h2>
+  <ul class="tight">
+    <li><b>Naming skills in the prompt.</b> "investigate, then prototype, then build" reorders steps the playbook already sequences. State the goal and constraints.</li>
+    <li><b>Leading with your theory.</b> The agent searches where you point. Give the fact ("/ws returns 403"), not the "so..." after it.</li>
+    <li><b>A done check that can't fail.</b> "see if there's a way" or "work for an hour" lets anything count as done.</li>
+    <li><b>Parallel agents in one worktree.</b> They overwrite each other. Say "own worktree per attempt".</li>
+    <li><b>Looping before you trust the loop.</b> Get a verification skill working first.</li>
+    <li><b>Correcting by hand.</b> A correction in chat helps one run. Use <code>/flatpaper:correct</code>.</li>
+    <li><b>Editing a skill mid-task.</b> Note the problem and fix the skill in its own change.</li>
+  </ul>
+</section>
+</main>
+</div>
+<footer>Built from the flatpaper repo at version 0.7.1 with <code>docs/guide/build.sh</code>.</footer>
