@@ -74,12 +74,13 @@ nav() { cat <<'EOF'
   </ol>
   <div class="grp">3 · Commands</div>
   <ol>
-    <li><a href="#c-mode"><span class="n">3.1</span>Playbook triggers</a></li>
-    <li><a href="#c-auto"><span class="n">3.2</span>In-run triggers</a></li>
-    <li><a href="#c-skills"><span class="n">3.3</span>Every skill</a></li>
-    <li><a href="#c-steer"><span class="n">3.4</span>Steering</a></li>
-    <li><a href="#c-scripts"><span class="n">3.5</span>Scripts</a></li>
-    <li><a href="#c-pitfalls"><span class="n">3.6</span>Pitfalls</a></li>
+    <li><a href="#c-first"><span class="n">3.1</span>First session</a></li>
+    <li><a href="#c-mode"><span class="n">3.2</span>By situation</a></li>
+    <li><a href="#c-auto"><span class="n">3.3</span>On its own</a></li>
+    <li><a href="#c-skills"><span class="n">3.4</span>Every command</a></li>
+    <li><a href="#c-steer"><span class="n">3.5</span>Steering</a></li>
+    <li><a href="#c-pitfalls"><span class="n">3.6</span>Common mistakes</a></li>
+    <li><a href="#c-scripts"><span class="n">3.7</span>Scripts</a></li>
   </ol>
 </nav>
 EOF
@@ -93,7 +94,7 @@ EOF
 <header class="top">
   <div class="eyebrow">A Claude Code plugin · version $version</div>
   <h1>Using flatpaper</h1>
-  <p class="lede">flatpaper makes agent work you can trust and still understand a month later. Part 1 gets you running. Part 2 covers the ideas behind it: how to work with agents so the result holds up. Part 3 lists every command and what sets each part of a playbook off.</p>
+  <p class="lede">flatpaper makes agent work you can trust and still understand a month later. Part 1 gets you running. Part 2 covers the ideas behind it: how to work with agents so the result holds up. Part 3 shows what to type for the situation you're in.</p>
   <div class="five"><span>goal</span><span>done check</span><span>proof</span><span>what you know</span><span>constraints</span></div>
 </header>
 <div class="wrap">
