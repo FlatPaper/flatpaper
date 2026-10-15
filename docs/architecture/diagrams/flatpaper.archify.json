@@ -5,8 +5,8 @@
     "title": "flatpaper skill map",
     "quality_profile": "showcase",
     "repository": {
-      "url": "https://github.com/FlatPaper/flatpaper",
-      "revision": "a08b6a537a4b4bfd26276186b246545c90c45232"
+      "url": "https://github.com/FlatPaper/flatpaper-stack",
+      "revision": "28d06e4f054b6335fc63471f36071bbaefaa2b13"
     }
   },
   "components": [
@@ -351,7 +351,7 @@
       "id": "byhand",
       "type": "database",
       "label": "By-hand skills",
-      "sublabel": "correct, reflect, recall, +2",
+      "sublabel": "correct, reflect, recall, +3",
       "pos": [
         40,
         420
@@ -364,7 +364,7 @@
         {
           "path": "README.md",
           "line": 52,
-          "end_line": 62
+          "end_line": 63
         },
         {
           "path": "skills/correct/SKILL.md",
@@ -597,7 +597,7 @@
       "title": "Standalone skills",
       "items": [
         "Playbook steps call why, architect, interrogate, swarm, arena, no-comments, unslop, technical-writing",
-        "By hand only: correct, reflect, recall, ketchup, sharpen, blast-radius, the verification skills",
+        "By hand only: correct, reflect, recall, ketchup, sharpen, flatpaper-help, blast-radius, the verification skills",
         "show-me-your-work keeps the decision log",
         "Subagents run on opus, sonnet, haiku, or fable, with effort set per spawn"
       ]
