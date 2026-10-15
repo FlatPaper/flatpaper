@@ -6,7 +6,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://github.com/FlatPaper/flatpaper",
-      "revision": "6687d9c79bd9966aff3b0e7b4b5e3c6f76227098"
+      "revision": "a08b6a537a4b4bfd26276186b246545c90c45232"
     }
   },
   "components": [
@@ -323,7 +323,7 @@
       "id": "called",
       "type": "database",
       "label": "Playbook-called skills",
-      "sublabel": "why, architect, interrogate, +4",
+      "sublabel": "why, architect, no-comments, +5",
       "pos": [
         990,
         30
@@ -336,11 +336,11 @@
         {
           "path": "README.md",
           "line": 26,
-          "end_line": 40
+          "end_line": 41
         },
         {
           "path": "skills/flatpaper-mode/SKILL.md",
-          "line": 73
+          "line": 74
         },
         {
           "path": "skills/swarm/SKILL.md"
@@ -363,8 +363,8 @@
       "sources": [
         {
           "path": "README.md",
-          "line": 42,
-          "end_line": 52
+          "line": 52,
+          "end_line": 62
         },
         {
           "path": "skills/correct/SKILL.md",
@@ -373,6 +373,32 @@
         {
           "path": "skills/reflect/SKILL.md",
           "line": 4
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "type": "database",
+      "label": "Plugin agents",
+      "sublabel": "flatpaper-agent, comment-sicko",
+      "pos": [
+        990,
+        640
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "sources": [
+        {
+          "path": "agents/flatpaper-agent.md"
+        },
+        {
+          "path": "agents/comment-sicko.md"
+        },
+        {
+          "path": "skills/flatpaper-mode/SKILL.md",
+          "line": 65
         }
       ]
     }
@@ -511,7 +537,11 @@
       "from": "openpr",
       "to": "github",
       "label": "gh pr create",
-      "toSide": "bottom"
+      "toSide": "bottom",
+      "labelAt": [
+        930,
+        584
+      ]
     },
     {
       "id": "inv-why",
@@ -534,6 +564,12 @@
         130,
         359
       ]
+    },
+    {
+      "id": "pr-sicko",
+      "from": "openpr",
+      "to": "agents",
+      "label": "no-comments"
     }
   ],
   "cards": [
@@ -560,10 +596,20 @@
       "dot": "violet",
       "title": "Standalone skills",
       "items": [
-        "Playbook steps call why, architect, interrogate, swarm, arena, unslop, technical-writing",
+        "Playbook steps call why, architect, interrogate, swarm, arena, no-comments, unslop, technical-writing",
         "By hand only: correct, reflect, recall, ketchup, sharpen, blast-radius, the verification skills",
         "show-me-your-work keeps the decision log",
         "Subagents run on opus, sonnet, haiku, or fable, with effort set per spawn"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Plugin agents",
+      "items": [
+        "flatpaper-agent: playbook delegates read flatpaper-mode, principles, and guidelines first",
+        "comment-sicko: spawned by no-comments, edits comments only",
+        "flatpaper-mode is by hand, so subagents reach it only through flatpaper-agent",
+        "check-skills.sh and the guide build check every agent"
       ]
     }
   ]
