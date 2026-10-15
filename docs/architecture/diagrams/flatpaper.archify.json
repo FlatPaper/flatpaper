@@ -6,7 +6,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://github.com/FlatPaper/flatpaper",
-      "revision": "ba86348c44ef9abcbbeac4f26f87c9bb89cbdb68"
+      "revision": "6687d9c79bd9966aff3b0e7b4b5e3c6f76227098"
     }
   },
   "components": [
@@ -340,7 +340,7 @@
         },
         {
           "path": "skills/flatpaper-mode/SKILL.md",
-          "line": 66
+          "line": 73
         },
         {
           "path": "skills/swarm/SKILL.md"
@@ -351,7 +351,7 @@
       "id": "byhand",
       "type": "database",
       "label": "By-hand skills",
-      "sublabel": "correct, reflect, recall, ketchup",
+      "sublabel": "correct, reflect, recall, +2",
       "pos": [
         40,
         420
@@ -364,7 +364,7 @@
         {
           "path": "README.md",
           "line": 42,
-          "end_line": 51
+          "end_line": 52
         },
         {
           "path": "skills/correct/SKILL.md",
@@ -561,9 +561,9 @@
       "title": "Standalone skills",
       "items": [
         "Playbook steps call why, architect, interrogate, swarm, arena, unslop, technical-writing",
-        "By hand only: correct, reflect, recall, ketchup, blast-radius, the verification skills",
+        "By hand only: correct, reflect, recall, ketchup, sharpen, blast-radius, the verification skills",
         "show-me-your-work keeps the decision log",
-        "Subagents run on opus, sonnet, haiku, or fable only"
+        "Subagents run on opus, sonnet, haiku, or fable, with effort set per spawn"
       ]
     }
   ]
