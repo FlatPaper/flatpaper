@@ -31,6 +31,18 @@ for f in skills/*/SKILL.md; do
 	fi
 done
 
+# Every agent has frontmatter with a matching name and a description, and is
+# listed in the README.
+for f in agents/*.md; do
+	[ -e "$f" ] || continue
+	base=$(basename "$f" .md)
+	head -1 "$f" | grep -qx -- '---' || problem "$f: no frontmatter"
+	name=$(sed -n '2,10{s/^name: *//p;}' "$f" | head -1)
+	[ "$name" = "$base" ] || problem "$f: name '$name' does not match file '$base'"
+	grep -q '^description: ' "$f" || problem "$f: no description"
+	grep -q "flatpaper:$base\`" README.md || problem "README.md: agent $base not listed as flatpaper:$base"
+done
+
 # Every playbook file is listed in the mode's SKILL.md, and the reverse.
 for p in "$mode"/playbooks/*.md; do
 	grep -q "playbooks/$(basename "$p")" "$mode/SKILL.md" || problem "$mode/SKILL.md: playbook $(basename "$p") not listed"
@@ -55,9 +67,9 @@ done < <(grep -roE '`[^` ]*/[^` ]*\.(md|sh|tsv|json|mjs)`' skills guidelines.md)
 
 # Only Anthropic models, and no Cursor-only tools or plugins.
 banned='grok|\bgpt\b|gpt-[0-9]|gemini|llama|mistral|deepseek|composer-[0-9]|codex|AskQuestion|poteto-agent|cursor-team-kit|/deslop|generalPurpose|\.cursor/|is_background'
-if hits=$(grep -rniE "$banned" skills guidelines.md hooks README.md); then
+if hits=$(grep -rsniE "$banned" skills agents guidelines.md hooks README.md); then
 	while IFS= read -r h; do problem "banned term: ${h:0:160}"; done <<<"$hits"
 fi
 
-[ "$fail" -eq 0 ] && echo "check-skills: ok ($(ls -d skills/*/ | wc -l | tr -d ' ') skills, $(ls "$mode"/playbooks/*.md | wc -l | tr -d ' ') playbooks)"
+[ "$fail" -eq 0 ] && echo "check-skills: ok ($(ls -d skills/*/ | wc -l | tr -d ' ') skills, $(ls agents/*.md 2>/dev/null | wc -l | tr -d ' ') agents, $(ls "$mode"/playbooks/*.md | wc -l | tr -d ' ') playbooks)"
 exit "$fail"

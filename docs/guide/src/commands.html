@@ -67,6 +67,7 @@ raise a draft PR.</pre>
       <tr><td>Commits are ready to push for a PR</td><td>Runs <code>no-comments</code> over the diff and commits its result</td><td class="nw">Opening a PR 2</td></tr>
       <tr><td>A risky diff in a PR</td><td>Runs <code>blast-radius</code> for the Blast Radius section</td><td class="nw">Opening a PR 4</td></tr>
       <tr><td>Any reply; any doc or PR text</td><td><code>unslop</code>; plus <code>technical-writing</code> for docs and PR text</td><td class="nw">Writing the reply</td></tr>
+      <tr><td>A playbook step hands code or a helper task to a subagent</td><td>Spawns <code>flatpaper-agent</code>, which reads the mode before any work</td><td class="nw">Subagents</td></tr>
       <tr><td>Review or verification of a change</td><td>A fresh subagent that did not write it</td><td class="nw">Subagents, guidelines</td></tr>
       <tr><td>A multi-phase plan is written</td><td><code>check-plan.sh</code> must exit 0</td><td class="nw">Multi-phase plan 6</td></tr>
     </tbody>
@@ -142,7 +143,7 @@ column -s$'\t' -t decisions.tsv          # read the log in a terminal</pre>
 
   <div class="cmd" id="c-no-comments">
     <h4>/flatpaper:no-comments</h4>
-    <p>Runs on its own before a PR is pushed. A fresh reviewer strips comments that narrate or excuse code, and flags code that only makes sense with a comment. The flags get fixed. A "do not remove" comment becomes a type, test, or lint if you approve.</p>
+    <p>Runs on its own before a PR is pushed. A fresh <code>comment-sicko</code> agent strips comments that narrate or excuse code, and flags code that only makes sense with a comment. The flags get fixed. A "do not remove" comment becomes a type, test, or lint if you approve.</p>
 <pre>/flatpaper:no-comments
 /flatpaper:no-comments src/billing/</pre>
   </div>

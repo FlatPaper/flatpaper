@@ -95,7 +95,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 </style>
 <header class="top">
-  <div class="eyebrow">A Claude Code plugin · version 0.7.2</div>
+  <div class="eyebrow">A Claude Code plugin · version 0.7.3</div>
   <h1>Using flatpaper</h1>
   <p class="lede">flatpaper makes agent work you can trust and still understand a month later. Part 1 gets you running. Part 2 covers the ideas behind it: how to work with agents so the result holds up. Part 3 lists every command and what sets each part of a playbook off.</p>
   <div class="five"><span>goal</span><span>done check</span><span>proof</span><span>what you know</span><span>constraints</span></div>
@@ -467,6 +467,7 @@ raise a draft PR.</pre>
       <tr><td>Commits are ready to push for a PR</td><td>Runs <code>no-comments</code> over the diff and commits its result</td><td class="nw">Opening a PR 2</td></tr>
       <tr><td>A risky diff in a PR</td><td>Runs <code>blast-radius</code> for the Blast Radius section</td><td class="nw">Opening a PR 4</td></tr>
       <tr><td>Any reply; any doc or PR text</td><td><code>unslop</code>; plus <code>technical-writing</code> for docs and PR text</td><td class="nw">Writing the reply</td></tr>
+      <tr><td>A playbook step hands code or a helper task to a subagent</td><td>Spawns <code>flatpaper-agent</code>, which reads the mode before any work</td><td class="nw">Subagents</td></tr>
       <tr><td>Review or verification of a change</td><td>A fresh subagent that did not write it</td><td class="nw">Subagents, guidelines</td></tr>
       <tr><td>A multi-phase plan is written</td><td><code>check-plan.sh</code> must exit 0</td><td class="nw">Multi-phase plan 6</td></tr>
     </tbody>
@@ -542,7 +543,7 @@ column -s$'\t' -t decisions.tsv          # read the log in a terminal</pre>
 
   <div class="cmd" id="c-no-comments">
     <h4>/flatpaper:no-comments</h4>
-    <p>Runs on its own before a PR is pushed. A fresh reviewer strips comments that narrate or excuse code, and flags code that only makes sense with a comment. The flags get fixed. A "do not remove" comment becomes a type, test, or lint if you approve.</p>
+    <p>Runs on its own before a PR is pushed. A fresh <code>comment-sicko</code> agent strips comments that narrate or excuse code, and flags code that only makes sense with a comment. The flags get fixed. A "do not remove" comment becomes a type, test, or lint if you approve.</p>
 <pre>/flatpaper:no-comments
 /flatpaper:no-comments src/billing/</pre>
   </div>
@@ -645,4 +646,4 @@ new task: review the open PR.</pre>
 </section>
 </main>
 </div>
-<footer>Built from the flatpaper repo at version 0.7.2 with <code>docs/guide/build.sh</code>.</footer>
+<footer>Built from the flatpaper repo at version 0.7.3 with <code>docs/guide/build.sh</code>.</footer>

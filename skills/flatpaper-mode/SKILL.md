@@ -62,6 +62,7 @@ If such a step touches a UI, CLI, or service and no `verify-<app>` skill exists,
 
 ## Subagents
 
+- Spawn code-writing delegates and ad-hoc helpers inside a playbook step with `subagent_type: "flatpaper:flatpaper-agent"`, and put this file's absolute path in the brief. It reads this skill before any work, which `general-purpose` does not. Read-only search stays on `Explore`. Skills that name their own `subagent_type` keep it. Never spawn a `flatpaper-agent` to run the playbook itself.
 - You own every subagent's work. Read its diff or output and write your own summary. Don't pass its claims through.
 - Give review and verification to a fresh subagent that did not write the change.
 - Write every brief with the fields in `references/subagent-brief.md`, sized to the unit. A brief that can't fill its fields is not ready to send.

@@ -3,7 +3,7 @@
 #   guide.html      all three parts, published as the guide artifact
 #                   (https://claude.ai/artifact/UtoWgg52numPjfmQg2r27P)
 #   working-with-agents.html  Part 2 alone, a standalone page for reading in the repo
-# Fails if a skill, playbook, hook, or script is missing from Part 3.
+# Fails if a skill, playbook, agent, hook, or script is missing from Part 3.
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
 root="$(cd "$here/../.." && pwd)"
@@ -24,6 +24,13 @@ done
 for f in "$root"/skills/flatpaper-mode/playbooks/*.md; do
 	p=$(basename "$f" .md)
 	grep -q "id=\"cp-$p\"" "$cmds" || problem "Part 3: no trigger row for playbook $p (id=\"cp-$p\")"
+done
+
+# Every agent is named in Part 3.
+for f in "$root"/agents/*.md; do
+	[ -e "$f" ] || continue
+	a=$(basename "$f" .md)
+	grep -q "<code>$a</code>" "$cmds" || problem "Part 3: agent $a not named"
 done
 
 # Every hook event and script is covered in Part 3.

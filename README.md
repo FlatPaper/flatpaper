@@ -40,6 +40,15 @@ You don't type these. A playbook step runs them. You can still call one directly
 
 Subagents use only Anthropic models: `opus`, `sonnet`, `fable`, and `haiku`. Same-family review catches less than a cross-vendor mix, so the skills treat agreement between reviewers as a weaker signal than pstack does.
 
+### Subagents
+
+flatpaper-mode is a by-hand skill, so a subagent cannot load it from its skill list. The plugin ships two agents for that.
+
+| Agent | Spawned by | What it does |
+|---|---|---|
+| `flatpaper:flatpaper-agent` | flatpaper-mode, for code-writing delegates and helpers | Reads the mode, its principles, and the guidelines before any work. Does not run the playbook itself |
+| `flatpaper:comment-sicko` | `/flatpaper:no-comments` | Deletes comments that don't earn their place and flags code that needs prose. Touches comments only |
+
 ### Skills you call by hand
 
 These act on your session or your repo at a time you choose.

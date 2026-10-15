@@ -11,7 +11,7 @@
    - **Independent workstreams.** Disjoint files, services, or layers that can run in parallel. Shared writes run one after another.
    - **Shared mutable state.** Split the target first (separate before serializing shared state). Serialize only for a real invariant.
    - **Smallest safe decomposition.** If one worker is best, say why.
-   Code-coupled work goes to one owner, who fans out after the blocking steps. Fan out across subagents only for slices that produce independent artifacts. Run that fan-out with the `swarm` skill. Rewrite the checkpoint at each phase boundary, and give a new phase to a fresh subagent instead of redirecting a running one.
+   Code-coupled work goes to one owner. The session running the playbook fans out after the blocking steps. Fan out across subagents only for slices that produce independent artifacts. Run that fan-out with the `swarm` skill. Rewrite the checkpoint at each phase boundary, and give a new phase to a fresh subagent instead of redirecting a running one.
 6. Implement in small units, each ending in a check (sequence verifiable units).
 7. Verify on the real surface through the project's `verify-<app>` skill: the new behavior works, and the pinned behavior is unchanged.
 8. If the change added, removed, or rewired something the architecture page shows, run the Architecture page playbook in update mode and include it in the same PR.
