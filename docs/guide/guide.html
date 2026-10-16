@@ -95,7 +95,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 </style>
 <header class="top">
-  <div class="eyebrow">A Claude Code plugin · version 0.8.2</div>
+  <div class="eyebrow">A Claude Code plugin · version 0.8.3</div>
   <h1>Using flatpaper</h1>
   <p class="lede">flatpaper makes agent work you can trust and still understand a month later. Part 1 gets you running. Part 2 covers the ideas behind it: how to work with agents so the result holds up. Part 3 shows what to type for the situation you're in.</p>
   <div class="five"><span>goal</span><span>done check</span><span>proof</span><span>what you know</span><span>constraints</span></div>
@@ -363,7 +363,7 @@ keep a decision log. don't ask me before committing.
       <tr><td>separate before serializing shared state</td><td>Two attempts are about to write to one branch</td></tr>
     </tbody>
   </table></div>
-  <p>The agent must say which decision the principle changed. A name with no decision behind it was name-dropping. Don't memorize the list; come back when an agent does something a name would have prevented. All 24 are in Part 3.</p>
+  <p>The agent must say which decision the principle changed. A name with no decision behind it was name-dropping. Every turn ends with a <b>Principles that changed decisions</b> footer, or "none this turn", so a missing footer shows the agent has drifted from the mode. Don't memorize the list; come back when an agent does something a name would have prevented. All 24 are in Part 3.</p>
 </section>
 
 <section class="ch" id="i-encode">
@@ -511,7 +511,7 @@ raise a draft PR.</pre>
     <thead><tr><th>When</th><th>flatpaper</th></tr></thead>
     <tbody>
       <tr><td>A session starts</td><td>Loads the always-on rules (the <code>SessionStart</code> hook) and says if the architecture page is behind</td></tr>
-      <tr><td>You send any prompt</td><td>Reminds the agent to be concise and to propose a done check, proof, and constraints (the <code>UserPromptSubmit</code> hook)</td></tr>
+      <tr><td>You send any prompt</td><td>Reminds the agent to be concise and to propose a done check, proof, and constraints. After flatpaper-mode has run, it also reminds the agent to end with the principles footer (the <code>UserPromptSubmit</code> hook)</td></tr>
       <tr><td>A task starts</td><td>Reads the repo's own rules, such as <code>CLAUDE.md</code>, <code>AGENTS.md</code>, and the PR template, and the architecture page if there is one</td></tr>
       <tr><td>Running something would settle a choice</td><td>Builds a quick prototype instead of asking you</td></tr>
       <tr><td>A change has several valid shapes, or the design is contested</td><td>Runs <code>architect</code>, then <code>interrogate</code> before the PR</td></tr>
@@ -698,4 +698,4 @@ new task: review the open PR.</pre>
 </section>
 </main>
 </div>
-<footer>Built from the flatpaper repo at version 0.8.2 with <code>docs/guide/build.sh</code>.</footer>
+<footer>Built from the flatpaper repo at version 0.8.3 with <code>docs/guide/build.sh</code>.</footer>

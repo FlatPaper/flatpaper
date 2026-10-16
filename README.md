@@ -15,7 +15,7 @@ Three ideas carry it:
 | Piece | What it does |
 |---|---|
 | `guidelines.md` | Always-on rules, loaded at session start by a hook |
-| `UserPromptSubmit` hook | One-line reminder on every prompt: concise replies, and a done check, proof, and constraints |
+| `UserPromptSubmit` hook | One-line reminder on every prompt: concise replies, a done check, proof, and constraints, and the principles footer in flatpaper-mode sessions |
 | `/flatpaper-stack:flatpaper-mode` | Rigorous mode. Matches the task to a playbook (investigation, bug fix, feature, refactoring, prototype, autonomous run, architecture page, perf, babysit, session pickup, pause safely, worktree cleanup, multi-phase plan, runtime forensics, trace forensics, opening a PR) |
 | Architecture drift line | At session start, says when `docs/architecture/` is behind this repo's commits, or behind the latest release of the repo it describes. Silent otherwise. |
 | `/flatpaper-stack:show-me-your-work` | Decision log (TSV), audited against the transcript, with an Attention section from a fresh reviewer |

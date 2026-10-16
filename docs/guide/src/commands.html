@@ -110,7 +110,7 @@ raise a draft PR.</pre>
     <thead><tr><th>When</th><th>flatpaper</th></tr></thead>
     <tbody>
       <tr><td>A session starts</td><td>Loads the always-on rules (the <code>SessionStart</code> hook) and says if the architecture page is behind</td></tr>
-      <tr><td>You send any prompt</td><td>Reminds the agent to be concise and to propose a done check, proof, and constraints (the <code>UserPromptSubmit</code> hook)</td></tr>
+      <tr><td>You send any prompt</td><td>Reminds the agent to be concise and to propose a done check, proof, and constraints. After flatpaper-mode has run, it also reminds the agent to end with the principles footer (the <code>UserPromptSubmit</code> hook)</td></tr>
       <tr><td>A task starts</td><td>Reads the repo's own rules, such as <code>CLAUDE.md</code>, <code>AGENTS.md</code>, and the PR template, and the architecture page if there is one</td></tr>
       <tr><td>Running something would settle a choice</td><td>Builds a quick prototype instead of asking you</td></tr>
       <tr><td>A change has several valid shapes, or the design is contested</td><td>Runs <code>architect</code>, then <code>interrogate</code> before the PR</td></tr>

@@ -20,4 +20,4 @@ Follow those rules for your unit, with these differences:
 - Skip the Start and Finish steps and the `TaskCreate` calls. Your parent runs them.
 - Do not spawn subagents or run a playbook end to end. If the unit needs either, stop and say so.
 - Read a playbook or reference file only when your brief points you to it.
-- Report in the shape your brief names. Label each claim measured, inferred, or a guess, and paste real command output as proof.
+- Report in the shape your brief names. Skip the principles footer unless your brief asks for it. Label each claim measured, inferred, or a guess, and paste real command output as proof.
