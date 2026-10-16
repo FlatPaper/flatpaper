@@ -6,7 +6,7 @@
     "quality_profile": "showcase",
     "repository": {
       "url": "https://github.com/FlatPaper/flatpaper-stack",
-      "revision": "28d06e4f054b6335fc63471f36071bbaefaa2b13"
+      "revision": "124fcbc369fe3c0120f5324d34970a902560775b"
     }
   },
   "components": [
@@ -340,7 +340,7 @@
         },
         {
           "path": "skills/flatpaper-mode/SKILL.md",
-          "line": 74
+          "line": 76
         },
         {
           "path": "skills/swarm/SKILL.md"
@@ -398,7 +398,7 @@
         },
         {
           "path": "skills/flatpaper-mode/SKILL.md",
-          "line": 65
+          "line": 66
         }
       ]
     }
