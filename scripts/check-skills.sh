@@ -65,6 +65,28 @@ while IFS=: read -r file ref; do
 	esac
 done < <(grep -roE '`[^` ]*/[^` ]*\.(md|sh|tsv|json|mjs)`' skills guidelines.md)
 
+# Skill and agent references resolve, so a rename can't leave one dangling.
+# A slash command must be a skill. skill-creator is an Anthropic skill outside
+# this plugin.
+skill_names=" $(ls skills | tr '\n' ' ')skill-creator "
+agent_names=" $(ls agents | sed 's/\.md$//' | tr '\n' ' ')"
+while IFS=: read -r file line ref; do
+	case "$ref" in
+		/flatpaper-stack:*) name=${ref#/flatpaper-stack:}; known=$skill_names ;;
+		flatpaper-stack:*) name=${ref#flatpaper-stack:}; known="$skill_names$agent_names" ;;
+		*) name=$(printf '%s' "$ref" | sed -E 's#^`/?##; s#` skill$##'); known=$skill_names ;;
+	esac
+	case "$known" in *" $name "*) ;; *) problem "$file:$line: unknown skill or agent '$ref'" ;; esac
+done < <(grep -rnoE '/?flatpaper-stack:[a-z0-9-]+|`/?[a-z][a-z0-9-]+` skill' skills agents guidelines.md README.md hooks)
+
+# A plugin agent dispatched by its bare name falls back to another agent.
+for f in agents/*.md; do
+	base=$(basename "$f" .md)
+	if hits=$(grep -rnE "subagent_type\"?:[ \"'\`]*$base\b" skills agents guidelines.md README.md); then
+		while IFS= read -r h; do problem "bare agent name, use flatpaper-stack:$base: ${h:0:160}"; done <<<"$hits"
+	fi
+done
+
 # Only Anthropic models, and no Cursor-only tools or plugins.
 banned='grok|\bgpt\b|gpt-[0-9]|gemini|llama|mistral|deepseek|composer-[0-9]|codex|AskQuestion|poteto-agent|cursor-team-kit|/deslop|generalPurpose|\.cursor/|is_background'
 if hits=$(grep -rsniE "$banned" skills agents guidelines.md hooks README.md); then
