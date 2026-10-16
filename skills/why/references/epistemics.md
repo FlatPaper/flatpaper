@@ -4,6 +4,12 @@ How to reason and write when the evidence is old, partial, and sometimes contrad
 
 Code shows what it does, not why it exists. The why lives in commits, PRs, tickets, docs, and conversations, and all of them are incomplete. A confident guess misleads the user, because they will act on it.
 
+## Claims about human decisions
+
+When the exact scope of a human ruling matters, find the person's original words. Keep the source, the speaker, and enough of the wording to show the scope. An agent's summary of a ruling is an interpretation, however old it is, and a paraphrase alone cannot establish the scope. If the original is gone, say so and leave the scope uncertain. Never invent a firm ban or permission.
+
+"Avoid that endpoint during this migration" and an agent's "the user forbids that endpoint" are different claims. Report the original and the interpretation separately. Copies of one interpretation in several notes are one evidence chain, not several decisions. Trace them to their source before raising confidence.
+
 ## What counts as Direct
 
 Something an author wrote that says why. Not "the code does X, so the author wanted X." Examples:

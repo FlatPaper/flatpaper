@@ -49,6 +49,8 @@ If the human pushes back on the shape, treat that as Phase A evidence. Re-ground
 
 Replace `not implemented` bodies with code and pseudocode with logic. The sketch is the contract. A deviation is a signal to surface, not friction to absorb quietly. If a function needs a parameter the sketch didn't anticipate, ask whether the sketch was wrong, the requirement was missed, or the implementation is overreaching.
 
+Once a deviation is accepted, fold it back before closing the unit or handing its contract to the next worker. Update the affected usage, signatures, and outcome contracts in the sketch and the rationale's Implementation reconciliation section, and record who accepted it. Keep unaccepted deviations visible. A unit is not reconciled while the next worker would get contradictory instructions. Never edit the sketch only to justify what was built.
+
 ## Phase E: Scrap when the architecture is wrong
 
 If implementation keeps producing friction the sketch can't absorb, throw the sketch out. Don't bolt fixes onto a wrong design (redesign from first principles, fix root causes).

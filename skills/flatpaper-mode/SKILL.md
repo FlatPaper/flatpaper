@@ -59,12 +59,14 @@ If such a step touches a UI, CLI, or service and no `verify-<app>` skill exists,
 - Reversible work proceeds without asking.
 - Always pause for irreversible actions: force-push to shared branches, deploys, data deletion, messages to other people. Replies on a PR the user asked you to babysit are the one exception.
 - Session overrides ("don't stop", "going to bed", "run until done") mean keep going and log decisions with the show-me-your-work skill.
+- A skill or playbook that breaks mid-task gets fixed in its own PR. Don't block on it, and don't silently work around it.
 
 ## Subagents
 
 - Spawn code-writing delegates and ad-hoc helpers inside a playbook step with `subagent_type: "flatpaper-stack:flatpaper-agent"`, and put this file's absolute path in the brief. It reads this skill before any work, which `general-purpose` does not. Read-only search stays on `Explore`. Skills that name their own `subagent_type` keep it. Never spawn a `flatpaper-agent` to run the playbook itself.
 - You own every subagent's work. Read its diff or output and write your own summary. Don't pass its claims through.
-- Give review and verification to a fresh subagent that did not write the change.
+- Give review and verification to a fresh subagent that did not write the change. If no independent reviewer can run, record `BLOCKED: independent review`, keep merge-ready closed, and say which reviewers ran. Your own review, passing tests, and CI never count as the verdict.
+- `completed` means an agent sent its completion notice, not that it exited. One with live background children can resume. Before you reuse its worktree or replace it, stop it and confirm the stop. The tell is a claim about the tree that `git status` contradicts.
 - Write every brief with the fields in `references/subagent-brief.md`, sized to the unit. A brief that can't fill its fields is not ready to send.
 - Route bulk reading to subagents and keep summaries in the main thread.
 - Match the effort to the job. Before each spawn, set the Agent tool's `effort`. Start at `high`. Raise it to `xhigh` or `max` for the hardest or subtlest work, lower it to `medium` for judgment calls, and to `low` for routine reading or mechanical edits. Keep the model a skill names, so a mixed panel stays mixed. If the tool rejects `effort`, omit it and say so.

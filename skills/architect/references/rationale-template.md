@@ -26,6 +26,10 @@ The prose that ships alongside the type sketch. One page. Sentence-case headings
 
 *Required. Name at least one concrete alternative shape, with one line on why it lost. Judge each alternative on interface depth, not implementation simplicity alone. Name the complexity it exposes to callers and the complexity it hides. Two or three alternatives belong here when the design space had real contenders. One is fine when the constraints forced the answer, with the conclusion phrased as "this was the only viable shape because..." Avoid listing flavors of the same shape. This section covers design alternatives the chosen shape considered and rejected, not other runner candidates.*
 
+## Implementation reconciliation
+
+*Filled during Phase D. Each accepted deviation, who accepted it, and the usage, signatures, or contracts it changed above. For a local deviation, why the shared contract still holds. Unaccepted changes stay listed here as open.*
+
 ## Open questions and risks
 
 *Things you noticed during the sketch that the human needs to weigh in on, and risks worth flagging before implementation starts. Phrase as questions, not assertions, so the human's answer is the resolution rather than a comment.*

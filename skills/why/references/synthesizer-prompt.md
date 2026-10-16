@@ -35,6 +35,7 @@ Read the Confidence section of `${CLAUDE_PLUGIN_ROOT}/skills/flatpaper-mode/refe
 4. Code is never evidence of its own intent.
 5. Gaps are named, not filled with guesses.
 6. A hypothesis in the user's question is a candidate. Check it.
+7. A human ruling whose scope matters is quoted in the person's own words. Copies of one agent paraphrase count as one source.
 
 ## Method
 

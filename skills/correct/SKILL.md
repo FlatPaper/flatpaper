@@ -20,7 +20,7 @@ Read recent commits, reverts, review comments, `CLAUDE.md` and `AGENTS.md`, and 
 2. **Enforce it with types so the bad state can't be written.**
 3. **Add a lint or CI check whose error names the fix.** If bad code still compiles, fail with a message that names the file, type, or function to use instead. If the pattern is already common, fail only when a change adds more.
 4. **Block it with a Claude Code hook.** Use this when the mistake is an agent action, not code: a command it runs, a file it edits, a step it skips before stopping. Put a `PreToolUse`, `PostToolUse`, or `Stop` hook in `.claude/settings.json`, or in a plugin's `hooks/hooks.json`. Have it exit non-zero with a message that names the fix. A hook only binds Claude Code sessions, so prefer a lint or CI check when people and other tools also touch the code.
-5. **Test the behavior.** Fix or delete any test that would still pass if every function it calls returned nothing.
+5. **Test the behavior.** Fix or delete any test that would still pass if every function it calls returned nothing, or that fails when only the internals change.
 6. **Write docs or `CLAUDE.md` rules last, only for judgment calls.** Nothing fails when an agent skips them. Give the rule a prominent spot and an example of the failure.
 
 ## Fix and prove

@@ -10,7 +10,7 @@ Mine the current session for durable learnings, then route each one to a concret
 
 ## 1. Locate the transcript
 
-Read this session's transcript at `~/.claude/projects/<project-dir>/<session-id>.jsonl`. `<project-dir>` is the working directory path with each `/` and other non-alphanumeric character turned into `-`, such as `-Users-me-src-app`. Use only this session's file. Never glob across other project directories. They hold unrelated private chats.
+Read this session's transcript at `~/.claude/projects/<project-dir>/<session-id>.jsonl`. `<project-dir>` is the working directory path with each `/` and other non-alphanumeric character turned into `-`, such as `-Users-me-src-app`. Use only this session's file. Its first line is session metadata, not a message, and a session that opened with `/clear` or a `!` command logs that wrapper as `user` records before the first real prompt. Never glob across other project directories. They hold unrelated private chats.
 
 If the session id is not known, list this project's directory with `ls -t` and take the newest file whose first user message matches this session's opening prompt. If none matches, pass a tight digest of the session instead.
 

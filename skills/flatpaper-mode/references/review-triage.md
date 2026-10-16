@@ -27,6 +27,7 @@ Ask the user about these, even if a similar comment was dismissed before:
 - Billing and payments.
 - Data loss, data retention, and deletion.
 - Migrations, schema changes, and backfills.
+- Idempotency, concurrency, and cross-system behavior.
 - Any finding the reviewer marks high-severity.
 
 A human once dismissing one of these is an owner's judgment call, not a team rule.

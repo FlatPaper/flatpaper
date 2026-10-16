@@ -1,12 +1,12 @@
 ---
 name: blast-radius
-description: Find what a change could break somewhere else before it ships, beyond the diff, and prove the one fact it is safe because of by running real code. Takes a diff, a branch, or a PR. Use for /blast-radius, "what could this break", "blast radius of X", or a small diff you don't trust yet.
+description: Find what a change could break somewhere else before it ships, beyond the diff, and prove the one fact it is safe because of by running real code. Takes a diff, a branch, or a PR. Use for /blast-radius, "what could this break", "blast radius of X", a small diff you don't trust yet, or before design when a brief asserts something about existing code.
 disable-model-invocation: true
 ---
 
 # Blast radius
 
-Find what a change breaks somewhere else, before it ships.
+Find what a change breaks somewhere else, before it ships. Run it before design, too, when a brief asserts something about existing code ("make endpoint X public"). The assertion is a hypothesis, and the census of who consumes it decides the design.
 
 Listing the callers is not the job. Grep finds those in a second. The job is the breakage grep won't show you.
 
@@ -17,6 +17,7 @@ A diff, a branch, or a PR.
 - **A diff.** Read it as given.
 - **A branch.** `git diff <base>...<branch>` and `git log <base>..<branch>`.
 - **A PR.** `gh pr diff <number>` and `gh pr view <number> --json title,body,baseRefName,commits,files`.
+- **A claim in a brief, before any diff.** Census who consumes the code the claim names. The census decides the design.
 
 With no input, use the current branch against its base.
 
