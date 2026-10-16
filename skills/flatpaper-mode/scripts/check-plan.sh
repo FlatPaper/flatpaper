@@ -44,8 +44,18 @@ BEGIN {
   RULE = "Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked."
   SUB = "|Depends on.|Files.|Build.|You see.|Verify, unit.|Verify, live.|Verify, perf.|Review gate.|Merge.|"
 }
-/^```/ { fence = !fence; next }
-fence { next }
+NR == 1 { sub(/^\xef\xbb\xbf/, "") }
+fence != "" {
+  t = $0; gsub(/^[ \t]+|[ \t]+$/, "", t)
+  if (length(t) >= length(fence) && t ~ (substr(fence, 1, 1) == "`" ? "^`+$" : "^~+$")) fence = ""
+  next
+}
+# A fence opens with up to three spaces of indent. The info string of a backtick
+# fence holds no backtick, so a line like ```x``` is inline code, not a fence.
+match($0, /^(   |  | )?(```+|~~~+)/) {
+  f = substr($0, RSTART, RLENGTH); gsub(/ /, "", f)
+  if (!(substr(f, 1, 1) == "`" && index(substr($0, RSTART + RLENGTH), "`"))) { fence = f; fenceat = NR; next }
+}
 {
   prose = $0; gsub(/`[^`]*`/, "`", prose)
   if (prose ~ /\xe2\x80[\x93\x94]/) fail(NR, "long dash")
@@ -74,6 +84,7 @@ inpr && match($0, /^\*\*[^*]+\*\*/) && index(SUB, "|" substr($0, 3, RLENGTH - 4)
 inpr { cur = cur $0 "\n" }
 END {
   endpr()
+  if (fence != "") fail(fenceat, "unclosed fence")
   if (!h1) fail(1, "no H1 title")
   if (!how) fail(1, "no \"## How to read this\" section")
   else {

@@ -11,6 +11,11 @@
 #
 # Buckets, first match wins:
 #   hold-wip       tracked uncommitted changes (count shown as wip:N)
+#   hold-reflog    commits only this worktree's HEAD reflog reaches, such as
+#                  work committed on a detached HEAD (reflog:N). Removal
+#                  deletes that reflog, and gc then drops the commits.
+#   hold-ignored   ignored files outside build and cache dirs, such as .env
+#                  (ignored:N). They may exist nowhere else.
 #   hold-open-pr   the branch has an open PR (needs gh)
 #   verify-recent  a Claude Code transcript from this repo's project dirs,
 #                  modified in the last 24h, mentions the path (rg if
@@ -77,6 +82,25 @@ if [ -n "$base" ]; then
 else
 	note "no base branch found; merged column is '?'"
 fi
+
+# An ignored dir or file with one of these names is rebuildable build or cache
+# output. Any other ignored path, such as .env or build/notes.txt in a dir git
+# does not ignore, may exist nowhere else.
+disposable='.build .cache .dart_tool .DS_Store .gradle .lake .mypy_cache .next .nuxt .parcel-cache .pytest_cache .ruff_cache .svelte-kit .tox .turbo .venv __pycache__ build coverage DerivedData dist node_modules target venv'
+
+# Commits any branch reflog lists. Branch reflogs live in the shared logs and
+# survive worktree removal, so a rebased branch's old tip is not at risk.
+g for-each-ref --format='%(refname)' refs/heads | while IFS= read -r ref; do
+	g rev-list --walk-reflogs "$ref" 2>/dev/null
+done | sort -u > "$tmp/branch_logged"
+
+# Commits only this worktree's HEAD reflog reaches: not on any branch, tag,
+# remote, or branch reflog. A worktree without a HEAD reflog counts 0. Prints
+# nothing if the count itself fails.
+reflog_only() {
+	{ g -C "$1" rev-list --walk-reflogs HEAD 2>/dev/null; sed 's/^/^/' "$tmp/branch_logged"; } |
+		g -C "$1" rev-list --count --stdin --not --branches --tags --remotes 2>/dev/null
+}
 
 # PR state per branch, one gh call. gh has jq built in, so jq is not needed.
 # Fields: headRefName number state headRefOid isCrossRepository.
@@ -186,7 +210,7 @@ row() {
 
 audit() {
 	local wt="$1" branch="$2" detached="$3" locked="$4" prunable="$5"
-	local size dirty merged pr seen bucket why tracked untracked porcelain wtp top head
+	local size dirty merged pr seen bucket why tracked untracked ignored reflog porcelain wtp top head
 
 	if [ "$prunable" = yes ] || [ ! -d "$wt" ]; then
 		row review - - - - - "${branch:--}" "$wt" \
@@ -201,15 +225,24 @@ audit() {
 	# repo, so the toplevel must be this worktree before status is trusted.
 	top=$(g -C "$wt" rev-parse --show-toplevel 2>/dev/null)
 	if [ -z "$top" ] || [ "$(phys "$top")" != "$wtp" ] || \
-		! porcelain=$(g -C "$wt" status --porcelain 2>/dev/null); then
+		! porcelain=$(g -C "$wt" status --porcelain --ignored=matching 2>/dev/null); then
 		row review "?" "?" "?" "?" "${size:-?}" "${branch:-(detached)}" "$wt" "git status failed"
 		return
 	fi
-	tracked=$(printf '%s\n' "$porcelain" | grep -c '^[^?]')
+	tracked=$(printf '%s\n' "$porcelain" | grep -c '^[^?!]')
 	untracked=$(printf '%s\n' "$porcelain" | grep -c '^??')
-	if [ "$tracked" -gt 0 ]; then dirty="wip:$tracked"
-	elif [ "$untracked" -gt 0 ]; then dirty="untracked:$untracked"
-	else dirty=clean; fi
+	ignored=$(printf '%s\n' "$porcelain" | LC_ALL=C awk -v d="$disposable" '
+		BEGIN { n = split(d, a, " "); for (i = 1; i <= n; i++) D[a[i]] = 1 }
+		/^!! / { p = substr($0, 4); gsub(/^"|"$/, "", p); sub(/\/$/, "", p)
+			k = split(p, part, "/"); if (!(part[k] in D)) c++ }
+		END { print c + 0 }')
+	reflog=$(reflog_only "$wt"); [ -z "$reflog" ] && reflog="?"
+	dirty=""
+	[ "$tracked" -gt 0 ] && dirty="$dirty,wip:$tracked"
+	[ "$untracked" -gt 0 ] && dirty="$dirty,untracked:$untracked"
+	[ "$ignored" -gt 0 ] && dirty="$dirty,ignored:$ignored"
+	[ "$reflog" != 0 ] && dirty="$dirty,reflog:$reflog"
+	dirty=${dirty#,}; [ -z "$dirty" ] && dirty=clean
 
 	head=$(g -C "$wt" rev-parse --verify --quiet HEAD 2>/dev/null)
 
@@ -234,11 +267,14 @@ audit() {
 	case "$pr" in */MERGED) merged=yes ;; esac
 
 	if [ "$tracked" -gt 0 ]; then bucket=hold-wip; why="uncommitted tracked changes"
+	elif [ "$reflog" != 0 ] && [ "$reflog" != "?" ]; then bucket=hold-reflog; why="commits only this worktree's reflog keeps"
+	elif [ "$ignored" -gt 0 ]; then bucket=hold-ignored; why="ignored files outside build and cache dirs"
 	elif case "$pr" in */OPEN) true ;; *) false ;; esac; then bucket=hold-open-pr; why="open PR"
 	elif [ "$seen" != "-" ] && [ "$seen" != "?" ]; then bucket=verify-recent; why="recent session touched it"
 	elif [ -n "$here" ] && [ "$wtp" = "$here" ]; then bucket=review; why="this is the current worktree"
 	elif [ "$locked" = yes ]; then bucket=review; why="locked"
 	elif [ "$untracked" -gt 0 ]; then bucket=review; why="untracked files would be lost"
+	elif [ "$reflog" = "?" ]; then bucket=review; why="reflog check failed"
 	elif [ "$merged" = yes ]; then bucket=safe; why="clean and merged"
 	elif [ "$detached" = yes ]; then bucket=review; why="detached HEAD not merged; commits have no branch"
 	elif [ "$pr" = "-" ]; then bucket=safe; why="clean, no PR, branch keeps its commits"
