@@ -14,8 +14,8 @@
 #   hold-reflog    commits only this worktree's HEAD reflog reaches, such as
 #                  work committed on a detached HEAD (reflog:N). Removal
 #                  deletes that reflog, and gc then drops the commits.
-#   hold-ignored   ignored files outside build and cache dirs, such as .env
-#                  (ignored:N). They may exist nowhere else.
+#   hold-ignored   ignored paths that are not build or cache output, such as
+#                  .env (ignored:N). They may exist nowhere else.
 #   hold-open-pr   the branch has an open PR (needs gh)
 #   verify-recent  a Claude Code transcript from this repo's project dirs,
 #                  modified in the last 24h, mentions the path (rg if
@@ -268,7 +268,7 @@ audit() {
 
 	if [ "$tracked" -gt 0 ]; then bucket=hold-wip; why="uncommitted tracked changes"
 	elif [ "$reflog" != 0 ] && [ "$reflog" != "?" ]; then bucket=hold-reflog; why="commits only this worktree's reflog keeps"
-	elif [ "$ignored" -gt 0 ]; then bucket=hold-ignored; why="ignored files outside build and cache dirs"
+	elif [ "$ignored" -gt 0 ]; then bucket=hold-ignored; why="ignored files that are not build or cache output"
 	elif case "$pr" in */OPEN) true ;; *) false ;; esac; then bucket=hold-open-pr; why="open PR"
 	elif [ "$seen" != "-" ] && [ "$seen" != "?" ]; then bucket=verify-recent; why="recent session touched it"
 	elif [ -n "$here" ] && [ "$wtp" = "$here" ]; then bucket=review; why="this is the current worktree"
